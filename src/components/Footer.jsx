@@ -11,7 +11,7 @@ const Footer = () => {
               href="#"
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6 "
             >
-              About
+              Nosotros
             </a>
           </li>
           <li>
@@ -19,7 +19,7 @@ const Footer = () => {
               href="#"
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6 "
             >
-              Privacy Policy
+              Nosotros
             </a>
           </li>
           <li>
@@ -27,15 +27,15 @@ const Footer = () => {
               href="#"
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6 "
             >
-              Licensing
+              Politicas
             </a>
           </li>
           <li>
             <a
               href="#"
-              className="text-sm text-gray-500 hover:underline dark:text-gray-400"
+              className="text-sm text-gray-500 hover:underline"
             >
-              Contact
+              Contactanos
             </a>
           </li>
         </ul>
