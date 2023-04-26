@@ -27,7 +27,7 @@ const Footer = () => {
               href="#"
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6 "
             >
-              Politicas
+              API
             </a>
           </li>
           <li>
