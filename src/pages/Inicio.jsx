@@ -4,7 +4,7 @@ import { products } from "../data/products";
 
 const Inicio = () => {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="z-0 flex flex-col h-screen">
         <Imagen_principal/>
         <ProductCarousel products={products} />
     </div>
