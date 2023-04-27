@@ -24,7 +24,7 @@ const ProductCarousel = ({ products }) => {
         {groupedProducts.map((productGroup, groupIndex) => (
           <div
             key={groupIndex}
-            className="p-4 flex flex-row items-center justify-around"
+            className="p-4 flex flex-row items-center justify-around bg-gray-200"
           >
             {productGroup.map((product, index) => (
               <div

@@ -1,4 +1,4 @@
-import Logo from "../img/logo_horizontal.svg";
+import Logo from "../assets/logo_horizontal.svg";
 import { Link } from "react-router-dom";
 
 const Header = () => {
