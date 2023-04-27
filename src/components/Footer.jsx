@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <>
@@ -7,36 +9,44 @@ const Footer = () => {
         </span>
         <ul className="flex flex-wrap items-center mt-3 sm:mt-0">
           <li>
-            <a
-              href="#"
+            <Link
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6 "
+              to="/"
             >
-              Nosotros
-            </a>
+              Inicio
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
-              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6 "
+            <Link
+              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
+              to="/Productos"
             >
-              Nosotros
-            </a>
+              Productos
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
-              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6 "
+            <Link
+              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
+              to="/Nosotros"
+            >
+              Nosotros
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
+              to="/API"
             >
               API
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
-              className="text-sm text-gray-500 hover:underline"
+            <Link
+              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
+              to="/Login"
             >
-              Contactanos
-            </a>
+              Login
+            </Link>
           </li>
         </ul>
       </footer>

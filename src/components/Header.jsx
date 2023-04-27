@@ -1,4 +1,5 @@
-import Logo from '../img/logo_horizontal.svg';
+import Logo from "../img/logo_horizontal.svg";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -6,26 +7,25 @@ const Header = () => {
       <header className="header sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
         {/* logo */}
 
-      <img src={Logo} className="w-2/12 my-2" alt="logo" />
-      
+        <img src={Logo} className="w-2/12 my-2" alt="logo" />
 
         {/* navigation */}
         <nav className="nav font-semibold text-lg">
           <ul className="flex items-center">
-            <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer active">
-              <a href="">Inicio</a>
+            <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer active">
+              <Link to="/">Inicio</Link>
             </li>
-            <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
-              <a href="">Productos</a>
+            <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
+            <Link to="/Productos">Productos</Link>
             </li>
-            <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
-              <a href="">Nosotros</a>
+            <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
+              <Link to="/Nosotros">Nosotros</Link>
             </li>
-            <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
-              <a href="">API</a>
+            <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
+            <Link to="/API">API</Link>
             </li>
-            <li className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer">
-              <a href="">Login</a>
+            <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
+            <Link to="/Login">Login</Link>
             </li>
           </ul>
         </nav>
@@ -34,7 +34,7 @@ const Header = () => {
         <div className="w-2/12 flex justify-center">
           <a href="">
             <svg
-              className="h-8 p-1 hover:text-green-500 duration-200 svg-inline--fa fa-search fa-w-16 fa-9x"
+              className="h-8 p-1 hover:text-teal-500 duration-200 svg-inline--fa fa-search fa-w-16 fa-9x"
               aria-hidden="true"
               focusable="false"
               data-prefix="far"
