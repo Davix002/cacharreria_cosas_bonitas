@@ -1,6 +1,6 @@
-import Imagen_principal from "./components/Imagen_principal";
-import ProductCarousel from "./components/ProductCarousel";
-import { products } from "./data/products";
+import Imagen_principal from "../components/Imagen_principal";
+import ProductCarousel from "../components/ProductCarousel";
+import { products } from "../data/products";
 
 const Inicio = () => {
   return (

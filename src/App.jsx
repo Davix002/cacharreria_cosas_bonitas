@@ -1,10 +1,10 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Inicio from "./Inicio";
-import Productos from "./Productos";
-import Nosotros from "./Nosotros";
-import Api from "./Api";
-import Login from "./Login";
+import Inicio from "./pages/Inicio";
+import Productos from "./pages/Productos";
+import Nosotros from "./pages/Nosotros";
+import Api from "./pages/Api";
+import Login from "./pages/Login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function App() {
@@ -13,6 +13,7 @@ export default function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Inicio />} />
+          <Route path="/cacharreria_cosas_bonitas" element={<Inicio />} />
           <Route path="/Productos" element={<Productos />} />
           <Route path="/Nosotros" element={<Nosotros />} />
           <Route path="/API" element={<Api />} />
