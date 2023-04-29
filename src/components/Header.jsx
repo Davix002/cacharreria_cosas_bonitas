@@ -1,10 +1,11 @@
 import Logo from "../assets/logo_horizontal.svg";
 import { Link } from "react-router-dom";
+import DropdownMenu from "./DropdownMenu";
 
 const Header = () => {
   return (
     <>
-      <header className="header sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
+      <header className="z-50 header sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
         {/* logo */}
 
         <img src={Logo} className="w-2/12 my-2" alt="logo" />
@@ -15,8 +16,9 @@ const Header = () => {
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer active">
               <Link to="/cacharreria_cosas_bonitas">Inicio</Link>
             </li>
-            <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
-            <Link to="/cacharreria_cosas_bonitas/Productos">Productos</Link>
+            <li className=" border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
+            {/* <Link to="/cacharreria_cosas_bonitas/Productos">Productos</Link> */}
+              <DropdownMenu />
             </li>
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
               <Link to="/cacharreria_cosas_bonitas/Nosotros">Nosotros</Link>

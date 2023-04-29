@@ -7,16 +7,19 @@ import Api from "./pages/Api";
 import Login from "./pages/Login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+
 export default function App() {
   return (
     <Router>
         <Header />
+        
         <Routes>
           <Route path="/cacharreria_cosas_bonitas" element={<Inicio />} />
           <Route path="/cacharreria_cosas_bonitas/Productos" element={<Productos />} />
           <Route path="/cacharreria_cosas_bonitas/Nosotros" element={<Nosotros />} />
           <Route path="/cacharreria_cosas_bonitas/API" element={<Api />} />
           <Route path="/cacharreria_cosas_bonitas/Login" element={<Login />} />
+          
         </Routes>
         <Footer />
     </Router>

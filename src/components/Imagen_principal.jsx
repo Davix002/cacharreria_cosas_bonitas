@@ -2,7 +2,7 @@ import Imagen from "../assets/imagen_principal.png";
 
 const Imagen_principal = () => {
   return (
-    <div className="flex-grow">
+    <div className="flex-grow ">
           <div className="h-full w-full relative">
             <img
               src={Imagen}
