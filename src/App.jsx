@@ -12,12 +12,11 @@ export default function App() {
     <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<Inicio />} />
           <Route path="/cacharreria_cosas_bonitas" element={<Inicio />} />
-          <Route path="/Productos" element={<Productos />} />
-          <Route path="/Nosotros" element={<Nosotros />} />
-          <Route path="/API" element={<Api />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/cacharreria_cosas_bonitas/Productos" element={<Productos />} />
+          <Route path="/cacharreria_cosas_bonitas/Nosotros" element={<Nosotros />} />
+          <Route path="/cacharreria_cosas_bonitas/API" element={<Api />} />
+          <Route path="/cacharreria_cosas_bonitas/Login" element={<Login />} />
         </Routes>
         <Footer />
     </Router>
