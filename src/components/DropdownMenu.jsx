@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const SubMenu = "block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm";
 
