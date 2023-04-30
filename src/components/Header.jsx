@@ -17,17 +17,17 @@ const Header = () => {
               <Link to="/cacharreria_cosas_bonitas">Inicio</Link>
             </li>
             <li className=" border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
-            {/* <Link to="/cacharreria_cosas_bonitas/Productos">Productos</Link> */}
+              {/* <Link to="/cacharreria_cosas_bonitas/Productos">Productos</Link> */}
               <DropdownMenu />
             </li>
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
               <Link to="/cacharreria_cosas_bonitas/Nosotros">Nosotros</Link>
             </li>
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
-            <Link to="/cacharreria_cosas_bonitas/API">API</Link>
+              <Link to="/cacharreria_cosas_bonitas/API">API</Link>
             </li>
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
-            <Link to="/cacharreria_cosas_bonitas/Login">Login</Link>
+              <Link to="/cacharreria_cosas_bonitas/Login">Login</Link>
             </li>
           </ul>
         </nav>

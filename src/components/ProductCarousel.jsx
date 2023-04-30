@@ -3,13 +3,15 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const ProductCarousel = ({ products }) => {
-  const chunkSize = 4;
+  const chunkSize = 3;
 
-  const groupedProducts = Array.from(
-    { length: Math.ceil(products.length / chunkSize) },
-    (_, i) => products.slice(i * chunkSize, (i + 1) * chunkSize)
-  );
-
+  const groupedProducts = [];
+  products.forEach((_, i) => {
+    if (i % chunkSize === 0) {
+      groupedProducts.push(products.slice(i, i + chunkSize));
+    }
+  });
+  
   return (
     <div className="relative">
       <Carousel
@@ -32,7 +34,7 @@ const ProductCarousel = ({ products }) => {
                 className="p-10 flex flex-col card"
               >
                 <img
-                  src={product.image}
+                  src={product.imageSrc}
                   alt={product.name}
                   className="w-40 h-40 object-contain mb-4"
                 />
