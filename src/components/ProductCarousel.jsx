@@ -4,11 +4,13 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const ProductCarousel = ({ products }) => {
   const chunkSize = 3;
-  const groupedProducts = [];
 
-  for (let i = 0; i < products.length; i += chunkSize) {
-    groupedProducts.push(products.slice(i, i + chunkSize));
-  }
+  const groupedProducts = [];
+  products.forEach((_, i) => {
+    if (i % chunkSize === 0) {
+      groupedProducts.push(products.slice(i, i + chunkSize));
+    }
+  });
 
   return (
     <div className="relative">
