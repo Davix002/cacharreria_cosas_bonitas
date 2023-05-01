@@ -18,7 +18,7 @@ const Product_grid = (props) => {
               title=""
               className="inline-flex items-center justify-center p-1 -m-1 text-sm font-bold transition-all duration-200 rounded-md focus:text-gray-900 focus:ring-gray-900 focus:ring-2 focus:ring-offset-2 focus:outline-none hover:text-gray-900"
             >
-              View All
+              Ver todo
               <Flecha_der />
             </a>
           </div>
@@ -29,14 +29,14 @@ const Product_grid = (props) => {
             <ProductItem key={product.id} product={product} />
           ))}
         </div>
-        {/* Small Screen View All */}
+        {/* Small Screen ver todo */}
         <div className="mt-12 text-center lg:hidden">
           <a
             href="#"
             title=""
             className="inline-flex items-center justify-center p-1 text-sm font-bold text-gray-600 transition-all duration-200 rounded-md focus:text-gray-900 focus:ring-gray-900 focus:ring-2 focus:ring-offset-2 focus:outline-none hover:text-gray-900"
           >
-            View all
+            Ver todo
             <Flecha_der />
           </a>
         </div>

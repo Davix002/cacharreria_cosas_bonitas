@@ -29,7 +29,7 @@ async function fetchProductsByCategory(categoryId) {
   }
 }
 
-const Category = ({ categoryId, nombre }) => {
+const Category = ({ categoryId, nombre_categoria }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -41,14 +41,14 @@ const Category = ({ categoryId, nombre }) => {
 
   return (
     <div>
-      <Product_grid products={{ category: nombre, array_products: products }} />
+      <Product_grid products={{ category: nombre_categoria, array_products: products }} />
     </div>
   );
 };
 
 Category.propTypes = {
   categoryId: PropTypes.string.isRequired,
-  nombre: PropTypes.string.isRequired,
+  nombre_categoria: PropTypes.string.isRequired,
 };
 
 export default Category;

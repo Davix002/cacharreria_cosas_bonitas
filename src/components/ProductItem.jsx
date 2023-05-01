@@ -40,7 +40,7 @@ const ProductItem = (props) => {
               {props.product.name}
             </a>
           </h3>
-          <p className="mt-5 text-sm font-bold text-gray-900 price">
+          <p className="mt-5 text-lg font-bold text-gray-900 price">
             {formattedPrice}
           </p>
         </div>

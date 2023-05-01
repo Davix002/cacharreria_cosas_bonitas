@@ -19,7 +19,7 @@ export default function App() {
     <Route
       key={category.originalKey}
       path={`/cacharreria_cosas_bonitas/${category.name}`}
-      element={<Category categoryId={category.originalKey} nombre={category.name} />}
+      element={<Category categoryId={category.originalKey} nombre_categoria={category.name} />}
     />
   ));
 
