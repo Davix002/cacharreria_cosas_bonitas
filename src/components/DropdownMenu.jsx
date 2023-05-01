@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const SubMenu = "block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm";
 
-const DropdownMenu = () => {
+const DropdownMenu = ({ categories }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const columnSize = Math.ceil(categories.length / 3);
+  const columns = Array.from({ length: 3 }, (_, index) =>
+    categories.slice(index * columnSize, (index + 1) * columnSize)
+  );
 
   return (
     <div
@@ -18,46 +24,28 @@ const DropdownMenu = () => {
           className="flex absolute mt-2 w-max rounded bg-white shadow-lg py-1 z-10 -ml-36"
           onClick={() => setIsOpen(false)}
         >
-          <div>
-            <a href="#" className={SubMenu}>
-              <Link to="/cacharreria_cosas_bonitas/Aseo_hogar">Aseo hogar</Link>
-            </a>
-            <a href="#" className={SubMenu}>
-              Mascotas
-            </a>
-            <a href="#" className={SubMenu}>
-              Papelería
-            </a>
-            <a href="#" className={SubMenu}>
-              Plasticos
-            </a>
-          </div>
-          <div>
-            <a href="#" className={SubMenu}>
-              Aseo y cuidado personal
-            </a>
-            <a href="#" className={SubMenu}>
-              Jugueteria y fiestas
-            </a>
-            <a href="#" className={SubMenu}>
-              Electro y tecnología
-            </a>
-            <a href="#" className={SubMenu}>
-              DecoHogar
-            </a>
-          </div>
-          <div>
-            <a href="#" className={SubMenu}>
-              Variedades
-            </a>
-            <a href="#" className={SubMenu}>
-              Cocina
-            </a>
-          </div>
+          {columns.map((column, columnIndex) => (
+            <div key={columnIndex}>
+              {column.map((category) => (
+                <div key={category.name} href="#" className={SubMenu}>
+                  <Link to={`/cacharreria_cosas_bonitas/${category.name}`}>{category.name}</Link>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       )}
     </div>
   );
 };
+
+DropdownMenu.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
 
 export default DropdownMenu;
