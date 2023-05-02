@@ -1,8 +1,11 @@
 import Logo from "../assets/logo_horizontal.svg";
 import { Link } from "react-router-dom";
 import DropdownMenu from "./DropdownMenu";
+import Categories from "../data/categories";
 
 const Header = () => {
+  const categoryArray = Object.keys(Categories).map((key) => Categories[key]);
+
   return (
     <>
       <header className="z-50 header sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
@@ -17,17 +20,17 @@ const Header = () => {
               <Link to="/cacharreria_cosas_bonitas">Inicio</Link>
             </li>
             <li className=" border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
-            {/* <Link to="/cacharreria_cosas_bonitas/Productos">Productos</Link> */}
-              <DropdownMenu />
+              {/* <Link to="/cacharreria_cosas_bonitas/Productos">Productos</Link> */}
+              <DropdownMenu categories={categoryArray} />
             </li>
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
               <Link to="/cacharreria_cosas_bonitas/Nosotros">Nosotros</Link>
             </li>
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
-            <Link to="/cacharreria_cosas_bonitas/API">API</Link>
+              <Link to="/cacharreria_cosas_bonitas/API">API</Link>
             </li>
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
-            <Link to="/cacharreria_cosas_bonitas/Login">Login</Link>
+              <Link to="/cacharreria_cosas_bonitas/Login">Login</Link>
             </li>
           </ul>
         </nav>

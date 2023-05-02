@@ -1,14 +1,40 @@
 import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const ProductCarousel = ({ products }) => {
-  const chunkSize = 4;
+const CategoryCarousel = (props) => {
+  const [chunkSize, setChunkSize] = useState(3);
 
-  const groupedProducts = Array.from(
-    { length: Math.ceil(products.length / chunkSize) },
-    (_, i) => products.slice(i * chunkSize, (i + 1) * chunkSize)
-  );
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth <= 640) {
+        setChunkSize(1);
+      } else if (window.innerWidth <= 768) {
+        setChunkSize(2);
+      } else if (window.innerWidth <= 1024) {
+        setChunkSize(3);
+      } else {
+        setChunkSize(3);
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const array_categories = props.categories;
+
+  const groupedCategories = [];
+  array_categories.forEach((_, i) => {
+    if (i % chunkSize === 0) {
+      groupedCategories.push(array_categories.slice(i, i + chunkSize));
+    }
+  });
 
   return (
     <div className="relative">
@@ -21,25 +47,25 @@ const ProductCarousel = ({ products }) => {
         interval={4000}
         transitionTime={2000}
       >
-        {groupedProducts.map((productGroup, groupIndex) => (
+        {groupedCategories.map((categoryGroup, groupIndex) => (
           <div
             key={groupIndex}
-            className="p-4 flex flex-row items-center justify-around bg-gray-200"
+            className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 items-center justify-items-center h-full bg-gray-200"
           >
-            {productGroup.map((product, index) => (
+            {categoryGroup.map((category, index) => (
               <div
                 key={index}
-                className="p-10 flex flex-col card"
+                className="p-10 h-full flex flex-col card items-center text-center"
               >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-40 h-40 object-contain mb-4"
-                />
+                <div className="flex-shrink-0">
+                  <img
+                    src={category.imageSrc}
+                    alt={category.name}
+                    className="w-full h-auto max-w-40 max-h-40 object-contain mb-4"
+                  />
+                </div>
                 <div className="text-center">
-                  <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-                  <p className="text-gray-600">{product.description}</p>
-                  <p className="text-lg font-bold mt-2">{product.price}</p>
+                  <h2 className="text-xl font-semibold">{category.name}</h2>
                 </div>
               </div>
             ))}
@@ -50,15 +76,13 @@ const ProductCarousel = ({ products }) => {
   );
 };
 
-ProductCarousel.propTypes = {
-  products: PropTypes.arrayOf(
+CategoryCarousel.propTypes = {
+  categories: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      price: PropTypes.string.isRequired,
+      imageSrc: PropTypes.string.isRequired,
     })
   ).isRequired,
 };
 
-export default ProductCarousel;
+export default CategoryCarousel;
