@@ -1,7 +1,7 @@
-import Imagen_principal from "../components/Imagen_principal";
-import ProductCarousel from "../components/ProductCarousel";
+import Imagen_principal from "./Imagen_principal";
+import ProductCarousel from "./ProductCarousel";
 import { useState, useEffect } from "react";
-import localCategories from "../data/categories";
+import localCategories from "../../../data/categories";
 
 async function fetchCategoryImage(categoryId) {
   try {

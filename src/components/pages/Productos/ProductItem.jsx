@@ -1,4 +1,4 @@
-import HeartIcon from "../components/icons/HeartIcon";
+import HeartIcon from "../../icons/HeartIcon";
 import PropTypes from "prop-types";
 
 const formatPrice = (price) => {

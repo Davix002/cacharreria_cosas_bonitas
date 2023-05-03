@@ -1,4 +1,4 @@
-import Flecha_der from "./icons/Flecha_der";
+import Flecha_der from "../../icons/Flecha_der";
 import ProductItem from "./ProductItem";
 import PropTypes from "prop-types";
 
