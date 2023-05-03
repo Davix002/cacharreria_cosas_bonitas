@@ -13,11 +13,7 @@ async function fetchCategoryImage(categoryId) {
     if (llamadaImagen.ok) {
       return data.picture;
     } else {
-      const localCategory = localCategories[categoryId];
-
-      if (localCategory && localCategory.picture) {
-        return localCategory.picture;
-      }
+        return localCategories[categoryId].picture;
     }
   } catch (error) {
     console.error(`Error al buscar la imagen de la categoría ${categoryId}:`, error);

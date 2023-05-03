@@ -1,18 +1,16 @@
 import Logo from "../assets/logo_horizontal.svg";
 import { Link } from "react-router-dom";
 import DropdownMenu from "./DropdownMenu";
-import Categories from "../data/categories";
 
 const Header = () => {
-  const categoryArray = Object.keys(Categories).map((key) => Categories[key]);
-
   return (
     <>
       <header className="z-50 header sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
         {/* logo */}
 
-        <img src={Logo} className="w-2/12 my-2" alt="logo" />
-
+        <Link to="/cacharreria_cosas_bonitas" className="w-2/12 my-2">
+          <img src={Logo}  alt="logo" />
+        </Link>
         {/* navigation */}
         <nav className="nav font-semibold text-lg">
           <ul className="flex items-center">
@@ -20,8 +18,7 @@ const Header = () => {
               <Link to="/cacharreria_cosas_bonitas">Inicio</Link>
             </li>
             <li className=" border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
-              {/* <Link to="/cacharreria_cosas_bonitas/Productos">Productos</Link> */}
-              <DropdownMenu categories={categoryArray} />
+              <DropdownMenu />
             </li>
             <li className="p-4 border-b-2 border-teal-500 border-opacity-0 hover:border-opacity-100 hover:text-teal-500 duration-200 cursor-pointer">
               <Link to="/cacharreria_cosas_bonitas/Nosotros">Nosotros</Link>

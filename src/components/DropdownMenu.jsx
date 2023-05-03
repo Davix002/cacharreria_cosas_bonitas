@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import Categories from "../data/categories";
 
 const SubMenu = "block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm";
 
-const DropdownMenu = ({ categories }) => {
+const DropdownMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const columnSize = Math.ceil(categories.length / 3);
-  const columns = Array.from({ length: 3 }, (_, index) =>
-    categories.slice(index * columnSize, (index + 1) * columnSize)
+  const categoryArray = Object.keys(Categories).map((key) => Categories[key]);
+  const numColumns = 3;
+  const columnSize = Math.ceil(categoryArray.length / numColumns);
+  const columns = Array.from({ length: numColumns }, (_, index) =>
+    categoryArray.slice(index * columnSize, (index + 1) * columnSize)
   );
 
   return (
@@ -27,9 +29,13 @@ const DropdownMenu = ({ categories }) => {
           {columns.map((column, columnIndex) => (
             <div key={columnIndex}>
               {column.map((category) => (
-                <div key={category.name} href="#" className={SubMenu}>
-                  <Link to={`/cacharreria_cosas_bonitas/${category.name}`}>{category.name}</Link>
-                </div>
+                <Link
+                  key={category.name}
+                  className={SubMenu}
+                  to={`/cacharreria_cosas_bonitas/${category.name}`}
+                >
+                  {category.name}
+                </Link>
               ))}
             </div>
           ))}
@@ -38,14 +44,5 @@ const DropdownMenu = ({ categories }) => {
     </div>
   );
 };
-
-DropdownMenu.propTypes = {
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
 
 export default DropdownMenu;

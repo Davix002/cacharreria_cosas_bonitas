@@ -10,16 +10,17 @@ import Categories from "./data/categories";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function App() {
-  const categoryArray = Object.keys(Categories).map((key) => ({
-    ...Categories[key],
-    originalKey: key,
-  }));
 
-  const categoryRoutes = categoryArray.map((category) => (
+  const categoryRoutes = Object.entries(Categories).map((entrada) => (
     <Route
-      key={category.originalKey}
-      path={`/cacharreria_cosas_bonitas/${category.name}`}
-      element={<Category categoryId={category.originalKey} nombre_categoria={category.name} />}
+      key={entrada[0]}
+      path={`/cacharreria_cosas_bonitas/${entrada[1].name}`}
+      element={
+        <Category
+          categoryId={entrada[0]}
+          nombre_categoria={entrada[1].name}
+        />
+      }
     />
   ));
 
@@ -29,8 +30,14 @@ export default function App() {
 
       <Routes>
         <Route path="/cacharreria_cosas_bonitas" element={<Inicio />} />
-        <Route path="/cacharreria_cosas_bonitas/Productos" element={<Productos />} />
-        <Route path="/cacharreria_cosas_bonitas/Nosotros" element={<Nosotros />} />
+        <Route
+          path="/cacharreria_cosas_bonitas/Productos"
+          element={<Productos />}
+        />
+        <Route
+          path="/cacharreria_cosas_bonitas/Nosotros"
+          element={<Nosotros />}
+        />
         <Route path="/cacharreria_cosas_bonitas/API" element={<Api />} />
         <Route path="/cacharreria_cosas_bonitas/Login" element={<Login />} />
         {categoryRoutes}
