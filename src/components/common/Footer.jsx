@@ -11,7 +11,7 @@ const Footer = () => {
           <li>
             <Link
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6 "
-              to="/"
+              to="/cacharreria_cosas_bonitas/"
             >
               Inicio
             </Link>
@@ -19,15 +19,7 @@ const Footer = () => {
           <li>
             <Link
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
-              to="/Productos"
-            >
-              Productos
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
-              to="/Nosotros"
+              to="/cacharreria_cosas_bonitas/Nosotros/"
             >
               Nosotros
             </Link>
@@ -35,7 +27,7 @@ const Footer = () => {
           <li>
             <Link
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
-              to="/API"
+              to="/cacharreria_cosas_bonitas/Api/"
             >
               API
             </Link>
@@ -43,7 +35,7 @@ const Footer = () => {
           <li>
             <Link
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
-              to="/Login"
+              to="/cacharreria_cosas_bonitas/Login/"
             >
               Login
             </Link>

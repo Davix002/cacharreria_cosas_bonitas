@@ -32,7 +32,7 @@ const DropdownMenu = () => {
                 <Link
                   key={category.name}
                   className={SubMenu}
-                  to={`/cacharreria_cosas_bonitas/${category.name}`}
+                  to={`/cacharreria_cosas_bonitas/${category.name}/`}
                 >
                   {category.name}
                 </Link>

@@ -1,28 +1,28 @@
 export default function Form() {
   return (
-    <div className="bg-white p-10 rounded-3xl border-2 border-gray-100">
+    <div className="card">
       <h1 className="text-5xl text-center font-semibold">Bienvenido</h1>
 
       <div className="mt-8">
         <div>
-          <label className="text-lf font-medium">Email</label>
+          <label className="text-lf font-medium">Correo</label>
           <input
-            className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
-            placeholder="Enter your email"
+            className="w-full border-2 border-gray-100 rounded-xl p-2 my-1 bg-transparent"
+            placeholder="Ingrese su correo"
           />
         </div>
         <div>
-          <label className="text-lf font-medium">Password</label>
+          <label className="text-lf font-medium">Contraseña</label>
           <input
             className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
-            placeholder="Enter your password"
+            placeholder="Ingrese su contraseña"
           />
         </div>
         <div className="mt-8 flex justify-between items-center">
           <div>
             <input type="checkbox" id="remember" />
             <label className="ml-2 font-medium text-base" htmlFor="remember">
-              Recuerdame{" "}
+              Recordar mi contraseña{" "}
             </label>
           </div>
           <button className="font-medium pl-4 text-base text-romTurquoise-600">
@@ -68,7 +68,7 @@ export default function Form() {
             /* onClick={() => setAuthState("register")} */
             className="ml-2 font-medium text-base text-romTurquoise-600"
           >
-            Registrarse
+            Regístrate
           </button>
         </div>
       </div>

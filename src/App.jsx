@@ -28,7 +28,7 @@ export default function App() {
       <Header />
 
       <Routes>
-        <Route path="/cacharreria_cosas_bonitas" element={<Inicio />} />
+        <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
         <Route
           path="/cacharreria_cosas_bonitas/Nosotros"
           element={<Nosotros />}

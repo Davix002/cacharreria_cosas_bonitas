@@ -1,4 +1,4 @@
-import Imagen from "../../../assets/imagen_principal.png";
+import Imagen from "../../../assets/imagen_principal.jpg";
 
 const Imagen_principal = () => {
   return (

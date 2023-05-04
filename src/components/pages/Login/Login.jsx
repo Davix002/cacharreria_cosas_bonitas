@@ -7,7 +7,7 @@ const Login = () => {
         <Form />
       </div>
       <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
-        <div className="w-60 h-60 bg-gradient-to-r from-yellowOrange-600   to-romTurquoise-600  rounded-full" />
+        <div className="w-60 h-60 bg-gradient-to-r from-yellowOrange-500 via-lime-300  to-romTurquoise-500  rounded-full" />
         <div className="w-full absolute bottom-0 h-1/2 bg-white/10 backdrop-blur-lg" />
       </div>
     </div>
