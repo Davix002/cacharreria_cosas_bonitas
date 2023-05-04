@@ -2,10 +2,10 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Inicio from "./components/pages/Inicio/Inicio";
 import Nosotros from "./components/pages/Nosotros/Nosotros";
-import Api from "./components/pages/Api/Api";
 import Login from "./components/pages/Login/Login";
 import Category from "./components/pages/Productos/Category";
 import Categories from "./data/categories";
+import APIpagina from "./components/pages/Api/APIpagina"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function App() {
@@ -33,7 +33,7 @@ export default function App() {
           path="/cacharreria_cosas_bonitas/Nosotros"
           element={<Nosotros />}
         />
-        <Route path="/cacharreria_cosas_bonitas/API" element={<Api />} />
+        <Route path="/cacharreria_cosas_bonitas/Api" element={<APIpagina />} />
         <Route path="/cacharreria_cosas_bonitas/Login" element={<Login />} />
         {categoryRoutes}
       </Routes>

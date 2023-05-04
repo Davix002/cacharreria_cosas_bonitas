@@ -1,6 +1,6 @@
 export default function Form() {
   return (
-    <div className="bg-white px-10 py-10 rounded-3xl border-2 border-gray-100">
+    <div className="bg-white p-10 rounded-3xl border-2 border-gray-100">
       <h1 className="text-5xl text-center font-semibold">Bienvenido</h1>
 
       <div className="mt-8">
