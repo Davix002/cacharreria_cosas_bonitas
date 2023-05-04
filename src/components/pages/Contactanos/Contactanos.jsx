@@ -55,7 +55,7 @@ const Contactenos = () => {
           <form>
             <div className="-mx-2 md:items-center md:flex">
               <div className="flex-1 px-2">
-                <label className="block mb-2 text-sm text-gray-600">
+                <label className="block mb-2 text-l text-gray-600">
                   Nombre completo
                 </label>
                 <input
@@ -66,8 +66,8 @@ const Contactenos = () => {
               </div>
 
               <div className="flex-1 px-2 mt-4 md:mt-0">
-                <label className="block mb-2 text-sm text-gray-600">
-                  Dirrecion de correo electronico
+                <label className="block mb-2 text-l text-gray-600">
+                  Correo electronico
                 </label>
                 <input
                   type="email"
@@ -78,7 +78,7 @@ const Contactenos = () => {
             </div>
 
             <div className="w-full mt-4">
-              <label className="block mb-2 text-sm text-gray-600">
+              <label className="block mb-2 text-l text-gray-600">
                 Mensaje
               </label>
               <textarea

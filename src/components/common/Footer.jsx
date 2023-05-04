@@ -27,6 +27,14 @@ const Footer = () => {
           <li>
             <Link
               className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
+              to="/cacharreria_cosas_bonitas/Contactanos/"
+            >
+              Contáctanos
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
               to="/cacharreria_cosas_bonitas/Api/"
             >
               API

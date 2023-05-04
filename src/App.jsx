@@ -2,23 +2,20 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Inicio from "./components/pages/Inicio/Inicio";
 import Nosotros from "./components/pages/Nosotros/Nosotros";
+import Contactanos from "./components/pages/Contactanos/Contactanos";
 import Login from "./components/pages/Login/Login";
 import Category from "./components/pages/Productos/Category";
 import Categories from "./data/categories";
-import APIpagina from "./components/pages/Api/APIpagina"
+import APIpagina from "./components/pages/Api/APIpagina";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function App() {
-
   const categoryRoutes = Object.entries(Categories).map((entrada) => (
     <Route
       key={entrada[0]}
-      path={`/cacharreria_cosas_bonitas/${entrada[1].name}`}
+      path={`/cacharreria_cosas_bonitas/${entrada[1].name}/`}
       element={
-        <Category
-          categoryId={entrada[0]}
-          nombre_categoria={entrada[1].name}
-        />
+        <Category categoryId={entrada[0]} nombre_categoria={entrada[1].name} />
       }
     />
   ));
@@ -30,11 +27,12 @@ export default function App() {
       <Routes>
         <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
         <Route
-          path="/cacharreria_cosas_bonitas/Nosotros"
+          path="/cacharreria_cosas_bonitas/Nosotros/"
           element={<Nosotros />}
         />
-        <Route path="/cacharreria_cosas_bonitas/Api" element={<APIpagina />} />
-        <Route path="/cacharreria_cosas_bonitas/Login" element={<Login />} />
+        <Route path="/cacharreria_cosas_bonitas/Contactanos/" element={<Contactanos />} />
+        <Route path="/cacharreria_cosas_bonitas/Api/" element={<APIpagina />} />
+        <Route path="/cacharreria_cosas_bonitas/Login/" element={<Login />} />
         {categoryRoutes}
       </Routes>
 

@@ -2,8 +2,10 @@ import Imagen from "../../../assets/SobreNosotros.jpg";
 
 const AcercaDe = () => {
   return (
-    <div className="container p-10 flex bg-white m-auto ">
-      <div className="p-10 text-justify">
+
+    <div className="container p-10 flex bg-white">
+      <div className="p-5 text-justify  justify-center m-5 ">
+      <h1 className="text-5xl  font-bold mb-8">Nosotros</h1>
         <h2 className="text-xl font-bold mb-2">Quiénes somos:</h2>
         <p className="mb-4">
           Somos una Cacharrería o tienda de variedades que se esfuerza por
