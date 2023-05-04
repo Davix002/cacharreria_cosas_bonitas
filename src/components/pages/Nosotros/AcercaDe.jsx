@@ -41,7 +41,7 @@ const AcercaDe = () => {
       <div className="p-10">
         <img
           src={Imagen}
-          className="shadow-xl"
+          className="shadow-xl rounded-3xl drop-shadow-xl"
           alt="Imagen principal"
         />
       </div>
