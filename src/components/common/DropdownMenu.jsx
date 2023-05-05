@@ -20,7 +20,7 @@ const DropdownMenu = () => {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <button>Productos</button>
+      <button>Productos (API)</button>
       {isOpen && (
         <div
           className="flex absolute mt-2 w-max rounded bg-white shadow-lg py-1 z-10 -ml-36"

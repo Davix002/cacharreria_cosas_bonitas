@@ -33,12 +33,6 @@ const Footer = () => {
             </Link>
           </li>
           <li>
-            <Link
-              className="mr-4 text-sm text-gray-500 hover:underline md:mr-6"
-              to="/cacharreria_cosas_bonitas/Api/"
-            >
-              API
-            </Link>
           </li>
           <li>
             <Link

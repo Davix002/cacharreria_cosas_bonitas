@@ -28,9 +28,6 @@ const Header = () => {
               <Link to="/cacharreria_cosas_bonitas/Contactanos/">Contáctanos</Link>
             </li>
             <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
-              <Link to="/cacharreria_cosas_bonitas/Api/">API</Link>
-            </li>
-            <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
               <Link to="/cacharreria_cosas_bonitas/Login/">Login</Link>
             </li>
           </ul>

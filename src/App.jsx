@@ -6,7 +6,6 @@ import Contactanos from "./components/pages/Contactanos/Contactanos";
 import Login from "./components/pages/Login/Login";
 import Category from "./components/pages/Productos/Category";
 import Categories from "./data/categories";
-import APIpagina from "./components/pages/Api/APIpagina";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function App() {
@@ -31,7 +30,6 @@ export default function App() {
           element={<Nosotros />}
         />
         <Route path="/cacharreria_cosas_bonitas/Contactanos/" element={<Contactanos />} />
-        <Route path="/cacharreria_cosas_bonitas/Api/" element={<APIpagina />} />
         <Route path="/cacharreria_cosas_bonitas/Login/" element={<Login />} />
         {categoryRoutes}
       </Routes>
