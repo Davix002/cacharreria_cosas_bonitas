@@ -3,10 +3,10 @@ import Imagen from "../../../assets/SobreNosotros.jpg";
 const AcercaDe = () => {
   return (
 
-    <div className="container p-10 flex bg-white">
+    <div className="flex flex-col w-full h-full sm:flex-row container sm:p-10 bg-white">
       <div className="p-5 text-justify  justify-center m-5 ">
-      <h1 className="text-5xl  font-bold mb-8">Nosotros</h1>
-        <h2 className="text-xl font-bold mb-2">Quiénes somos:</h2>
+      <h1 className="text-4xl sm:text-5xl  font-semibold mb-8">Nosotros</h1>
+        <h2 className="text-xl font-semibold mb-2">Quiénes somos:</h2>
         <p className="mb-4">
           Somos una Cacharrería o tienda de variedades que se esfuerza por
           ofrecer a nuestros clientes una experiencia de compra satisfactoria.
@@ -19,7 +19,7 @@ const AcercaDe = () => {
           acogedor y agradable en nuestra tienda.
         </p>
 
-        <h2 className="text-xl font-bold mb-2">Misión:</h2>
+        <h2 className="text-xl font-semibold mb-2">Misión:</h2>
         <p className="mb-4">
           Nuestra misión en la Cacharrería Cosas bonitas es proporcionar a
           nuestros clientes una experiencia de compra única y satisfactoria. Nos
@@ -30,7 +30,7 @@ const AcercaDe = () => {
           acogedor en nuestra tienda.
         </p>
 
-        <h2 className="text-xl font-bold mb-2">Visión:</h2>
+        <h2 className="text-xl font-semibold mb-2">Visión:</h2>
         <p className="mb-4">
           Nuestra visión es convertirnos en la Cacharrería Cosas bonitas líder
           en la región, reconocida por nuestra amplia selección de productos,

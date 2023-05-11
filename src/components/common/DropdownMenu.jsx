@@ -9,6 +9,8 @@ const DropdownMenu = () => {
 
   const categoryArray = Object.keys(Categories).map((key) => Categories[key]);
   const numColumns = 3;
+
+  
   const columnSize = Math.ceil(categoryArray.length / numColumns);
   const columns = Array.from({ length: numColumns }, (_, index) =>
     categoryArray.slice(index * columnSize, (index + 1) * columnSize)
