@@ -17,8 +17,7 @@ const Header = () => {
           <img src={Logo}  alt="logo" />
         </Link>
         {/* navigation */}
-         <nav className={`sm:block ${isOpen ? "flex" : "hidden"} absolute sm:relative sm:w-auto bg-white sm:bg-transparent z-20 sm:z-0 top-1/2 sm:top-auto left-1/2 sm:left-auto transform -translate-x-1/2 translate-y-1 sm:transform-none font-semibold`}>
-          <ul className="flex flex-col sm:flex-row items-center">
+        <nav className={`sm:block ${isOpen ? "block" : "hidden"} absolute sm:relative w-full sm:w-auto bg-white sm:bg-transparent z-20 sm:z-0 top-full sm:top-auto left-0 sm:left-auto font-semibold`}>          <ul className="flex flex-col sm:flex-row items-center">
             <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer active">
               <Link to="/cacharreria_cosas_bonitas/">Inicio</Link>
             </li>
@@ -36,7 +35,7 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <div className="sm:hidden">
+        <div className=" sm:hidden">
           <BurgerMenuIcon onClick={() => setIsOpen(!isOpen)} className="h-6 w-6 cursor-pointer" width={24} height={24} color="black"/>
         </div>
         {/* searchButton */}

@@ -6,7 +6,8 @@ import TwitterIcon from "../../icons/TwitterIcon";
 const Contactenos = () => {
   return (
     <>
-      <section className="flex w-full h-screen bg-gray-200">
+     {/*  <section className="flex-col flex w-full h-screen bg-gray-200"> */}
+     <section className=" flex flex-col w-full h-full sm:flex-row  bg-gray-200">
         <div className="flex flex-col justify-center  w-full p-8  lg:px-12 xl:px-32 lg:w-1/2">
           <h1 className="text-2xl font-semibold text-black-900 capitalize lg:text-5xl">
             Contáctanos
