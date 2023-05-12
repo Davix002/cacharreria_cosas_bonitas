@@ -52,7 +52,7 @@ const Contactenos = () => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center bg-white p-8 md:m-10 md:card lg:w-1/2 lg:px-12 xl:px-24 ">
+        <div className="flex flex-col justify-center bg-white p-8 sm:m-10 sm:card lg:w-1/2 lg:px-12 xl:px-24 ">
           <form>
             <div className="-mx-2 md:items-center md:flex">
               <div className="flex-1 px-2">

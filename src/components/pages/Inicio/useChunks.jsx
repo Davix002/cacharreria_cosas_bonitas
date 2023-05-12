@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useWindowSize = () => {
+const useChunks  = () => {
   const [chunkSize, setChunkSize] = useState(3);
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const useWindowSize = () => {
   return chunkSize;
 };
 
-export default useWindowSize;
+export default useChunks;
