@@ -1,6 +1,6 @@
 export default function Form() {
   return (
-    <div className="sm:card bg-white ">
+    <div className="sm:card bg-white p-8">
       <h1 className="text-5xl text-center font-semibold">Bienvenido</h1>
 
       <div className="mt-8">
