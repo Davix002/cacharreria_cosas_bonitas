@@ -43,9 +43,6 @@ const Header = () => {
                 Inicio
               </Link>
             </li>
-            {/* <li className=" border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
-              <DropdownMenu />
-            </li> */}
             <li className=" border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
               <DropdownMenu isOpen={isOpen} setIsOpen={setIsOpen} />
             </li>
