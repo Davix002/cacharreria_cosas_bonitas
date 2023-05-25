@@ -9,7 +9,7 @@ const BurgerMenuIcon = ({ width, height, color, ...props }) => {
       height={height}
       fill="none"
       stroke={color}
-      strokeWidth="2"
+      strokeWidth="2.2"
       strokeLinecap="round"
       strokeLinejoin="round"
       {...props}
