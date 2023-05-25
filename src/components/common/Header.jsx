@@ -5,9 +5,11 @@ import Lupa from "../icons/Lupa";
 import { Link } from "react-router-dom";
 import DropdownMenu from "./DropdownMenu";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
+import Search from "../common/Search";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState(false);
 
   return (
     <>
@@ -71,8 +73,9 @@ const Header = () => {
               </Link>
             </li>
             <li className="p-4 sm:hidden border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
-              <a href="#">
-                <Lupa />
+              <a>
+                <Lupa onClick={() => setSearch(!search)} />
+                {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen}/>}
               </a>
             </li>
           </ul>
@@ -88,13 +91,13 @@ const Header = () => {
         </div>
         {/* searchButton */}
         <div className="hidden w-4/12 sm:w-2/12 sm:flex justify-center">
-          <a href="#">
-            <Lupa />
+          <a>
+            <Lupa onClick={() => setSearch(!search)} />
+            {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen}/>}
           </a>
         </div>
       </header>
     </>
   );
 };
-
 export default Header;

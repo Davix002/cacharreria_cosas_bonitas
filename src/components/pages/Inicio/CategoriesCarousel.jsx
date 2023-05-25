@@ -23,7 +23,7 @@ const CategoryCarousel = (props) => {
         showIndicators={false}
         infiniteLoop
         autoPlay
-        interval={4000}
+        interval={3000}
         transitionTime={2000}
       >
         {groupedCategories.map((categoryGroup, groupIndex) => (
