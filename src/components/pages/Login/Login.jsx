@@ -3,7 +3,7 @@ import Form from "./Form";
 const Login = () => {
   return (
     <div className="flex w-full h-screen">
-      <div className="bg-gray-200 w-full flex items-center justify-center lg:w-1/2">
+      <div className="bg-gray-200 w-full flex items-center justify-center lg:w-1/2 p-8">
         <Form />
       </div>
       <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
