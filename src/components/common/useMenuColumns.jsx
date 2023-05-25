@@ -6,10 +6,8 @@ const useMenuColumns  = () => {
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth <= 640) {
-        setNumColumns(1);
-      } else if (window.innerWidth <= 768) {
         setNumColumns(2);
-      } else {
+      }  else {
         setNumColumns(3);
       }
     }
