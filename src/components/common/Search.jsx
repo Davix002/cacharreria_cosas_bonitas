@@ -26,7 +26,7 @@ const Search = ({search, setSearch,isOpen, setIsOpen}) => {
   );
 
   return (
-    <div className="bg-white flex absolute mt-2 w-fit sm:w-max rounded shadow-lg py-1 z-10 -m-24 -translate-x-1 sm:-ml-36 md:-ml-12 overflow-y-auto">
+    <div className="bg-white flex absolute mt-2 w-fit sm:w-max rounded shadow-lg py-1 px-2 pb-2 z-10 -m-24 -translate-x-1 sm:-ml-36 md:-ml-12 overflow-y-auto">
       <div className="dropdown">
         <div id="myDropdown" className="dropdown-content">
           <input
