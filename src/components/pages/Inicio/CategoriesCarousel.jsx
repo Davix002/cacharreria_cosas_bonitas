@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import CategoryGroup from "./CategoryGroup";
-import useWindowSize from "./useWindowSize";
+import useChunks from "./useChunks";
 
 const CategoryCarousel = (props) => {
-  const chunkSize = useWindowSize();
+  const chunkSize = useChunks();
   const array_categories = props.categories;
 
   const groupedCategories = [];
@@ -23,7 +23,7 @@ const CategoryCarousel = (props) => {
         showIndicators={false}
         infiniteLoop
         autoPlay
-        interval={4000}
+        interval={3000}
         transitionTime={2000}
       >
         {groupedCategories.map((categoryGroup, groupIndex) => (

@@ -1,4 +1,4 @@
-const Lupa = () => {
+const Lupa = (props) => {
   return (
     <svg
       className="h-8 p-1 hover:text-romTurquoise-500 duration-200 svg-inline--fa fa-search fa-w-16 fa-9x"
@@ -9,6 +9,7 @@ const Lupa = () => {
       role="img"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
+      {...props}
     >
       <path
         fill="currentColor"

@@ -3,9 +3,16 @@
 @tailwind utilities;
 
 @layer components {
-    .card {
-      @apply bg-white p-10 rounded-3xl border-2 drop-shadow-lg;
-    }
+  .card {
+    @apply bg-white p-10 rounded-3xl border-2 drop-shadow-lg;
   }
+}
 
-
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

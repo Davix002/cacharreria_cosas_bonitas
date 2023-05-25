@@ -6,7 +6,8 @@ import TwitterIcon from "../../icons/TwitterIcon";
 const Contactenos = () => {
   return (
     <>
-      <section className="flex w-full h-screen bg-gray-200">
+     {/*  <section className="flex-col flex w-full h-screen bg-gray-200"> */}
+     <section className=" flex flex-col w-full h-full sm:flex-row  bg-gray-200">
         <div className="flex flex-col justify-center  w-full p-8  lg:px-12 xl:px-32 lg:w-1/2">
           <h1 className="text-2xl font-semibold text-black-900 capitalize lg:text-5xl">
             Contáctanos
@@ -51,7 +52,7 @@ const Contactenos = () => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center m-10 card lg:w-1/2 lg:px-12 xl:px-24 ">
+        <div className="flex flex-col justify-center bg-white p-8 sm:m-10 sm:card lg:w-1/2 lg:px-12 xl:px-24 ">
           <form>
             <div className="-mx-2 md:items-center md:flex">
               <div className="flex-1 px-2">
