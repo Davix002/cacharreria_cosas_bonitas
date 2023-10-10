@@ -1,34 +1,15 @@
 import localCategories from "../../../data/categories";
 
-export async function fetchCategoryImage(categoryId) {
-  try {
-    const response = await fetch(`https://api.mercadolibre.com/categories/${categoryId}`);
-    const data = await response.json();
-
-    const llamadaImagen = await fetch(data.picture);
-
-    if (llamadaImagen.ok) {
-      return data.picture;
-    } else {
-      return localCategories[categoryId].picture;
-    }
-  } catch (error) {
-    console.error(`Error al buscar la imagen de la categoría ${categoryId}:`, error);
-  }
-
-  return "";
-}
 
 export async function fetchCategories() {
   try {
-    const response = await fetch(`https://api.mercadolibre.com/sites/MCO/categories`);
+    const response = await fetch(`http://localhost:5800/api/categories`);
     const data = await response.json();
-    const images = await Promise.all(data.map((category) => fetchCategoryImage(category.id)));
-
+  
     const categories = data.map((category, index) => ({
       id: index,
       name: category.name,
-      imageSrc: images[index],
+      imageSrc: category.picture,
       imageAlt: category.name,
     }));
 
