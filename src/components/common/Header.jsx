@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import DropdownMenu from "./DropdownMenu";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import Search from "../common/Search";
+import CarritoDeCompras from "../icons/CarritoDeCompras";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,9 +33,8 @@ const Header = () => {
         </Link>
         {/* navigation */}
         <nav
-          className={`sm:block ${
-            isOpen ? "block" : "hidden"
-          } absolute sm:relative w-full sm:w-auto bg-white sm:bg-transparent z-20 sm:z-0 top-full sm:top-auto left-0 sm:left-auto font-semibold`}
+          className={`sm:block ${isOpen ? "block" : "hidden"
+            } absolute sm:relative w-full sm:w-auto bg-white sm:bg-transparent z-20 sm:z-0 top-full sm:top-auto left-0 sm:left-auto font-semibold`}
         >
           <ul className="flex flex-col sm:flex-row items-center">
             <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer active">
@@ -72,12 +72,16 @@ const Header = () => {
                 Login
               </Link>
             </li>
-            <li className="p-4 sm:hidden border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+            <li className="w-1/2 p-4 sm:hidden border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
               <a>
                 <Lupa onClick={() => setSearch(!search)} />
-                {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen}/>}
+                {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen} />}
+                <CarritoDeCompras />
               </a>
             </li>
+            
+
+
           </ul>
         </nav>
         <div className="m-auto sm:hidden">
@@ -93,7 +97,7 @@ const Header = () => {
         <div className="hidden w-4/12 sm:w-2/12 sm:flex justify-center">
           <a>
             <Lupa onClick={() => setSearch(!search)} />
-            {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen}/>}
+            {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen} />}
           </a>
         </div>
       </header>
