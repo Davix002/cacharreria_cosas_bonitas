@@ -7,6 +7,7 @@ import Login from "./components/pages/Login/Login";
 import Category from "./components/pages/Productos/Category";
 import Categories from "./data/categories";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Register from "./components/pages/Register/Register";
 
 export default function App() {
   const categoryRoutes = Object.entries(Categories).map((entrada) => (
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/cacharreria_cosas_bonitas/Contactanos/" element={<Contactanos />} />
         <Route path="/cacharreria_cosas_bonitas/Login/" element={<Login />} />
         {categoryRoutes}
+        <Route path="/cacharreria_cosas_bonitas/Register/" element={<Register/>}/>
       </Routes>
 
       <Footer />
