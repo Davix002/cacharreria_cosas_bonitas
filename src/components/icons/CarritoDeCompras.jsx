@@ -4,7 +4,7 @@ const CarritoDeCompras = (props) => {
       className="h-8 p-1 hover:text-romTurquoise-500 duration-200 svg-inline--fa fa-shopping-cart fa-w-18 fa-3x"
       aria-hidden="true"
       focusable="false"
-      data-prefix="fas"
+      data-prefix="far"
       data-icon="shopping-cart"
       role="img"
       xmlns="http://www.w3.org/2000/svg"

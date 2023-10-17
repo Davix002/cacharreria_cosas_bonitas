@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export default function Form() {
 
@@ -8,11 +9,16 @@ export default function Form() {
 
       <div className="mt-0">
         <div className="mb-8 flex flex-col flex-shrink-0">
-          <img
-            src="../src/assets/logo_horizontal.svg"
-            alt="logo"
-            className=" p-2 md:block flex-shrink-0"
-          />
+
+          <Link to="/cacharreria_cosas_bonitas/"
+          >
+            <img
+              src="../src/assets/logo_horizontal.svg"
+              alt="logo"
+              className=" p-2 md:block flex-shrink-0"
+            />
+          </Link>
+
         </div>
         <div>
           <label className="text-lf font-medium">Correo</label>
@@ -41,12 +47,14 @@ export default function Form() {
         </div>
         <div className="mt-2 flex justify-center items-center">
           <p className="font-medium text-base">No tienes una cuenta</p>
-          <button
-            /* onClick={() => setAuthState("register")} */
-            className="ml-2 font-medium text-base text-romTurquoise-600"
-          >
+
+          <Link to="/cacharreria_cosas_bonitas/Register/"
+            className="ml-2 font-medium text-base text-romTurquoise-600">
             Regístrate
-          </button>
+          </Link>
+
+
+
         </div>
       </div>
     </div>

@@ -28,13 +28,6 @@ export default function FormRegister() {
                             />
                         </div>
                         <div>
-                            <label className="text-lf font-medium">Número Contacto</label>
-                            <input
-                                className="w-full border-2 border-gray-100 rounded-xl p-2 my-1 bg-transparent"
-                                placeholder="Ingrese su número"
-                            />
-                        </div>
-                        <div>
                             <label className="text-lf font-medium">Contraseña</label>
                             <input
                                 className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent"
