@@ -26,7 +26,7 @@ const ProductItem = (props) => {
         <div className="aspect-w-1 aspect-h-1">
           <img
             className="object-contain w-full h-52 p-4"
-            src={props.product.imageSrc}
+            src={props.product.thumbnail}
             alt={props.product.imageAlt}
           />
         </div>
@@ -52,7 +52,7 @@ const ProductItem = (props) => {
 ProductItem.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    imageSrc: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string.isRequired,
     imageAlt: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

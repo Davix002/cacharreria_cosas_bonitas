@@ -19,7 +19,7 @@ CategoryGroup.propTypes = {
   categoryGroup: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      imageSrc: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired,
     })
   ).isRequired,
 };

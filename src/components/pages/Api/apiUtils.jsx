@@ -4,9 +4,9 @@ export async function fetchCategories() {
     const data = await response.json();
   
     const categories = data.map((category) => ({
-      id: category.id,
+      id: category._id,
       name: category.name,
-      imageSrc: category.picture,
+      picture: category.picture,
       imageAlt: category.name,
     }));
 
@@ -20,19 +20,17 @@ export async function fetchCategories() {
 export async function fetchProductsByCategory(categoryId) {
   try {
     const response = await fetch(
-      `https://api.mercadolibre.com/sites/MCO/search?category=${categoryId}`
+      `http://localhost:5800/api/products/category/${categoryId}`
     );
-    const data = await response.json();
+    const productsData = await response.json();
 
-    const products = data.results.map((product) => ({
-      id: product.id,
-      name: product.title,
-      imageSrc: product.thumbnail,
+    const products = productsData.map((product) => ({
+      id: product._id,
+      name: product.name,
+      thumbnail: product.thumbnail,
+      brand: product.brand || "Cosas Bonitas",
       price: product.price,
-      brand: product.attributes[0].value_name || "Marca no disponible",
-      href: product.permalink,
-      imageAlt: product.title,
-      quantity: product.available_quantity,
+      imageAlt: product.name,
     }));
     return products;
   } catch (error) {
