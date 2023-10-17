@@ -6,13 +6,14 @@ import { Link } from "react-router-dom";
 import DropdownMenu from "./DropdownMenu";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import Search from "../common/Search";
-import CarritoDeCompras from "../icons/CarritoDeCompras";
+import CarritoIcon from "../icons/CarritoIcon";
 //import { FaShoppingCart } from "react-icons/fa";
+import CarritoDropDown from "../pages/Carrito/CarritoDropDown";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState(false);
-
+  const [isCarritoDropDown, setCarritoDropDown] = useState(false);
   return (
     <>
       <header className="z-50 header sticky top-0 bg-white shadow-md flex items-center justify-between py-2 sm:py-0 sm:px-8">
@@ -91,16 +92,20 @@ const Header = () => {
           />
         </div>
         {/* searchButton */}
-        <div className="hidden w-4/12 sm:w-2/12 sm:flex justify-center">
+        <div className="hidden w-4/12 space-x-2 sm:w-2/12 sm:flex justify-center">
           <a>
             <Lupa onClick={() => setSearch(!search)} />
             {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen} />}
           </a>
           <a>
-            <CarritoDeCompras />
+            <CarritoIcon onClick={() => {
+              setCarritoDropDown(!isCarritoDropDown);
+              console.log("isCarritoDropDown:", !isCarritoDropDown); // Verifica el cambio de estado
+            }} />
+
+            {isCarritoDropDown && <CarritoDropDown isCarritoDropDown={isCarritoDropDown} setCarritoDropDown={setCarritoDropDown} isOpen={isOpen} setIsOpen={setIsOpen} />}
           </a>
 
-          
         </div>
       </header>
     </>

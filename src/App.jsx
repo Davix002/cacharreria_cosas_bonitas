@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
@@ -9,8 +9,8 @@ import Login from "./components/pages/Login/Login";
 import Category from "./components/pages/Productos/Category";
 import Categories from "./data/categories";
 import Register from "./components/pages/Register/Register";
-
-
+import Carrito from "./components/pages/Carrito/Carrito";
+import CarritoPagar from "./components/pages/Carrito/CarritoPagar"
 
 const App = () => {
   return (
@@ -44,7 +44,8 @@ const AppContent = () => {
         <Route path="/cacharreria_cosas_bonitas/Login/" element={<Login />} />
         {categoryRoutes}
         <Route path="/cacharreria_cosas_bonitas/Register/" element={<Register />} />
-        
+        <Route path="/cacharreria_cosas_bonitas/Carrito/"element={<Carrito />} />
+        <Route path="/cacharreria_cosas_bonitas/CarritoPagar/"element={<CarritoPagar />} />
       </Routes>
 
       {shouldShowHeaderAndFooter && <Footer />}
