@@ -7,6 +7,7 @@ import DropdownMenu from "./DropdownMenu";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import Search from "../common/Search";
 import CarritoDeCompras from "../icons/CarritoDeCompras";
+//import { FaShoppingCart } from "react-icons/fa";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,15 +74,11 @@ const Header = () => {
               </Link>
             </li>
             <li className="w-1/2 p-4 sm:hidden border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
-              <a>
+              <a className="flex items-center">
                 <Lupa onClick={() => setSearch(!search)} />
                 {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen} />}
-                <CarritoDeCompras />
-              </a>
+              </a >
             </li>
-            
-
-
           </ul>
         </nav>
         <div className="m-auto sm:hidden">
@@ -99,6 +96,9 @@ const Header = () => {
             <Lupa onClick={() => setSearch(!search)} />
             {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen} />}
           </a>
+          <a className="flex items-center">
+                <CarritoDeCompras />
+              </a>
         </div>
       </header>
     </>
