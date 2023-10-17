@@ -43,7 +43,7 @@ export default function FormRegister() {
                         </div>
                         <div className="mt-4">
                             <input type="checkbox" id='remember' />
-                            <label className="font-medium text base text-romTurquoise-600" for='remember'> Acepto Términos y Condiciones</label>
+                            <label className="font-medium text base text-romTurquoise-600" htmlFor='remember'> Acepto Términos y Condiciones</label>
 
                         </div>
 

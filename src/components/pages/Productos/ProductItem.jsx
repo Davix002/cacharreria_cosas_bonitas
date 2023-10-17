@@ -51,7 +51,7 @@ const ProductItem = (props) => {
 
 ProductItem.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     imageSrc: PropTypes.string.isRequired,
     imageAlt: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,

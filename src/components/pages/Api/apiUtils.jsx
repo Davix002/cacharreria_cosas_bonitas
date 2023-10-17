@@ -3,8 +3,8 @@ export async function fetchCategories() {
     const response = await fetch(`http://localhost:5800/api/categories`);
     const data = await response.json();
   
-    const categories = data.map((category, index) => ({
-      id: index,
+    const categories = data.map((category) => ({
+      id: category.id,
       name: category.name,
       imageSrc: category.picture,
       imageAlt: category.name,
@@ -24,8 +24,8 @@ export async function fetchProductsByCategory(categoryId) {
     );
     const data = await response.json();
 
-    const products = data.results.map((product, index) => ({
-      id: index,
+    const products = data.results.map((product) => ({
+      id: product.id,
       name: product.title,
       imageSrc: product.thumbnail,
       price: product.price,
@@ -33,7 +33,6 @@ export async function fetchProductsByCategory(categoryId) {
       href: product.permalink,
       imageAlt: product.title,
       quantity: product.available_quantity,
-      ratings: product.reviews?.rating_average || "Sin calificaciones",
     }));
     return products;
   } catch (error) {
