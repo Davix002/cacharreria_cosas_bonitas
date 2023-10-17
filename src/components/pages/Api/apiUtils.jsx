@@ -1,6 +1,3 @@
-import localCategories from "../../../data/categories";
-
-
 export async function fetchCategories() {
   try {
     const response = await fetch(`http://localhost:5800/api/categories`);
