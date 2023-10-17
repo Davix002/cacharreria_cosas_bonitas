@@ -23,7 +23,7 @@ const DropdownMenu = ({isOpen, setIsOpen}) => {
       onMouseEnter={() => setIsCategoryOpen(!isCategoryOpen)}
       onMouseLeave={() => setIsCategoryOpen(!isCategoryOpen)}
     >
-      <button onClick={() => setIsCategoryOpen(!isCategoryOpen)}>Productos (API)</button>
+      <button onClick={() => setIsCategoryOpen(!isCategoryOpen)}>Productos</button>
       {isCategoryOpen && (
         <div
           className="bg-white flex absolute mt-2 w-fit sm:w-max rounded shadow-lg py-1 z-10 -m-24 -translate-x-1 sm:-ml-36 md:-ml-12 overflow-y-auto"

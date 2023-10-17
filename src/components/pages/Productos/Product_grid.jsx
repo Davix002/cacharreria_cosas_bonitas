@@ -50,7 +50,7 @@ Product_grid.propTypes = {
     category: PropTypes.string.isRequired,
     array_products: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
       })
     ),
   }),
