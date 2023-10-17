@@ -96,9 +96,11 @@ const Header = () => {
             <Lupa onClick={() => setSearch(!search)} />
             {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen} />}
           </a>
-          <a className="flex items-center">
-                <CarritoDeCompras />
-              </a>
+          <a>
+            <CarritoDeCompras />
+          </a>
+
+          
         </div>
       </header>
     </>
