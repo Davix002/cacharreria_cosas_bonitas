@@ -74,6 +74,16 @@ const Header = () => {
                 Login
               </Link>
             </li>
+
+            <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+              <Link
+                onClick={() => setIsOpen(!isOpen)}
+                to="/cacharreria_cosas_bonitas/Register/"
+              >
+                Register
+              </Link>
+            </li>
+
             <li className="w-1/2 p-4 sm:hidden border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
               <a className="flex items-center">
                 <Lupa onClick={() => setSearch(!search)} />
