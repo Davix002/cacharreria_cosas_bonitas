@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Auth/UseAuth";
 
 export default function Form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { logIn } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ export default function Form() {
       const data = await response.json();
 
       if (data.token) {
-        localStorage.setItem("token", data.token);
+        logIn(data.token); 
         navigate("/cacharreria_cosas_bonitas/perfil");
     } else {
         setError(data.msg);

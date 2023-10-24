@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Auth/UseAuth";
 
 function Perfil() {
     const [usuario, setUsuario] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const { logOut } = useAuth();
 
     const cerrarSesion = () => {
-        localStorage.removeItem('token');
+        logOut();
         navigate('/cacharreria_cosas_bonitas/Login/');
     };
 

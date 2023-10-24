@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Logo from "../../assets/logo_horizontal.svg";
 import LogoSmall from "../../assets/favicon_cs.svg";
 import Lupa from "../icons/Lupa";
@@ -8,21 +8,13 @@ import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import Search from "../common/Search";
 import CarritoIcon from "../icons/CarritoIcon";
 import CarritoDropDown from "../pages/Carrito/CarritoDropDown";
+import { useAuth } from "../../Auth/UseAuth";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState(false);
   const [isCarritoDropDown, setCarritoDropDown] = useState(false);
-  const [isLogueado, setIsLogueado] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLogueado(true);
-    } else {
-      setIsLogueado(false);
-    }
-  }, []);
+  const { isLogueado } = useAuth();
 
   return (
     <>
@@ -97,7 +89,7 @@ const Header = () => {
                     onClick={() => setIsOpen(!isOpen)}
                     to="/cacharreria_cosas_bonitas/Login/"
                   >
-                    Iniciar sesión
+                    Iniciar Sesión
                   </Link>
                 </li>
                 <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
