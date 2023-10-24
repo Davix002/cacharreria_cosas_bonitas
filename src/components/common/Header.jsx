@@ -97,7 +97,7 @@ const Header = () => {
                     onClick={() => setIsOpen(!isOpen)}
                     to="/cacharreria_cosas_bonitas/Login/"
                   >
-                    Iniciar sesion
+                    Iniciar sesión
                   </Link>
                 </li>
                 <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">

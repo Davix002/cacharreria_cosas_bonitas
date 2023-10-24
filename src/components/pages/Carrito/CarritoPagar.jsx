@@ -1,5 +1,6 @@
 import { Heart, Trash } from 'lucide-react'
 import React from 'react'
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -45,7 +46,7 @@ export default function CartTwo() {
     <div className="mx-auto max-w-7xl px-28 lg:px-0 flex justify-center  ">
       <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
         <h1 className="text-4xl sm:text-5xl  font-semibold mb-8">
-          Tu carrito 
+          Tu carrito
         </h1>
         <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
           <section aria-labelledby="cart-heading" className="rounded-lg bg-white lg:col-span-8">
@@ -158,6 +159,14 @@ export default function CartTwo() {
               <div className="px-2 pb-4 font-medium text-green-700">
                 Pagaras ₹ 3,431 en esta orden
               </div>
+              <Link to="/cacharreria_cosas_bonitas/FacturaCompra/" >
+                <div
+                  className="w-full text-center rounded-md bg-romTurquoise-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                >
+                  PAGAR
+                </div>
+              </Link>
+
             </div>
           </section>
         </form>
