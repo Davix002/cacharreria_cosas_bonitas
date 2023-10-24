@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Logo from "../../assets/logo_horizontal.svg";
 import LogoSmall from "../../assets/favicon_cs.svg";
 import Lupa from "../icons/Lupa";
@@ -7,13 +7,23 @@ import DropdownMenu from "./DropdownMenu";
 import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import Search from "../common/Search";
 import CarritoIcon from "../icons/CarritoIcon";
-//import { FaShoppingCart } from "react-icons/fa";
 import CarritoDropDown from "../pages/Carrito/CarritoDropDown";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState(false);
   const [isCarritoDropDown, setCarritoDropDown] = useState(false);
+  const [isLogueado, setIsLogueado] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLogueado(true);
+    } else {
+      setIsLogueado(false);
+    }
+  }, []);
+
   return (
     <>
       <header className="z-50 header sticky top-0 bg-white shadow-md flex items-center justify-between py-2 sm:py-0 sm:px-8">
@@ -35,8 +45,9 @@ const Header = () => {
         </Link>
         {/* navigation */}
         <nav
-          className={`sm:block ${isOpen ? "block" : "hidden"
-            } absolute sm:relative w-full sm:w-auto bg-white sm:bg-transparent z-20 sm:z-0 top-full sm:top-auto left-0 sm:left-auto font-semibold`}
+          className={`sm:block ${
+            isOpen ? "block" : "hidden"
+          } absolute sm:relative w-full sm:w-auto bg-white sm:bg-transparent z-20 sm:z-0 top-full sm:top-auto left-0 sm:left-auto font-semibold`}
         >
           <ul className="flex flex-col sm:flex-row items-center">
             <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer active">
@@ -67,27 +78,51 @@ const Header = () => {
                 Contáctanos
               </Link>
             </li>
-            <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
-              <Link
-                onClick={() => setIsOpen(!isOpen)}
-                to="/cacharreria_cosas_bonitas/Iniciar_sesion/"
-              >
-                Iniciar Sesión
-              </Link>
-            </li>
-            <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
-              <Link
-                onClick={() => setIsOpen(!isOpen)}
-                to="/cacharreria_cosas_bonitas/Register/"
-              >
-                Registrarse
-              </Link>
-            </li>
+
+            {isLogueado ? (
+              // Si el usuario está logueado, muestra el botón de perfil
+              <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+                <Link
+                  onClick={() => setIsOpen(!isOpen)}
+                  to="/cacharreria_cosas_bonitas/Perfil/"
+                >
+                  Perfil
+                </Link>
+              </li>
+            ) : (
+              // Si el usuario no está logueado, muestra los botones de login y register
+              <>
+                <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+                  <Link
+                    onClick={() => setIsOpen(!isOpen)}
+                    to="/cacharreria_cosas_bonitas/Login/"
+                  >
+                    Login
+                  </Link>
+                </li>
+                <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+                  <Link
+                    onClick={() => setIsOpen(!isOpen)}
+                    to="/cacharreria_cosas_bonitas/Register/"
+                  >
+                    Register
+                  </Link>
+                </li>
+              </>
+            )}
+
             <li className="w-1/2 p-4 sm:hidden border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
               <a className="flex items-center">
                 <Lupa onClick={() => setSearch(!search)} />
-                {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen} />}
-              </a >
+                {search && (
+                  <Search
+                    search={search}
+                    setSearch={setSearch}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                  />
+                )}
+              </a>
             </li>
           </ul>
         </nav>
@@ -104,17 +139,31 @@ const Header = () => {
         <div className="hidden w-4/12 space-x-2 sm:w-2/12 sm:flex justify-center">
           <a>
             <Lupa onClick={() => setSearch(!search)} />
-            {search && <Search search={search} setSearch={setSearch} isOpen={isOpen} setIsOpen={setIsOpen} />}
+            {search && (
+              <Search
+                search={search}
+                setSearch={setSearch}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+              />
+            )}
           </a>
           <a>
-            <CarritoIcon onClick={() => {
-              setCarritoDropDown(!isCarritoDropDown);
-              console.log("isCarritoDropDown:", !isCarritoDropDown); // Verifica el cambio de estado
-            }} />
+            <CarritoIcon
+              onClick={() => {
+                setCarritoDropDown(!isCarritoDropDown);
+              }}
+            />
 
-            {isCarritoDropDown && <CarritoDropDown isCarritoDropDown={isCarritoDropDown} setCarritoDropDown={setCarritoDropDown} isOpen={isOpen} setIsOpen={setIsOpen} />}
+            {isCarritoDropDown && (
+              <CarritoDropDown
+                isCarritoDropDown={isCarritoDropDown}
+                setCarritoDropDown={setCarritoDropDown}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+              />
+            )}
           </a>
-
         </div>
       </header>
     </>

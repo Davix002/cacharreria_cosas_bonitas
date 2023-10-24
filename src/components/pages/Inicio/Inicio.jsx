@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Imagen_principal from "./Imagen_principal";
 import CategoriesCarousel from "./CategoriesCarousel";
-import { fetchCategories } from "../Api/apiUtils";
+import { fetchCategories } from "../../../config/api/apiUtils";
 import Spinner from "./Spinner";
 
 const Inicio = () => {

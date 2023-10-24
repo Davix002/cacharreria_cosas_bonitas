@@ -38,3 +38,31 @@ export async function fetchProductsByCategory(categoryId) {
     return [];
   }
 }
+
+export async function registrar({ nombre, password, email }) {
+  try {
+    const response = await fetch(
+      `http://localhost:5800/api/usuarios/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nombre: nombre,
+          password: password,
+          email: email,
+        }),
+      }
+    );
+    const data = await response.json();
+    
+    if (data._id) { // Asumimos que si se devuelve un ID, el registro fue exitoso
+        window.location.href = '/cacharreria_cosas_bonitas/espera-confirmacion';
+    } else {
+        console.error("Error en el registro:", data);
+    }
+  } catch (error) {
+    console.error("Error al registrar:", error);
+  }
+}
