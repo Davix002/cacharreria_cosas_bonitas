@@ -1,4 +1,4 @@
-const orderStatus = "Currently Shipping"; 
+const orderStatus = "Enviado"; 
 const paymentMethod = "Visa"; 
 const address = " 852 Theodore Roosevelt Rd"
 const city = "Springfield"
@@ -7,7 +7,7 @@ const city = "Springfield"
 export default function FacturaCompra() {
   return (
     <div className="flex flex-col items-center justify-center">
-      <h1 className="text-3xl text-center px-2 py-4 font-bold tracking-tight text-gray-900 sm:text-4xl">
+      <h1 className="text-3xl text-center px-2 pt-10 font-bold tracking-tight text-gray-900 sm:text-4xl">
         Detalles de la compra
       </h1>
 
@@ -59,7 +59,7 @@ export default function FacturaCompra() {
               <li>  {paymentMethod}</li>
             </ul>
             </dl>
-            <div className="px-2 pb-4 font-medium text-green-700 text-center">
+            <div className="px-2 py-4 font-medium text-green-700 text-center">
               Enviado
             </div>
           </div>
