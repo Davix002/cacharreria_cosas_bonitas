@@ -14,6 +14,7 @@ import ConfirmarRegistro from "./components/pages/Register/ConfirmarRegistro";
 import Perfil from "./components/pages/Users/Perfil";
 import EsperaConfirmacion from "./components/pages/Register/EsperaConfirmacion";
 import { AuthProvider } from "./Auth/AuthProvider";
+import FacturaCompra from "./components/pages/Factura/FacturaCompra";
 
 export default function App() {
   const categoryRoutes = Object.entries(Categories).map((entrada) => (
@@ -66,6 +67,10 @@ export default function App() {
           <Route
             path="/cacharreria_cosas_bonitas/espera-confirmacion"
             element={<EsperaConfirmacion />}
+          />
+          <Route
+            path="/cacharreria_cosas_bonitas/FacturaCompra/"
+            element={<FacturaCompra />}
           />
         </Routes>
 
