@@ -14,49 +14,37 @@ import ConfirmarRegistro from "./components/pages/Register/ConfirmarRegistro";
 import Perfil from "./components/pages/Users/Perfil";
 import EsperaConfirmacion from "./components/pages/Register/EsperaConfirmacion";
 
-const App = () => {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  );
-};
-
-const AppContent = () => {
-  const location = useLocation();
-
+export default function App() {
   const categoryRoutes = Object.entries(Categories).map((entrada) => (
     <Route
       key={entrada[0]}
       path={`/cacharreria_cosas_bonitas/${entrada[1].name}/`}
-      element={<Category categoryId={entrada[0]} nombre_categoria={entrada[1].name} />}
+      element={
+        <Category categoryId={entrada[0]} nombre_categoria={entrada[1].name} />
+      }
     />
   ));
 
-  const shouldShowHeaderAndFooter = !(location.pathname === "/cacharreria_cosas_bonitas/Login/" || location.pathname === "/cacharreria_cosas_bonitas/Register/");
-
   return (
-    <div>
-      {shouldShowHeaderAndFooter && <Header />}
+    <Router>
+      <Header />
 
       <Routes>
         <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
-        <Route path="/cacharreria_cosas_bonitas/Nosotros/" element={<Nosotros />} />
+        <Route path="/cacharreria_cosas_bonitas/Nosotros/" element={<Nosotros />}/>
         <Route path="/cacharreria_cosas_bonitas/Contactanos/" element={<Contactanos />} />
         <Route path="/cacharreria_cosas_bonitas/Login/" element={<Login />} />
         {categoryRoutes}
-        <Route path="/cacharreria_cosas_bonitas/Register/" element={<Register />} />
-        <Route path="/cacharreria_cosas_bonitas/Carrito/"element={<Carrito />} />
+        <Route path="/cacharreria_cosas_bonitas/Register/" element={<Register/>}/>
+	<Route path="/cacharreria_cosas_bonitas/Carrito/"element={<Carrito />} />
         <Route path="/cacharreria_cosas_bonitas/CarritoPagar/"element={<CarritoPagar />} />
         <Route path="/cacharreria_cosas_bonitas/confirmar/:token" element={<ConfirmarRegistro/>} />
         <Route path="/cacharreria_cosas_bonitas/perfil" element={<Perfil/>} />
         <Route path="/cacharreria_cosas_bonitas/espera-confirmacion" element={<EsperaConfirmacion/>} />
-        
       </Routes>
 
-      {shouldShowHeaderAndFooter && <Footer />}
-    </div>
+      <Footer />
+    </Router>
   );
 };
 
-export default App;
