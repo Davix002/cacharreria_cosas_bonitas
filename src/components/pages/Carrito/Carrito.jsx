@@ -44,10 +44,9 @@ const products = [
 export default function CartOne() {
   return (
     <div className="mx-auto flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
-      <h2 className="text-3xl font-bold">Your cart</h2>
-      <p className="mt-3 text-sm font-medium text-gray-700">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eius repellat ipsam, sit
-        praesentium incidunt.
+      <h2 className="text-4xl sm:text-5xl  font-semibold mb-8">Tu carrito</h2>
+      <p className="text-xl font-semibold mb-2">
+        Resumen del carrito.
       </p>
       <ul className="flex flex-col divide-y divide-gray-200">
         {products.map((product) => (
@@ -71,11 +70,11 @@ export default function CartOne() {
                 <div className="flex divide-x text-sm">
                   <button type="button" className="flex items-center space-x-2 px-2 py-1 pl-0">
                     <Trash size={16} />
-                    <span>Remove</span>
+                    <span>Eliminar</span>
                   </button>
                   <button type="button" className="flex items-center space-x-2 px-2 py-1">
                     <Heart size={16} />
-                    <span>Add to favorites</span>
+                    <span>Agregar a favoritos</span>
                   </button>
                 </div>
               </div>
@@ -85,7 +84,7 @@ export default function CartOne() {
       </ul>
       <div className="space-y-1 text-right">
         <p>
-          Total amount:
+          Total a pagar:
           <span className="font-semibold"> ₹48,967</span>
         </p>
       </div>
@@ -95,7 +94,7 @@ export default function CartOne() {
           type="button"
           className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
         >
-          Back to shop
+          Volver a la tienda
         </button>
         </Link>
  
@@ -104,7 +103,7 @@ export default function CartOne() {
             type="button"
             className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
           >
-            Checkout
+            Ir a pagar
           </button>
         </Link>
 

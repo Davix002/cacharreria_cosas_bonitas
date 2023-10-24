@@ -61,7 +61,7 @@ export default function CartThree({ setCarritoDropDown }) {
             className="relative ml-auto block text-gray-600 transition"
            
           >
-            <span className="sr-only">Close cart</span>
+            <span className="sr-only">Cerrar Carrito</span>
             <X size={24} className="icon-hover-effect" />
           </div>
 
@@ -94,20 +94,20 @@ export default function CartThree({ setCarritoDropDown }) {
             <div
               className="w-full mb-2 rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
-              View Cart (3)
+              Ver carrito(3)
             </div>
           </Link>
           <Link to="/cacharreria_cosas_bonitas/CarritoPagar/" onClick={handleViewCartClick} >
           <div
             className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
           >
-            Checkout
+            Ir a pagar
           </div>
           </Link>
 
           <Link className="inline-block text-sm text-gray-600 transition hover:text-gray-700 hover:underline hover:underline-offset-4"
           to="/cacharreria_cosas_bonitas/" onClick={handleViewCartClick}>
-            Continue shopping &rarr;
+            Continuar comprando &rarr;
         
           </Link>
         </div>

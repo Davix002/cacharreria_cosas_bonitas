@@ -44,13 +44,13 @@ export default function CartTwo() {
   return (
     <div className="mx-auto max-w-7xl px-28 lg:px-0 flex justify-center  ">
       <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Shopping Cart
+        <h1 className="text-4xl sm:text-5xl  font-semibold mb-8">
+          Tu carrito 
         </h1>
         <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
           <section aria-labelledby="cart-heading" className="rounded-lg bg-white lg:col-span-8">
             <h2 id="cart-heading" className="sr-only">
-              Items in your shopping cart
+              Articulos agregados a tu carrito
             </h2>
             <ul role="list" className="divide-y divide-gray-200">
               {products.map((product, productIdx) => (
@@ -130,33 +130,33 @@ export default function CartTwo() {
               id="summary-heading"
               className=" border-b border-gray-200 px-4 py-3 text-lg font-medium text-gray-900 sm:p-4"
             >
-              Price Details
+              Detalles de precio
             </h2>
             <div>
               <dl className=" space-y-1 px-2 py-4">
                 <div className="flex items-center justify-between">
-                  <dt className="text-sm text-gray-800">Price (3 item)</dt>
+                  <dt className="text-sm text-gray-800">Precio (3 Articulos)</dt>
                   <dd className="text-sm font-medium text-gray-900">₹ 52,398</dd>
                 </div>
                 <div className="flex items-center justify-between pt-4">
                   <dt className="flex items-center text-sm text-gray-800">
-                    <span>Discount</span>
+                    <span>Descuento</span>
                   </dt>
                   <dd className="text-sm font-medium text-green-700">- ₹ 3,431</dd>
                 </div>
                 <div className="flex items-center justify-between py-4">
                   <dt className="flex text-sm text-gray-800">
-                    <span>Delivery Charges</span>
+                    <span>Valor de envio</span>
                   </dt>
-                  <dd className="text-sm font-medium text-green-700">Free</dd>
+                  <dd className="text-sm font-medium text-green-700">Gratis</dd>
                 </div>
                 <div className="flex items-center justify-between border-y border-dashed py-4 ">
-                  <dt className="text-base font-medium text-gray-900">Total Amount</dt>
+                  <dt className="text-base font-medium text-gray-900">Total a pagar</dt>
                   <dd className="text-base font-medium text-gray-900">₹ 48,967</dd>
                 </div>
               </dl>
               <div className="px-2 pb-4 font-medium text-green-700">
-                You will save ₹ 3,431 on this order
+                Pagaras ₹ 3,431 en esta orden
               </div>
             </div>
           </section>

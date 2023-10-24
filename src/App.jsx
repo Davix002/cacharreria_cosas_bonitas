@@ -30,7 +30,7 @@ const AppContent = () => {
     />
   ));
 
-  const shouldShowHeaderAndFooter = !(location.pathname === "/cacharreria_cosas_bonitas/Login/" || location.pathname === "/cacharreria_cosas_bonitas/Register/");
+  const shouldShowHeaderAndFooter = !(location.pathname === "/cacharreria_cosas_bonitas/Iniciar_sesion/" || location.pathname === "/cacharreria_cosas_bonitas/Register/");
 
   return (
     <div>
@@ -40,7 +40,7 @@ const AppContent = () => {
         <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
         <Route path="/cacharreria_cosas_bonitas/Nosotros/" element={<Nosotros />} />
         <Route path="/cacharreria_cosas_bonitas/Contactanos/" element={<Contactanos />} />
-        <Route path="/cacharreria_cosas_bonitas/Login/" element={<Login />} />
+        <Route path="/cacharreria_cosas_bonitas/Iniciar_sesion/" element={<Login />} />
         {categoryRoutes}
         <Route path="/cacharreria_cosas_bonitas/Register/" element={<Register />} />
         <Route path="/cacharreria_cosas_bonitas/Carrito/"element={<Carrito />} />

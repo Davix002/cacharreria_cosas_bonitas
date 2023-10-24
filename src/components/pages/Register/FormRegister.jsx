@@ -43,7 +43,7 @@ export default function FormRegister() {
                         </div>
                         <div className="mt-4 flex flex-col gap-y-2">
                             <button className="active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold">
-                                Iniciar Sesión
+                                Registrarse
                             </button>
                         </div>
                         <div className="mt-4  flex items-center justify-center">
