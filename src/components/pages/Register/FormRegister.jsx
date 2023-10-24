@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { registrar } from "../../../config/api/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 export default function FormRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await registrar({ nombre, email, password });
+    await registrar({ nombre, email, password,navigate });
   };
-
+  const navigate = useNavigate();
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-start justify-center h-screen pt-8">
       <div className="w-full max-w-md p-6 bg-white rounded-xl shadow-lg">
         <div className="flex flex-col items-center space-y-4">
-          <h1 className="text-4xl sm:text-5xl font-semibold  text-center">
+          <h1 className="text-4xl sm:text-4xl font-semibold  text-center">
             Crea tu cuenta
           </h1>
           <h2 className="text-xl font-semibold text-center">

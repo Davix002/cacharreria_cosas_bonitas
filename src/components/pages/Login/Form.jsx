@@ -72,9 +72,13 @@ export default function Form() {
           </div>
           {error && <p className="text-red-500 mt-2">{error}</p>}
           <div className="mt-8 flex flex-col gap-y-2">
+            <Link to="/cacharreria_cosas_bonitas/CambioContrasena/">
+            
             <button className=" font-medium pl-4 text-base text-romTurquoise-600">
               Olvidaste tu contraseña
             </button>
+            </Link>
+
 
             <button type="submit" className=" active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold">
               Iniciar Sesión

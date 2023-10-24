@@ -14,6 +14,9 @@ import ConfirmarRegistro from "./components/pages/Register/ConfirmarRegistro";
 import Perfil from "./components/pages/Users/Perfil";
 import EsperaConfirmacion from "./components/pages/Register/EsperaConfirmacion";
 import FacturaCompra from "./components/pages/Factura/FacturaCompra";
+import CambioContrasena from "./components/pages/Register/SolicitarCambioContrasena";
+import FormularioCambioContrasena from "./components/pages/Register/FormularioCambioContrasena";
+import CambiarContrasena from "./components/pages/Register/CambiarContrasena";
 
 export default function App() {
   const categoryRoutes = Object.entries(Categories).map((entrada) => (
@@ -42,8 +45,10 @@ export default function App() {
         <Route path="/cacharreria_cosas_bonitas/confirmar/:token" element={<ConfirmarRegistro/>} />
         <Route path="/cacharreria_cosas_bonitas/perfil" element={<Perfil/>} />
         <Route path="/cacharreria_cosas_bonitas/espera-confirmacion" element={<EsperaConfirmacion/>} />
+        <Route path="/cacharreria_cosas_bonitas/CambioContrasena/" element={<CambioContrasena/>} />
         <Route path="/cacharreria_cosas_bonitas/FacturaCompra/" element={<FacturaCompra />} />
-
+        <Route path="/cacharreria_cosas_bonitas/recuperar/:token" element={<CambiarContrasena />} />
+        <Route path="/cacharreria_cosas_bonitas/FormularioCambioContrasena/:token" element={<FormularioCambioContrasena/>} />
       </Routes>
 
       <Footer />
