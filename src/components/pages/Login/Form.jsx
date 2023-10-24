@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,10 +27,10 @@ export default function Form() {
 
       if (data.token) {
         localStorage.setItem("token", data.token);
-        // Redirige al usuario a su perfil o donde desees después de un inicio de sesión exitoso
-      } else {
+        navigate("/cacharreria_cosas_bonitas/perfil");
+    } else {
         setError(data.msg);
-      }
+    }    
     } catch (err) {
       setError("Error al iniciar sesión. Intente de nuevo más tarde.");
       console.error("Error al iniciar sesión:", err);
