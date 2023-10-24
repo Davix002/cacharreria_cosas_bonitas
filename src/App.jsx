@@ -10,6 +10,9 @@ import Categories from "./data/categories";
 import Register from "./components/pages/Register/Register";
 import Carrito from "./components/pages/Carrito/Carrito";
 import CarritoPagar from "./components/pages/Carrito/CarritoPagar"
+import ConfirmarRegistro from "./components/pages/Register/ConfirmarRegistro";
+import Perfil from "./components/pages/Users/Perfil";
+import EsperaConfirmacion from "./components/pages/Register/EsperaConfirmacion";
 
 const App = () => {
   return (
@@ -45,6 +48,9 @@ const AppContent = () => {
         <Route path="/cacharreria_cosas_bonitas/Register/" element={<Register />} />
         <Route path="/cacharreria_cosas_bonitas/Carrito/"element={<Carrito />} />
         <Route path="/cacharreria_cosas_bonitas/CarritoPagar/"element={<CarritoPagar />} />
+        <Route path="/cacharreria_cosas_bonitas/confirmar/:token" element={<ConfirmarRegistro/>} />
+        <Route path="/cacharreria_cosas_bonitas/perfil" element={<Perfil/>} />
+        <Route path="/cacharreria_cosas_bonitas/espera-confirmacion" element={<EsperaConfirmacion/>} />
       </Routes>
 
       {shouldShowHeaderAndFooter && <Footer />}

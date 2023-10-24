@@ -110,7 +110,6 @@ const Header = () => {
           <a>
             <CarritoIcon onClick={() => {
               setCarritoDropDown(!isCarritoDropDown);
-              console.log("isCarritoDropDown:", !isCarritoDropDown); // Verifica el cambio de estado
             }} />
 
             {isCarritoDropDown && <CarritoDropDown isCarritoDropDown={isCarritoDropDown} setCarritoDropDown={setCarritoDropDown} isOpen={isOpen} setIsOpen={setIsOpen} />}

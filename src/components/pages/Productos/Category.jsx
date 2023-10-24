@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Product_grid from "./Product_grid";
 import PropTypes from "prop-types";
-import { fetchProductsByCategory } from "../Api/apiUtils";
+import { fetchProductsByCategory } from "../../../config/api/apiUtils";
 
 const Category = ({ categoryId, nombre_categoria }) => {
   const [products, setProducts] = useState([]);
