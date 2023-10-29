@@ -19,7 +19,7 @@ function ConfirmarRegistro() {
                     // Redirigir al perfil después de 3 segundos
                     setTimeout(() => {
                         navigate('/cacharreria_cosas_bonitas/Login');
-                    }, 4000);
+                    }, 3000);
                 } else {
                     setMensaje('Error al confirmar el registro.');
                 }

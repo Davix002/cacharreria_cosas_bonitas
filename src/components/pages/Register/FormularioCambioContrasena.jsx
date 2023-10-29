@@ -1,13 +1,17 @@
-import React from 'react'
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FormularioReestablecerContrasena } from "../../../config/api/apiUtils";
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FormularioCambioContrasena = () => {
     const { token } = useParams();
-    
     const navigate = useNavigate();
+    const location = useLocation();
+    const successMessageFromRoute = location.state?.successMessage;
+    const [successMessage] = useState(successMessageFromRoute || "");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [passwordConfirmacion, setPasswordConfirmacion] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,9 +26,7 @@ const FormularioCambioContrasena = () => {
     
     };
 
-    const [errorMessage, setErrorMessage] = useState("");
-    const [passwordConfirmacion, setPasswordConfirmacion] = useState("");
-    const [password, setPassword] = useState("");
+
     return (
         <div className="flex items-start justify-center h-screen p-8">
 
@@ -70,6 +72,7 @@ const FormularioCambioContrasena = () => {
                                 Cambiar contraseña
                             </button>
                         </div>
+                        {successMessage && <p className="text-green-600 mb-4">{successMessage}</p>}
                         {errorMessage && <p className="text-red-600 mb-4">{errorMessage}</p>}
                         <div className="mt-4  flex items-center justify-center">
                             <p className="font-medium text-base">¿Recordaste tu antigua contraseña?</p>

@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Auth/UseAuth";
 
 export default function Form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const errorMessageFromRoute = location.state?.errorMessage;
+  const [error, setError] = useState(errorMessageFromRoute || "");
   const { logIn } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -72,7 +74,7 @@ export default function Form() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {error && <p className="text-red-500 mt-2">{error}</p>}
+          {error && <p className="text-red-600 mb-4">{error}</p>}
           <div className="mt-8 flex flex-col gap-y-2">
             <Link to="/cacharreria_cosas_bonitas/CambioContrasena/">
             
