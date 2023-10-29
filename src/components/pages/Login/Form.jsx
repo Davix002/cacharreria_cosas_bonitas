@@ -1,17 +1,23 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Auth/UseAuth";
 
 export default function Form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const errorMessageFromRoute = location.state?.errorMessage;
+  const [errorMessage, setErrorMessage] = useState(errorMessageFromRoute || "");
+  const successMessageFromRoute = location.state?.successMessage;
+  const [successMessage, setSuccessMessage] = useState(successMessageFromRoute || "");
   const { logIn } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSuccessMessage("");
+    setErrorMessage("");
 
     try {
       const response = await fetch("http://localhost:5800/api/usuarios/login", {
@@ -30,12 +36,11 @@ export default function Form() {
       if (data.token) {
         logIn(data.token, data.role);
         navigate("/cacharreria_cosas_bonitas/perfil");
-
-      } else {
-        setError(data.msg);
-      }
+    } else {
+        setErrorMessage(data.msg);
+    }    
     } catch (err) {
-      setError("Error al iniciar sesión. Intente de nuevo más tarde.");
+      setErrorMessage("Error al iniciar sesión. Intente de nuevo.");
       console.error("Error al iniciar sesión:", err);
     }
   };
@@ -73,8 +78,18 @@ export default function Form() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {error && <p className="text-red-500 mt-2">{error}</p>}
-          <div className="mt-8 flex flex-col gap-y-2">
+          {errorMessage ? (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mt-4 text-center">
+                {errorMessage}
+              </div>
+            ) : (
+              successMessage && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded relative mt-4 text-center">
+                  {successMessage}
+                </div>
+              )
+            )}
+          <div className="mt-4 flex flex-col gap-y-2">
             <Link to="/cacharreria_cosas_bonitas/CambioContrasena/">
 
               <button className=" font-medium pl-4 text-base text-romTurquoise-600">
