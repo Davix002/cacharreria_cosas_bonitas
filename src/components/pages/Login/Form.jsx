@@ -28,11 +28,12 @@ export default function Form() {
       const data = await response.json();
 
       if (data.token) {
-        logIn(data.token); 
+        logIn(data.token, data.role);
         navigate("/cacharreria_cosas_bonitas/perfil");
-    } else {
+
+      } else {
         setError(data.msg);
-    }    
+      }
     } catch (err) {
       setError("Error al iniciar sesión. Intente de nuevo más tarde.");
       console.error("Error al iniciar sesión:", err);
@@ -75,10 +76,10 @@ export default function Form() {
           {error && <p className="text-red-500 mt-2">{error}</p>}
           <div className="mt-8 flex flex-col gap-y-2">
             <Link to="/cacharreria_cosas_bonitas/CambioContrasena/">
-            
-            <button className=" font-medium pl-4 text-base text-romTurquoise-600">
-              Olvidaste tu contraseña
-            </button>
+
+              <button className=" font-medium pl-4 text-base text-romTurquoise-600">
+                Olvidaste tu contraseña
+              </button>
             </Link>
 
 

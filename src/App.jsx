@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import PrivateRoute from "./Auth/PrivateRoute";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Inicio from "./components/pages/Inicio/Inicio";
@@ -18,7 +19,7 @@ import FacturaCompra from "./components/pages/Factura/FacturaCompra";
 import CambioContrasena from "./components/pages/Register/SolicitarCambioContrasena";
 import FormularioCambioContrasena from "./components/pages/Register/FormularioCambioContrasena";
 import CambiarContrasena from "./components/pages/Register/CambiarContrasena";
-
+import CRUD from "./components/pages/CRUD/CRUD";
 export default function App() {
   const categoryRoutes = Object.entries(Categories).map((entrada) => (
     <Route
@@ -36,6 +37,14 @@ export default function App() {
         <Header />
 
         <Routes>
+
+          <Route path="/cacharreria_cosas_bonitas/CRUD" element={
+            <PrivateRoute roles={['admin']}>
+              <CRUD />
+            </PrivateRoute>
+          } />
+
+
           <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
           <Route
             path="/cacharreria_cosas_bonitas/Nosotros/"
@@ -71,13 +80,13 @@ export default function App() {
             path="/cacharreria_cosas_bonitas/espera-confirmacion"
             element={<EsperaConfirmacion />}
           />
-          <Route path="/cacharreria_cosas_bonitas/CambioContrasena/" element={<CambioContrasena/>} />
-        <Route
+          <Route path="/cacharreria_cosas_bonitas/CambioContrasena/" element={<CambioContrasena />} />
+          <Route
             path="/cacharreria_cosas_bonitas/FacturaCompra/"
             element={<FacturaCompra />}
           />
-        <Route path="/cacharreria_cosas_bonitas/recuperar/:token" element={<CambiarContrasena />} />
-        <Route path="/cacharreria_cosas_bonitas/FormularioCambioContrasena/:token" element={<FormularioCambioContrasena/>} />        </Routes>
+          <Route path="/cacharreria_cosas_bonitas/recuperar/:token" element={<CambiarContrasena />} />
+          <Route path="/cacharreria_cosas_bonitas/FormularioCambioContrasena/:token" element={<FormularioCambioContrasena />} />        </Routes>
 
         <Footer />
       </Router>
