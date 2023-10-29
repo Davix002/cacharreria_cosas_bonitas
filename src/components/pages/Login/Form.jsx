@@ -9,13 +9,15 @@ export default function Form() {
   const navigate = useNavigate();
   const location = useLocation();
   const errorMessageFromRoute = location.state?.errorMessage;
-  const [errorMessage, setError] = useState(errorMessageFromRoute || "");
+  const [errorMessage, setErrorMessage] = useState(errorMessageFromRoute || "");
   const successMessageFromRoute = location.state?.successMessage;
   const [successMessage, setSuccessMessage] = useState(successMessageFromRoute || "");
   const { logIn } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSuccessMessage("");
+    setErrorMessage("");
 
     try {
       const response = await fetch("http://localhost:5800/api/usuarios/login", {
@@ -35,12 +37,10 @@ export default function Form() {
         logIn(data.token); 
         navigate("/cacharreria_cosas_bonitas/perfil");
     } else {
-        setError(data.msg);
-        setSuccessMessage("");
+        setErrorMessage(data.msg);
     }    
     } catch (err) {
-      setError("Error al iniciar sesión. Intente de nuevo.");
-      setSuccessMessage("");
+      setErrorMessage("Error al iniciar sesión. Intente de nuevo.");
       console.error("Error al iniciar sesión:", err);
     }
   };
