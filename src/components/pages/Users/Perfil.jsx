@@ -67,7 +67,7 @@ function Perfil() {
                 </div>
             </div>
             <button onClick={cerrarSesion}
-            className=" active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out px-2 py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
+            className=" active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out px-4 py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
             >Cerrar Sesión</button>
         </div>
     );

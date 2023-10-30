@@ -76,26 +76,36 @@ const CategoryList = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-6 rounded-md place-items-center shadow-md w-full flex flex-col justify-center items-center">
-      {
-        <>
-          <div className="w-2/4 mb-4">
+    <div className="flex items-center justify-center bg-gray-200 py-8">
+      <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-full mb-4">
+            <label className="block text-lf font-medium mb-1">
+              Nombre de la nueva categoría
+            </label>
             <input
-              className="border p-2 w-full"
+              className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
-              placeholder="Nombre de la nueva categoría"
+              placeholder="Ingrese el nombre de la categoría"
             />
-            <input type="file" accept="image/*" onChange={handleImageChange} />
-
+            <label className="block text-lf font-medium mb-1">
+              Imagen de la nueva categoría
+            </label>
+            <input
+              className="mt-2 w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
             <button
-              className="bg-blue-600 text-white p-2 mt-2 rounded w-full"
+              className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
               onClick={handleAddCategory}
             >
               Agregar Categoría
             </button>
           </div>
-          <table className="bg-white  w-2/4 rounded-md shadow-md overflow-hidden">
+          <table className="bg-white  w-full rounded-md shadow-md overflow-hidden">
             <thead className="bg-gray-800 text-white">
               <tr>
                 <th className="py-2 px-4">Nombre de la categoría</th>
@@ -112,15 +122,15 @@ const CategoryList = () => {
                         setSelectedCategory(cat);
                         setIsModalOpen(true);
                       }}
-                      className="mr-2 rounded-md shadow-md text-romTurquoise-600 hover:text-blue-800 focus:outline-none"
+                      className="mr-2 py-1 px-3 rounded-md shadow-md bg-blue-700 hover:bg-blue-800 text-white focus:outline-none transition duration-150 ease-in-out"
                     >
-                      Edit
+                      Editar
                     </button>
                     <button
                       onClick={() => handleDelete(cat._id)}
-                      className=" rounded-md shadow-md text-red-600 hover:text-red-800 focus:outline-none"
+                      className="py-1 px-3 rounded-md shadow-md bg-red-600 hover:bg-red-700 text-white focus:outline-none transition duration-150 ease-in-out"
                     >
-                      Delete
+                      Eliminar
                     </button>
                   </td>
                 </tr>
@@ -147,8 +157,8 @@ const CategoryList = () => {
               </div>
             </div>
           )}
-        </>
-      }
+        </div>
+      </div>
     </div>
   );
 };
