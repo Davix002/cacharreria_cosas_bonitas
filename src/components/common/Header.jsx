@@ -137,6 +137,7 @@ const Header = () => {
             <CarritoIcon
               onClick={() => {
                 setCarritoDropDown(!isCarritoDropDown);
+                setPerfilDropDown(false);
               }}
             />
 
@@ -153,7 +154,10 @@ const Header = () => {
             {isLogueado && (
               <div>
                 <PerfilIcon
-                  onClick={() => setPerfilDropDown(!isPerfilDropDown)}
+                  onClick={() => {
+                    setPerfilDropDown(!isPerfilDropDown);
+                    setCarritoDropDown(false);
+                  }}
                 />
                 {isPerfilDropDown && (
                   <PerfilDropDown
