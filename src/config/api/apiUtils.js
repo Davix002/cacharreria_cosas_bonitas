@@ -100,20 +100,34 @@ export async function getCategory(id) {
   return await response.json();
 }
 
-export async function updateCategory(id, categoryData) {
+export async function updateCategoryWithImage(id, formData) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(categoryData),
+      method: "PUT",
+      body: formData, // Nota: no establezcas headers aquí
   });
 
   if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.msg || "Error al actualizar la categoría");
+      const data = await response.json();
+      throw new Error(data.msg || "Error al actualizar la categoría");
   }
 
   return await response.json();
 }
+
+export async function createCategoryWithImage(formData) {
+  const response = await fetch("http://localhost:5800/api/categories/", {
+      method: "POST",
+      body: formData, // Nota: no establezcas headers aquí
+  });
+
+  if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.msg || "Error al crear la categoría");
+  }
+
+  return await response.json();
+}
+
 
 export async function deleteCategory(id) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {

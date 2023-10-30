@@ -1,11 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  createCategory,
-  updateCategory,
-  uploadCategoryImage,
-} from "../../../config/api/apiUtils";
 
+import { updateCategoryWithImage,createCategoryWithImage } from "../../../config/api/apiUtils";
 const CategoryForm = ({ categoryToUpdate, onFormSubmit }) => {
   const [category, setCategory] = useState(categoryToUpdate || {});
   const [newImage, setNewImage] = useState(null);
@@ -17,20 +13,24 @@ const CategoryForm = ({ categoryToUpdate, onFormSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let updatedCategory;
+    const formData = new FormData();
+    formData.append('name', category.name);
     if (newImage) {
-        const imageResponse = await uploadCategoryImage(newImage);
-        category.picture = imageResponse.imageUrl;
+        formData.append('image', newImage);
+    } else if (category.picture) {
+        formData.append('picture', category.picture);
     }
 
+    let updatedCategory;
     if (category._id) {
-        updatedCategory = await updateCategory(category._id, category);
+        updatedCategory = await updateCategoryWithImage(category._id, formData);
     } else {
-        updatedCategory = await createCategory(category);
+        updatedCategory = await createCategoryWithImage(formData);
     }
-    
+
     onFormSubmit(updatedCategory);
 };
+
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
