@@ -68,6 +68,70 @@ export async function registrar({ nombre, password, email,navigate }) {
 }
 
 
+// PARA LAS CATEGORIAS''
+
+export async function createCategory(categoryData) {
+  const response = await fetch("http://localhost:5800/api/categories/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(categoryData),
+  });
+
+  if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.msg || "Error al crear la categoría");
+  }
+
+  return await response.json();
+}
+
+export async function getCategories() {
+  const response = await fetch("http://localhost:5800/api/categories");
+  if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.msg || "Error al obtener las categorías");
+  }
+  return await response.json();
+}
+
+export async function getCategory(id) {
+  const response = await fetch(`http://localhost:5800/api/categories/${id}`);
+  if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.msg || "Error al obtener la categoría");
+  }
+  return await response.json();
+}
+
+export async function updateCategory(id, categoryData) {
+  const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(categoryData),
+  });
+
+  if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.msg || "Error al actualizar la categoría");
+  }
+
+  return await response.json();
+}
+
+export async function deleteCategory(id) {
+  const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
+      method: "DELETE",
+  });
+
+  if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.msg || "Error al eliminar la categoría");
+  }
+
+  return await response.json();
+}
+
+
 export async function cambioContrasena({ email,navigate }) {
   try {
     const response = await fetch(

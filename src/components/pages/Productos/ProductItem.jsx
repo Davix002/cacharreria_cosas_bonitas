@@ -41,7 +41,7 @@ const ProductItem = (props) => {
       <button
         type="button"
         className="inline-flex flex-col items-center justify-center bg-romTurquoise-600 text-white rounded-xl p-2 hover:bg-black/80 mt-4"
-        >
+      >
         Agregar al carrito
         <CarritoIcon className="mt-2" />
       </button>
