@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Product_grid from "./Product_grid";
 import PropTypes from "prop-types";
 import { fetchProductsByCategory } from "../../../config/api/apiUtils";
+import Categories from "../../../data/categories";
 
 const Category = ({ categoryId, nombre_categoria }) => {
   const [products, setProducts] = useState([]);
@@ -15,7 +16,11 @@ const Category = ({ categoryId, nombre_categoria }) => {
 
   return (
     <div>
-      <Product_grid products={{ category: nombre_categoria, array_products: products }} />
+      <Product_grid 
+        products={{ category: nombre_categoria, array_products: products }}
+        currentCategoryId={categoryId}
+        categories={Categories}
+      />
     </div>
   );
 };
