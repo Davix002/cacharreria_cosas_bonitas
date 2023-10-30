@@ -19,7 +19,8 @@ import FacturaCompra from "./components/pages/Factura/FacturaCompra";
 import CambioContrasena from "./components/pages/Register/SolicitarCambioContrasena";
 import FormularioCambioContrasena from "./components/pages/Register/FormularioCambioContrasena";
 import CambiarContrasena from "./components/pages/Register/CambiarContrasena";
-import CRUD from "./components/pages/CRUD/CRUD";
+import Admin from "./components/pages/Administracion/Administracion";
+import AdminCategorias from "./components/pages/Administracion/CategoryList"
 export default function App() {
   const categoryRoutes = Object.entries(Categories).map((entrada) => (
     <Route
@@ -38,11 +39,22 @@ export default function App() {
 
         <Routes>
 
-          <Route path="/cacharreria_cosas_bonitas/CRUD" element={
+          <Route path="/cacharreria_cosas_bonitas/Admin" element={
             <PrivateRoute roles={['admin']}>
-              <CRUD />
+              <Admin/>
             </PrivateRoute>
           } />
+          <Route path="/cacharreria_cosas_bonitas/Admin/categorias" element={
+            <PrivateRoute roles={['admin']}>
+              <AdminCategorias />
+            </PrivateRoute>
+          } />
+          {/*<Route path="/cacharreria_cosas_bonitas/Admin/productos" element={
+           <PrivateRoute roles={['admin']}>
+              <AdminProductos />
+            </PrivateRoute>
+          } />*/} 
+          
 
 
           <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
