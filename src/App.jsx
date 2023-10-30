@@ -54,9 +54,6 @@ export default function App() {
               <AdminProductos />
             </PrivateRoute>
           } />*/} 
-          
-
-
           <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
           <Route
             path="/cacharreria_cosas_bonitas/Nosotros/"

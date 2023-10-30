@@ -39,26 +39,24 @@ export async function fetchProductsByCategory(categoryId) {
   }
 }
 
-export async function registrar({ nombre, password, email,navigate }) {
+export async function registrar({ nombre, password, email, navigate }) {
   try {
-    const response = await fetch(
-      `http://localhost:5800/api/usuarios/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nombre: nombre,
-          password: password,
-          email: email,
-        }),
-      }
-    );
+    const response = await fetch(`http://localhost:5800/api/usuarios/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nombre: nombre,
+        password: password,
+        email: email,
+      }),
+    });
     const data = await response.json();
 
-    if (data._id) { // Asumimos que si se devuelve un ID, el registro fue exitoso
-      navigate('/cacharreria_cosas_bonitas/espera-confirmacion');
+    if (data._id) {
+      // Asumimos que si se devuelve un ID, el registro fue exitoso
+      navigate("/cacharreria_cosas_bonitas/espera-confirmacion");
     } else {
       console.error("Error en el registro:", data);
     }
@@ -67,19 +65,18 @@ export async function registrar({ nombre, password, email,navigate }) {
   }
 }
 
-
 // PARA LAS CATEGORIAS''
 
 export async function createCategory(categoryData) {
   const response = await fetch("http://localhost:5800/api/categories/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(categoryData),
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(categoryData),
   });
 
   if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.msg || "Error al crear la categoría");
+    const data = await response.json();
+    throw new Error(data.msg || "Error al crear la categoría");
   }
 
   return await response.json();
@@ -88,8 +85,8 @@ export async function createCategory(categoryData) {
 export async function getCategories() {
   const response = await fetch("http://localhost:5800/api/categories");
   if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.msg || "Error al obtener las categorías");
+    const data = await response.json();
+    throw new Error(data.msg || "Error al obtener las categorías");
   }
   return await response.json();
 }
@@ -97,22 +94,22 @@ export async function getCategories() {
 export async function getCategory(id) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`);
   if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.msg || "Error al obtener la categoría");
+    const data = await response.json();
+    throw new Error(data.msg || "Error al obtener la categoría");
   }
   return await response.json();
 }
 
 export async function updateCategory(id, categoryData) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(categoryData),
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(categoryData),
   });
 
   if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.msg || "Error al actualizar la categoría");
+    const data = await response.json();
+    throw new Error(data.msg || "Error al actualizar la categoría");
   }
 
   return await response.json();
@@ -120,19 +117,35 @@ export async function updateCategory(id, categoryData) {
 
 export async function deleteCategory(id) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
-      method: "DELETE",
+    method: "DELETE",
   });
 
   if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.msg || "Error al eliminar la categoría");
+    const data = await response.json();
+    throw new Error(data.msg || "Error al eliminar la categoría");
   }
 
   return await response.json();
 }
 
+export async function uploadCategoryImage(image) {
+  const formData = new FormData();
+  formData.append("image", image);
 
-export async function cambioContrasena({ email,navigate }) {
+  const response = await fetch("http://localhost:5800/api/categories/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.msg || "Error al subir la imagen");
+  }
+
+  return await response.json();
+}
+
+export async function cambioContrasena({ email, navigate }) {
   try {
     const response = await fetch(
       `http://localhost:5800/api/usuarios/olvide-password`,
@@ -149,7 +162,7 @@ export async function cambioContrasena({ email,navigate }) {
     const data = await response.json();
 
     if (response.ok) {
-      navigate('/cacharreria_cosas_bonitas/espera-confirmacion');
+      navigate("/cacharreria_cosas_bonitas/espera-confirmacion");
     } else {
       if (data && data.msg) {
         alert(data.msg); // Muestra un mensaje de error al usuario si el backend lo proporciona
@@ -162,9 +175,11 @@ export async function cambioContrasena({ email,navigate }) {
   }
 }
 
-
-export async function FormularioReestablecerContrasena(password, token,navigate) {
-
+export async function FormularioReestablecerContrasena(
+  password,
+  token,
+  navigate
+) {
   try {
     // Asegurándose de que el token se añade correctamente a la URL
     const response = await fetch(
@@ -182,8 +197,8 @@ export async function FormularioReestablecerContrasena(password, token,navigate)
 
     const data = await response.json();
     if (response.ok) {
-      navigate("/cacharreria_cosas_bonitas/Login/")
-      return { success: true, message: data.msg }; 
+      navigate("/cacharreria_cosas_bonitas/Login/");
+      return { success: true, message: data.msg };
     } else {
       return { success: false, message: data.msg || "Error en el proceso." };
     }
