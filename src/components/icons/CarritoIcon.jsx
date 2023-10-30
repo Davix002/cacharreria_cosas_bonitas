@@ -2,7 +2,7 @@ const CarritoIcon = (props) => {
   return (
     <div>
     <svg
-      className="h-8 p-1 hover:text-romTurquoise-500 duration-200 svg-inline--fa fa-shopping-cart fa-w-18 fa-3x"
+      className="h-8 p-1 hover:text-romTurquoise-500 duration-200 cursor-pointer"
       aria-hidden="true"
       focusable="false"
       data-prefix="far"

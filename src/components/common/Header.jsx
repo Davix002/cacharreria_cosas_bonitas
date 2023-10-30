@@ -8,6 +8,7 @@ import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import Search from "../common/Search";
 import CarritoIcon from "../icons/CarritoIcon";
 import CarritoDropDown from "../pages/Carrito/CarritoDropDown";
+import PerfilIcon from "../icons/PerfilIcon";
 import { useAuth } from "../../Auth/UseAuth";
 
 const Header = () => {
@@ -71,17 +72,7 @@ const Header = () => {
               </Link>
             </li>
 
-            {isLogueado ? (
-              // Si el usuario está logueado, muestra el botón de perfil
-              <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
-                <Link
-                  onClick={() => setIsOpen(!isOpen)}
-                  to="/cacharreria_cosas_bonitas/Perfil/"
-                >
-                  Perfil
-                </Link>
-              </li>
-            ) : (
+            {!isLogueado && (
               // Si el usuario no está logueado, muestra los botones de login y register
               <>
                 <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
@@ -104,7 +95,7 @@ const Header = () => {
             )}
 
             <li className="w-1/2 p-4 sm:hidden border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
-              <a className="flex items-center">
+              <div className="flex items-center">
                 <Lupa onClick={() => setSearch(!search)} />
                 {search && (
                   <Search
@@ -114,7 +105,7 @@ const Header = () => {
                     setIsOpen={setIsOpen}
                   />
                 )}
-              </a>
+              </div>
             </li>
           </ul>
         </nav>
@@ -129,7 +120,7 @@ const Header = () => {
         </div>
         {/* searchButton */}
         <div className="hidden w-4/12 space-x-2 sm:w-2/12 sm:flex justify-center">
-          <a>
+          <div>
             <Lupa onClick={() => setSearch(!search)} />
             {search && (
               <Search
@@ -139,8 +130,8 @@ const Header = () => {
                 setIsOpen={setIsOpen}
               />
             )}
-          </a>
-          <a>
+          </div>
+          <div>
             <CarritoIcon
               onClick={() => {
                 setCarritoDropDown(!isCarritoDropDown);
@@ -155,7 +146,21 @@ const Header = () => {
                 setIsOpen={setIsOpen}
               />
             )}
-          </a>
+          </div>
+          <div>
+            {isLogueado && (
+              // Si el usuario está logueado, muestra el botón de perfil
+              <div>
+                <Link
+                  onClick={() => setIsOpen(!isOpen)}
+                  to="/cacharreria_cosas_bonitas/Perfil/"
+                >
+                  <PerfilIcon /> 
+                </Link>
+              </div>
+            )
+            }
+          </div>
         </div>
       </header>
     </>
