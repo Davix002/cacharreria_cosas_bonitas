@@ -1,7 +1,7 @@
 const PerfilIcon = (props) => {
     return (
       <svg 
-        className="h-8 p-1 ms-1 hover:text-romTurquoise-500 duration-200"
+        className="h-8 p-1 ms-1 hover:text-romTurquoise-500 duration-200 cursor-pointer"
         xmlns="http://www.w3.org/2000/svg" 
         height="1em" 
         viewBox="0 0 448 512"

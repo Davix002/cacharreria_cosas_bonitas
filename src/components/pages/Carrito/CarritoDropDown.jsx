@@ -1,9 +1,6 @@
-import React from 'react'
 import { X } from 'lucide-react'
 import { Link } from "react-router-dom";
-function handleViewCartClick() {
-  setCarritoDropDown(false);
-}
+import PropTypes from 'prop-types';
 
 const products = [
   {
@@ -45,26 +42,27 @@ const products = [
 ]
 
 export default function CartThree({ setCarritoDropDown }) {
+
   function handleViewCartClick() {
     setCarritoDropDown(false);
   }
+
   return (
-    <div className="bg-white px-5 py-3 flex my-6 absolute right-4 mt-2 w-auto max-w-md sm:max-w-md rounded shadow-lg z-50 overflow-y-auto"
+    <div
+      className="bg-white px-5 py-3 flex my-6 absolute right-4 mt-2 w-auto max-w-md sm:max-w-md rounded shadow-lg z-50 overflow-y-auto"
       aria-modal="true"
       role="dialog"
       tabIndex={-1}
     >
-
       <div className="mt-4 space-y-6">
         <ul>
-          <div onClick={handleViewCartClick}
+          <div
+            onClick={handleViewCartClick}
             className="relative ml-auto block text-gray-600 transition"
-           
           >
             <span className="sr-only">Cerrar Carrito</span>
             <X size={24} className="icon-hover-effect" />
           </div>
-
         </ul>
         <ul className="space-y-4">
           {products.map((product) => (
@@ -90,28 +88,36 @@ export default function CartThree({ setCarritoDropDown }) {
           ))}
         </ul>
         <div className="space-y-4 text-center">
-          <Link to="/cacharreria_cosas_bonitas/Carrito/" onClick={handleViewCartClick}>
-            <div
-              className="w-full mb-2 rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            >
+          <Link
+            to="/cacharreria_cosas_bonitas/Carrito/"
+            onClick={handleViewCartClick}
+          >
+            <div className="w-full mb-2 rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
               Ver carrito(3)
             </div>
           </Link>
-          <Link to="/cacharreria_cosas_bonitas/CarritoPagar/" onClick={handleViewCartClick} >
-          <div
-            className="w-full rounded-md bg-romTurquoise-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          <Link
+            to="/cacharreria_cosas_bonitas/CarritoPagar/"
+            onClick={handleViewCartClick}
           >
-            Ir a pagar
-          </div>
+            <div className="w-full rounded-md bg-romTurquoise-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
+              Ir a pagar
+            </div>
           </Link>
 
-          <Link className="inline-block text-sm text-gray-600 transition hover:text-gray-700 hover:underline hover:underline-offset-4"
-          to="/cacharreria_cosas_bonitas/" onClick={handleViewCartClick}>
+          <Link
+            className="inline-block text-sm text-gray-600 transition hover:text-gray-700 hover:underline hover:underline-offset-4"
+            to="/cacharreria_cosas_bonitas/"
+            onClick={handleViewCartClick}
+          >
             Continuar comprando &rarr;
-        
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }
+
+CartThree.propTypes = {
+  setCarritoDropDown: PropTypes.func.isRequired,
+};

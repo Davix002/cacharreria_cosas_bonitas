@@ -8,6 +8,7 @@ import BurgerMenuIcon from "../icons/BurgerMenuIcon";
 import Search from "../common/Search";
 import CarritoIcon from "../icons/CarritoIcon";
 import CarritoDropDown from "../pages/Carrito/CarritoDropDown";
+import PerfilDropDown from "../pages/Users/PerfilDropDown";
 import PerfilIcon from "../icons/PerfilIcon";
 import { useAuth } from "../../Auth/UseAuth";
 
@@ -15,6 +16,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState(false);
   const [isCarritoDropDown, setCarritoDropDown] = useState(false);
+  const [isPerfilDropDown, setPerfilDropDown] = useState(false);
   const { isLogueado } = useAuth();
 
   return (
@@ -149,17 +151,20 @@ const Header = () => {
           </div>
           <div>
             {isLogueado && (
-              // Si el usuario está logueado, muestra el botón de perfil
               <div>
-                <Link
-                  onClick={() => setIsOpen(!isOpen)}
-                  to="/cacharreria_cosas_bonitas/Perfil/"
-                >
-                  <PerfilIcon /> 
-                </Link>
+                <PerfilIcon
+                  onClick={() => setPerfilDropDown(!isPerfilDropDown)}
+                />
+                {isPerfilDropDown && (
+                  <PerfilDropDown
+                    isPerfilDropDown={isPerfilDropDown}
+                    setPerfilDropDown={setPerfilDropDown}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                  />
+                )}
               </div>
-            )
-            }
+            )}
           </div>
         </div>
       </header>
