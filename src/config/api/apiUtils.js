@@ -1,6 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
-
 export async function fetchCategories() {
   try {
     const response = await fetch(`http://localhost:5800/api/categories`);

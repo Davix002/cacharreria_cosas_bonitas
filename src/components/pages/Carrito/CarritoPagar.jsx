@@ -1,5 +1,4 @@
-import { Heart, Trash } from 'lucide-react'
-import React from 'react'
+import { Trash } from 'lucide-react'
 import { Link } from "react-router-dom";
 
 const products = [
@@ -54,7 +53,7 @@ export default function CartTwo() {
               Articulos agregados a tu carrito
             </h2>
             <ul role="list" className="divide-y divide-gray-200">
-              {products.map((product, productIdx) => (
+              {products.map((product) => (
                 <div key={product.id} className="">
                   <li className="flex py-6 sm:py-6 ">
                     <div className="flex-shrink-0">

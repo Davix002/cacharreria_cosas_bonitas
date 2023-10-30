@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useChunks  = () => {
+const useChunks = () => {
   const [chunkSize, setChunkSize] = useState(3);
 
   useEffect(() => {

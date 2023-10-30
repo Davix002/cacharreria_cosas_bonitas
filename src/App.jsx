@@ -11,14 +11,14 @@ import Categories from "./data/categories";
 import Register from "./components/pages/Register/Register";
 import Carrito from "./components/pages/Carrito/Carrito";
 import CarritoPagar from "./components/pages/Carrito/CarritoPagar";
-import ConfirmarRegistro from "./components/pages/Register/ConfirmarRegistro";
+import ConfirmarRegistro from "./Auth/ConfirmarRegistro";
 import Perfil from "./components/pages/Users/Perfil";
 import EsperaConfirmacion from "./components/pages/Register/EsperaConfirmacion";
 import { AuthProvider } from "./Auth/AuthProvider";
 import FacturaCompra from "./components/pages/Factura/FacturaCompra";
 import CambioContrasena from "./components/pages/Register/SolicitarCambioContrasena";
 import FormularioCambioContrasena from "./components/pages/Register/FormularioCambioContrasena";
-import CambiarContrasena from "./components/pages/Register/CambiarContrasena";
+import CambiarContrasena from "./Auth/CambiarContrasena";
 import Admin from "./components/pages/Administracion/Administracion";
 import AdminCategorias from "./components/pages/Administracion/CategoryList"
 export default function App() {
