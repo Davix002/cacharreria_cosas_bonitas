@@ -16,7 +16,7 @@ const formatPrice = (price) => {
 const ProductItem = (props) => {
 
   const { isLogueado, usuario } = useAuth();
-  const { state, dispatch } = useCart();
+  const { dispatch } = useCart();
 
   const addToCart = async (product) => {
     // Verificar si el usuario está autenticado

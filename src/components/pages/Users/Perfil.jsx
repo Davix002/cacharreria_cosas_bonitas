@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Auth/UseAuth";
 
 function Perfil() {
-    const [usuario, setUsuario] = useState(null);
-    const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const { logOut, logIn } = useAuth(); 
+    const { logOut, usuario } = useAuth(); 
 
     const cerrarSesion = () => {
         logOut();
@@ -14,46 +12,11 @@ function Perfil() {
     };
 
     useEffect(() => {
-        const obtenerPerfil = async () => {
-            try {
-
-                // Obtener el token del localStorage
-                const token = localStorage.getItem('token');
-
-                if (!token) {
-                    navigate('/cacharreria_cosas_bonitas/Login/');
-                    return;
-                }
-
-                // Enviar el token en el encabezado Authorization
-                const response = await fetch(`http://localhost:5800/api/usuarios/perfil`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (response.status === 401) {
-                    navigate('/cacharreria_cosas_bonitas/Login/');
-                    return;
-                }   
-
-                const data = await response.json();
-                setUsuario(data);
-                logIn(token, data.role, data);
-
-            
-            } catch (error) {
-                setError("Error al obtener el perfil del usuario.");
-                console.error('Error al obtener el perfil:', error);
-            }
-        };
-
-        obtenerPerfil();
-    }, [navigate, logIn, logOut]);
-
-    if (error) {
-        return <div className="flex items-center justify-center h-screen">{error}</div>;
-    }
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/cacharreria_cosas_bonitas/Login/');
+        }
+    }, [navigate]);
 
     if (!usuario) {
         return <div className="flex items-center justify-center h-screen">Cargando perfil...</div>;
@@ -74,7 +37,6 @@ function Perfil() {
             >Cerrar Sesión</button>
         </div>
     );
-    
 }
 
 export default Perfil;

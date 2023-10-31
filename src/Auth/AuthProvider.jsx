@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AuthContext from "./AuthContext";
 import PropTypes from 'prop-types';
 
@@ -9,6 +9,50 @@ export const AuthProvider = ({ children }) => {
     const [isLogueado, setIsLogueado] = useState(initialIsLogueado);
     const [role, setRole] = useState(initialRole);
     const [usuario, setUsuario] = useState(null);
+
+    const logIn = useCallback((token, userRole, user) => {
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", userRole);
+        setIsLogueado(true);
+        setRole(userRole);
+        setUsuario(user);
+    }, []);
+    
+    const logOut = useCallback(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        setIsLogueado(false);
+        setRole(null);
+        setUsuario(null);
+    }, []);    
+
+    useEffect(() => {
+        const obtenerPerfil = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await fetch(`http://localhost:5800/api/usuarios/perfil`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+    
+                    if (response.status === 401) {
+                        logOut(); // Llama a logOut si el token no es válido.
+                        return;
+                    }
+    
+                    const data = await response.json();
+                    logIn(token, data.role, data); // Actualiza el estado del usuario
+                } catch (error) {
+                    console.error('Error al obtener el perfil:', error);
+                }
+            }
+        };
+    
+        obtenerPerfil();
+    }, [logIn, logOut]);
+   
     
     useEffect(() => {
         const handleStorageChange = () => {
@@ -29,23 +73,7 @@ export const AuthProvider = ({ children }) => {
         };
     }, []);
 
- 
-
-    const logIn = (token, userRole, user) => {
-        localStorage.setItem("token", token);
-        localStorage.setItem("role", userRole);
-        setIsLogueado(true);
-        setRole(userRole);
-        setUsuario(user);
-    };
-
-    const logOut = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
-        setIsLogueado(false);
-        setRole(null);
-        setUsuario(null);
-    };
+    
 
     const value = {
         isLogueado,
