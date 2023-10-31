@@ -23,6 +23,7 @@ import CambiarContrasena from "./Auth/CambiarContrasena";
 import Admin from "./components/pages/Administracion/Administracion";
 import AdminCategorias from "./components/pages/Administracion/CategoryList"
 import Spinner from "./components/pages/Inicio/Spinner";
+import CartProvider from '../src/components/pages/Carrito/CartContext';
 
 export default function App() {
   const [categories, setCategories] = useState([]);
@@ -52,6 +53,7 @@ export default function App() {
 
   return (
     <AuthProvider>
+      <CartProvider>
       <Router>
         <Header />
 
@@ -117,6 +119,7 @@ export default function App() {
 
         <Footer />
       </Router>
+      </CartProvider>
     </AuthProvider>
   );
 }

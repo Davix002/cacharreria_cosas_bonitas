@@ -6,7 +6,7 @@ function Perfil() {
     const [usuario, setUsuario] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const { logOut } = useAuth();
+    const { logOut, logIn } = useAuth(); 
 
     const cerrarSesion = () => {
         logOut();
@@ -39,6 +39,9 @@ function Perfil() {
 
                 const data = await response.json();
                 setUsuario(data);
+                logIn(token, data.role, data);
+
+            
             } catch (error) {
                 setError("Error al obtener el perfil del usuario.");
                 console.error('Error al obtener el perfil:', error);
@@ -46,7 +49,7 @@ function Perfil() {
         };
 
         obtenerPerfil();
-    }, [navigate]);
+    }, [navigate, logIn, logOut]);
 
     if (error) {
         return <div className="flex items-center justify-center h-screen">{error}</div>;

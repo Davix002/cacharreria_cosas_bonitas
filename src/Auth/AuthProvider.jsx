@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
     
     const [isLogueado, setIsLogueado] = useState(initialIsLogueado);
     const [role, setRole] = useState(initialRole);
+    const [usuario, setUsuario] = useState(null);
     
     useEffect(() => {
         const handleStorageChange = () => {
@@ -28,22 +29,28 @@ export const AuthProvider = ({ children }) => {
         };
     }, []);
 
-    const logIn = (token, userRole) => {
+ 
+
+    const logIn = (token, userRole, user) => {
         localStorage.setItem("token", token);
         localStorage.setItem("role", userRole);
         setIsLogueado(true);
         setRole(userRole);
+        setUsuario(user);
     };
 
     const logOut = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("role");
         setIsLogueado(false);
+        setRole(null);
+        setUsuario(null);
     };
 
     const value = {
         isLogueado,
         role,
+        usuario,
         logIn,
         logOut
     };
