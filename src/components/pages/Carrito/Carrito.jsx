@@ -1,7 +1,12 @@
 import { Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { deleteProductFromCart } from "../../../config/api/apiUtils";
+import {
+  deleteProductFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  getCartItems
+} from "../../../config/api/apiUtils";
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {
@@ -15,28 +20,34 @@ export default function CartOne() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
 
+  const handleIncreaseQuantity = async (productId) => {
+    const updatedProducts = await increaseQuantity(products, productId);
+    setProducts(updatedProducts);
+  };
+
+  // Disminuir cantidad de producto en el carrito
+  const handleDecreaseQuantity = async (productId) => {
+    const updatedProducts = await decreaseQuantity(products, productId);
+    setProducts(updatedProducts);
+  };
+
   useEffect(() => {
-    fetch("http://localhost:5800/api/cart")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(
-          data.items.map((item) => ({
-            id: item._id._id,
-            name: item._id.name,
-            price: item._id.price,
-            brand: item._id.brand,
-            imageSrc: item._id.thumbnail,
-            quantity: item.quantity,
-          }))
-        );
-        setTotal(
-          data.items.reduce(
-            (acc, item) => acc + item._id.price * item.quantity,
-            0
-          )
-        );
-      });
+    const fetchCartItems = async () => {
+      const { products, total } = await getCartItems();
+      setProducts(products);
+      setTotal(total);
+    };
+  
+    fetchCartItems();
   }, []);
+
+  useEffect(() => {
+    const newTotal = products.reduce(
+      (acc, product) => acc + product.price * product.quantity,
+      0
+    );
+    setTotal(newTotal);
+  }, [products]);
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
@@ -58,8 +69,26 @@ export default function CartOne() {
                 <div className="flex w-full justify-between space-x-2 pb-2">
                   <div className="space-y-1">
                     <h3 className="text-lg font-semibold leading-snug sm:pr-8">
-                      {product.name} (x{product.quantity})
+                      {product.name}
                     </h3>
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => handleDecreaseQuantity(product.id)}
+                        className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded-l"
+                      >
+                        -
+                      </button>
+                      <div className="bg-gray-200 text-black py-1 px-3 rounded-none">
+                        {product.quantity}
+                      </div>
+                      <button
+                        onClick={() => handleIncreaseQuantity(product.id)}
+                        className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded-r"
+                      >
+                        +
+                      </button>
+                    </div>
+
                     <p className="text-sm">
                       Precio por unidad: {formatPrice(product.price)}
                     </p>
@@ -72,7 +101,15 @@ export default function CartOne() {
                   <button
                     type="button"
                     className="flex items-center space-x-2 px-2 py-1 pl-0"
-                    onClick={() => deleteProductFromCart(products, setProducts, total, setTotal, product.id)}
+                    onClick={() =>
+                      deleteProductFromCart(
+                        products,
+                        setProducts,
+                        total,
+                        setTotal,
+                        product.id
+                      )
+                    }
                   >
                     <Trash size={16} />
                     <span>Eliminar</span>

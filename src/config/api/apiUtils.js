@@ -221,6 +221,34 @@ export async function FormularioReestablecerContrasena(
   }
 }
 
+//Carrito
+
+export const getCartItems = async () => {
+  try {
+    const response = await fetch("http://localhost:5800/api/cart");
+    const data = await response.json();
+
+    const products = data.items.map((item) => ({
+      id: item._id._id,
+      name: item._id.name,
+      price: item._id.price,
+      brand: item._id.brand,
+      imageSrc: item._id.thumbnail,
+      quantity: item.quantity,
+    }));
+
+    const total = products.reduce(
+      (acc, product) => acc + product.price * product.quantity,
+      0
+    );
+
+    return { products, total };
+  } catch (error) {
+    console.error("Hubo un error al obtener los productos del carrito:", error);
+    return { products: [], total: 0 };
+  }
+};
+
 export const addProductToCart = async (usuario, product) => {
   const response = await fetch("http://localhost:5800/api/cart", {
     method: "POST",
@@ -267,4 +295,68 @@ export const deleteProductFromCart = (
     .catch((error) => {
       console.error("Hubo un error al eliminar el producto:", error);
     });
+};
+
+// ... (Código existente)
+
+export const increaseQuantity = async (products, productId) => {
+  const product = products.find((prod) => prod.id === productId);
+  if (!product) return products;
+
+  const newQuantity = product.quantity + 1;
+
+  try {
+    const response = await fetch(
+      `http://localhost:5800/api/cart/item/${productId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity: newQuantity }),
+      }
+    );
+
+    const updatedItem = await response.json();
+
+    const updatedProducts = products.map((prod) =>
+      prod.id === productId ? { ...prod, quantity: updatedItem.quantity } : prod
+    );
+
+    return updatedProducts;
+  } catch (error) {
+    console.error("Error al aumentar la cantidad:", error);
+    return products;
+  }
+};
+
+export const decreaseQuantity = async (products, productId) => {
+  const product = products.find((prod) => prod.id === productId);
+  if (!product || product.quantity <= 1) return products;
+
+  const newQuantity = product.quantity - 1;
+
+  try {
+    const response = await fetch(
+      `http://localhost:5800/api/cart/item/${productId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity: newQuantity }),
+      }
+    );
+
+    const updatedItem = await response.json();
+
+    const updatedProducts = products.map((prod) =>
+      prod.id === productId ? { ...prod, quantity: updatedItem.quantity } : prod
+    );
+
+    return updatedProducts;
+  } catch (error) {
+    console.error("Error al disminuir la cantidad:", error);
+    return products;
+  }
 };
