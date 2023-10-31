@@ -237,3 +237,34 @@ export const addProductToCart = async (usuario, product) => {
 
   return await response.json();
 };
+
+export const deleteProductFromCart = (
+  products,
+  setProducts,
+  total,
+  setTotal,
+  productId
+) => {
+  // Encuentra el producto por su id
+  const productToDelete = products.find((product) => product.id === productId);
+
+  if (!productToDelete) {
+    console.error("Producto no encontrado:", productId);
+    return;
+  }
+
+  // Hacer una solicitud DELETE al backend para eliminar el producto
+  fetch(`http://localhost:5800/api/cart/item/${productId}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then(() => {
+      // Actualizar el estado de los productos después de eliminar uno
+      setProducts(products.filter((product) => product.id !== productId));
+      // Actualizar el total
+      setTotal(total - productToDelete.price * productToDelete.quantity);
+    })
+    .catch((error) => {
+      console.error("Hubo un error al eliminar el producto:", error);
+    });
+};
