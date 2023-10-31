@@ -123,7 +123,11 @@ const Header = () => {
         {/* searchButton */}
         <div className="hidden w-4/12 space-x-2 sm:w-2/12 sm:flex justify-center">
           <div>
-            <Lupa onClick={() => setSearch(!search)} />
+            <Lupa onClick={() => {
+              setSearch(!search);
+              setPerfilDropDown(false);
+              setCarritoDropDown(false);
+              }} />
             {search && (
               <Search
                 search={search}
@@ -138,6 +142,7 @@ const Header = () => {
               onClick={() => {
                 setCarritoDropDown(!isCarritoDropDown);
                 setPerfilDropDown(false);
+                setSearch(false);
               }}
             />
 
@@ -157,6 +162,7 @@ const Header = () => {
                   onClick={() => {
                     setPerfilDropDown(!isPerfilDropDown);
                     setCarritoDropDown(false);
+                    setSearch(false);
                   }}
                 />
                 {isPerfilDropDown && (

@@ -1,20 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Categories from "../../data/categories";
+import { fetchCategories } from "../../config/api/apiUtils";
 import useMenuColumns from "./useMenuColumns";
 import PropTypes from "prop-types";
+import Spinner from "../pages/Inicio/Spinner";
 
 const SubMenu = "block px-4 py-2 text-gray-700 hover:bg-gray-100 text-xs sm:text-sm";
 
 const DropdownMenu = ({isOpen, setIsOpen}) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const categoryArray = Object.keys(Categories).map((key) => Categories[key]);
+  useEffect(() => {
+    (async () => {
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
+      setLoading(false);
+    })();
+  }, []);
+
   const numColumns = useMenuColumns();
+
+  if (loading) {
+    return <Spinner />;
+  }
   
-  const columnSize = Math.ceil(categoryArray.length / numColumns);
+  const columnSize = Math.ceil(categories.length / numColumns);
   const columns = Array.from({ length: numColumns }, (_, index) =>
-    categoryArray.slice(index * columnSize, (index + 1) * columnSize)
+    categories.slice(index * columnSize, (index + 1) * columnSize)
   );
 
   return (

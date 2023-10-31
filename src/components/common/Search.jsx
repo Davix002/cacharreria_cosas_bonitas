@@ -1,16 +1,28 @@
-import Categories from "../../data/categories";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { fetchCategories } from "../../config/api/apiUtils";
 
 const SubMenu = "block px-4 py-2 text-gray-700 hover:bg-gray-100 text-xs sm:text-sm";
 
 const Search = ({search, setSearch,isOpen, setIsOpen}) => {
   const [filter, setFilter] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const categoryArray = Object.keys(Categories).map(
-    (key) => Categories[key]["name"]
-  );
+  useEffect(() => {
+    (async () => {
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
+      setLoading(false);
+    })();
+  }, []);
+
+  if (loading) {
+    return null;
+  }
+
+  const categoryArray = categories.map((category) => category.name);
 
   const handleInputChange = (event) => {
     setFilter(event.target.value.toUpperCase());

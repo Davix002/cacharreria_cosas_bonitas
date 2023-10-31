@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Product_grid from "./Product_grid";
 import PropTypes from "prop-types";
-import { fetchProductsByCategory } from "../../../config/api/apiUtils";
-import Categories from "../../../data/categories";
+import { fetchProductsByCategory, fetchCategories } from "../../../config/api/apiUtils";
 
 const Category = ({ categoryId, nombre_categoria }) => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -14,13 +14,23 @@ const Category = ({ categoryId, nombre_categoria }) => {
     })();
   }, [categoryId]);
 
+  // Fetch all categories
+  useEffect(() => {
+    (async () => {
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
+    })();
+  }, []);
+
   return (
     <div>
-      <Product_grid 
-        products={{ category: nombre_categoria, array_products: products }}
-        currentCategoryId={categoryId}
-        categories={Categories}
-      />
+      {categories.length > 0 && (
+        <Product_grid 
+          products={{ category: nombre_categoria, array_products: products }}
+          currentCategoryId={categoryId}
+          categories={categories}
+        />
+      )}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./Auth/PrivateRoute";
+import { useState, useEffect } from "react";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Inicio from "./components/pages/Inicio/Inicio";
@@ -7,7 +8,7 @@ import Nosotros from "./components/pages/Nosotros/Nosotros";
 import Contactanos from "./components/pages/Contactanos/Contactanos";
 import Login from "./components/pages/Login/Login";
 import Category from "./components/pages/Productos/Category";
-import Categories from "./data/categories";
+import { fetchCategories } from "../src/config/api/apiUtils";
 import Register from "./components/pages/Register/Register";
 import Carrito from "./components/pages/Carrito/Carrito";
 import CarritoPagar from "./components/pages/Carrito/CarritoPagar";
@@ -21,13 +22,30 @@ import FormularioCambioContrasena from "./components/pages/Register/FormularioCa
 import CambiarContrasena from "./Auth/CambiarContrasena";
 import Admin from "./components/pages/Administracion/Administracion";
 import AdminCategorias from "./components/pages/Administracion/CategoryList"
+import Spinner from "./components/pages/Inicio/Spinner";
+
 export default function App() {
-  const categoryRoutes = Object.entries(Categories).map((entrada) => (
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
+      setLoading(false);
+    })();
+  }, []);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  const categoryRoutes = categories.map((categoria) => (
     <Route
-      key={entrada[0]}
-      path={`/cacharreria_cosas_bonitas/${entrada[1].name}/`}
+      key={categoria.id}
+      path={`/cacharreria_cosas_bonitas/${categoria.name}/`}
       element={
-        <Category categoryId={entrada[0]} nombre_categoria={entrada[1].name} />
+        <Category categoryId={categoria.id} nombre_categoria={categoria.name} />
       }
     />
   ));

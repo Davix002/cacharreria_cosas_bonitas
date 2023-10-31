@@ -11,6 +11,7 @@ const Inicio = () => {
   useEffect(() => {
     (async () => {
       const fetchedCategories = await fetchCategories();
+      console.log("Fetched Categories:", fetchedCategories);
       setCategories(fetchedCategories);
       setLoading(false);
     })();

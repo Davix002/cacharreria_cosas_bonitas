@@ -6,11 +6,12 @@ import { Link } from "react-router-dom";
 const Product_grid = ({ products, currentCategoryId, categories }) => {
 
   const getNextCategoryLink = () => {
-    const categoryIds = Object.keys(categories);
+    if (!categories || categories.length === 0) return "#";
+  
+    const categoryIds = categories.map(category => category.id);
     const currentIndex = categoryIds.indexOf(currentCategoryId);
     const nextIndex = (currentIndex + 1) % categoryIds.length;
-    const nextCategoryId = categoryIds[nextIndex];
-    const nextCategoryName = categories[nextCategoryId].name;
+    const nextCategoryName = categories[nextIndex].name;
     return `/cacharreria_cosas_bonitas/${nextCategoryName}/`;
   };
 
@@ -61,11 +62,17 @@ Product_grid.propTypes = {
       PropTypes.shape({
         id: PropTypes.string.isRequired,
       })
-    ),
-  }),
+    ).isRequired,
+  }).isRequired,
   currentCategoryId: PropTypes.string.isRequired,
-  categories: PropTypes.object.isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      picture: PropTypes.string,
+      imageAlt: PropTypes.string,
+    })
+  ).isRequired,
 };
-
 
 export default Product_grid;
