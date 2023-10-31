@@ -102,13 +102,13 @@ export async function getCategory(id) {
 
 export async function updateCategoryWithImage(id, formData) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
-      method: "PUT",
-      body: formData, // Nota: no establezcas headers aquí
+    method: "PUT",
+    body: formData, // Nota: no establezcas headers aquí
   });
 
   if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.msg || "Error al actualizar la categoría");
+    const data = await response.json();
+    throw new Error(data.msg || "Error al actualizar la categoría");
   }
 
   return await response.json();
@@ -116,18 +116,17 @@ export async function updateCategoryWithImage(id, formData) {
 
 export async function createCategoryWithImage(formData) {
   const response = await fetch("http://localhost:5800/api/categories/", {
-      method: "POST",
-      body: formData, // Nota: no establezcas headers aquí
+    method: "POST",
+    body: formData, // Nota: no establezcas headers aquí
   });
 
   if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.msg || "Error al crear la categoría");
+    const data = await response.json();
+    throw new Error(data.msg || "Error al crear la categoría");
   }
 
   return await response.json();
 }
-
 
 export async function deleteCategory(id) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
@@ -221,3 +220,51 @@ export async function FormularioReestablecerContrasena(
     return { success: false, message: "Error al procesar la solicitud." };
   }
 }
+
+export const addProductToCart = async (usuario, product) => {
+  const response = await fetch("http://localhost:5800/api/cart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: usuario.email,
+      userID: usuario._id,
+      productID: product.id,
+      quantity: 1,
+    }),
+  });
+
+  return await response.json();
+};
+
+export const deleteProductFromCart = (
+  products,
+  setProducts,
+  total,
+  setTotal,
+  productId
+) => {
+  // Encuentra el producto por su id
+  const productToDelete = products.find((product) => product.id === productId);
+
+  if (!productToDelete) {
+    console.error("Producto no encontrado:", productId);
+    return;
+  }
+
+  // Hacer una solicitud DELETE al backend para eliminar el producto
+  fetch(`http://localhost:5800/api/cart/item/${productId}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then(() => {
+      // Actualizar el estado de los productos después de eliminar uno
+      setProducts(products.filter((product) => product.id !== productId));
+      // Actualizar el total
+      setTotal(total - productToDelete.price * productToDelete.quantity);
+    })
+    .catch((error) => {
+      console.error("Hubo un error al eliminar el producto:", error);
+    });
+};

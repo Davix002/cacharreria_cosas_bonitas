@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import CarritoIcon from "../../icons/CarritoIcon";
 import { useCart } from '../Carrito/CartContext';
 import { useAuth } from '../../../Auth/UseAuth';
-
-
+import { addProductToCart } from '../../../config/api/apiUtils'; 
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {
@@ -16,7 +15,7 @@ const formatPrice = (price) => {
 const ProductItem = (props) => {
 
   const { isLogueado, usuario } = useAuth();
-  const { state, dispatch } = useCart();
+  const { dispatch } = useCart();
 
   const addToCart = async (product) => {
     // Verificar si el usuario está autenticado
@@ -24,25 +23,12 @@ const ProductItem = (props) => {
       console.log('El usuario no está autenticado');
       return;
     }
-    //console.log(usuario);
+
     // Agregar producto al carrito en el estado global
     dispatch({ type: 'ADD_TO_CART', payload: product });
-  console.log(usuario);
     // Hacer solicitud al backend para actualizar el carrito en la base de datos
-    const response = await fetch('http://localhost:5800/api/cart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: usuario.email, // Usar el correo electrónico del usuario autenticado
-        userID: usuario._id,
-        productID: product.id,
-        quantity: 1, // Cantidad del producto que se está añadiendo
-      }),
-    });
   
-    const data = await response.json();
+    const data = await addProductToCart(usuario, product);
     console.log(data);
   };
   
