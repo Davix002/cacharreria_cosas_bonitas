@@ -1,24 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { fetchCategories } from "../../config/api/apiUtils";
 import useMenuColumns from "./useMenuColumns";
 import PropTypes from "prop-types";
 import Spinner from "../pages/Inicio/Spinner";
+import CategoryContext from '../pages/Administracion/CategoryContext';
 
 const SubMenu = "block px-4 py-2 text-gray-700 hover:bg-gray-100 text-xs sm:text-sm";
 
 const DropdownMenu = ({isOpen, setIsOpen}) => {
+  const { categories, loading } = useContext(CategoryContext);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      const fetchedCategories = await fetchCategories();
-      setCategories(fetchedCategories);
-      setLoading(false);
-    })();
-  }, []);
 
   const numColumns = useMenuColumns();
 

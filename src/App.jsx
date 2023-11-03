@@ -20,10 +20,10 @@ import FacturaCompra from "./components/pages/Factura/FacturaCompra";
 import CambioContrasena from "./components/pages/Register/SolicitarCambioContrasena";
 import FormularioCambioContrasena from "./components/pages/Register/FormularioCambioContrasena";
 import CambiarContrasena from "./Auth/CambiarContrasena";
-import Admin from "./components/pages/Administracion/Administracion";
-import AdminCategorias from "./components/pages/Administracion/CategoryList"
+import AdminCategorias from "./components/pages/Administracion/CategoryList";
 import Spinner from "./components/pages/Inicio/Spinner";
-import CartProvider from '../src/components/pages/Carrito/CartContext';
+import CartProvider from "../src/components/pages/Carrito/CartContext";
+import { CategoryProvider } from "./components/pages/Administracion/CategoryContext";
 
 export default function App() {
   const [categories, setCategories] = useState([]);
@@ -53,73 +53,85 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <CartProvider>
-      <Router>
-        <Header />
+      <CategoryProvider>
+        <CartProvider>
+          <Router>
+            <Header />
 
-        <Routes>
-
-          <Route path="/cacharreria_cosas_bonitas/Admin" element={
-            <PrivateRoute roles={['admin']}>
-              <Admin/>
-            </PrivateRoute>
-          } />
-          <Route path="/cacharreria_cosas_bonitas/Admin/categorias" element={
-            <PrivateRoute roles={['admin']}>
-              <AdminCategorias />
-            </PrivateRoute>
-          } />
-          {/*<Route path="/cacharreria_cosas_bonitas/Admin/productos" element={
+            <Routes>
+              <Route
+                path="/cacharreria_cosas_bonitas/Admin/categorias"
+                element={
+                  <PrivateRoute roles={["admin"]}>
+                    <AdminCategorias />
+                  </PrivateRoute>
+                }
+              />
+              {/*<Route path="/cacharreria_cosas_bonitas/Admin/productos" element={
            <PrivateRoute roles={['admin']}>
               <AdminProductos />
             </PrivateRoute>
-          } />*/} 
-          <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
-          <Route
-            path="/cacharreria_cosas_bonitas/Nosotros/"
-            element={<Nosotros />}
-          />
-          <Route
-            path="/cacharreria_cosas_bonitas/Contactanos/"
-            element={<Contactanos />}
-          />
-          <Route path="/cacharreria_cosas_bonitas/Login/" element={<Login />} />
-          {categoryRoutes}
-          <Route
-            path="/cacharreria_cosas_bonitas/Register/"
-            element={<Register />}
-          />
-          <Route
-            path="/cacharreria_cosas_bonitas/Carrito/"
-            element={<Carrito />}
-          />
-          <Route
-            path="/cacharreria_cosas_bonitas/CarritoPagar/"
-            element={<CarritoPagar />}
-          />
-          <Route
-            path="/cacharreria_cosas_bonitas/confirmar/:token"
-            element={<ConfirmarRegistro />}
-          />
-          <Route
-            path="/cacharreria_cosas_bonitas/perfil"
-            element={<Perfil />}
-          />
-          <Route
-            path="/cacharreria_cosas_bonitas/espera-confirmacion"
-            element={<EsperaConfirmacion />}
-          />
-          <Route path="/cacharreria_cosas_bonitas/CambioContrasena/" element={<CambioContrasena />} />
-          <Route
-            path="/cacharreria_cosas_bonitas/FacturaCompra/"
-            element={<FacturaCompra />}
-          />
-          <Route path="/cacharreria_cosas_bonitas/recuperar/:token" element={<CambiarContrasena />} />
-          <Route path="/cacharreria_cosas_bonitas/FormularioCambioContrasena/:token" element={<FormularioCambioContrasena />} />        </Routes>
+          } />*/}
+              <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
+              <Route
+                path="/cacharreria_cosas_bonitas/Nosotros/"
+                element={<Nosotros />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/Contactanos/"
+                element={<Contactanos />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/Login/"
+                element={<Login />}
+              />
+              {categoryRoutes}
+              <Route
+                path="/cacharreria_cosas_bonitas/Register/"
+                element={<Register />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/Carrito/"
+                element={<Carrito />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/CarritoPagar/"
+                element={<CarritoPagar />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/confirmar/:token"
+                element={<ConfirmarRegistro />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/perfil"
+                element={<Perfil />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/espera-confirmacion"
+                element={<EsperaConfirmacion />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/CambioContrasena/"
+                element={<CambioContrasena />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/FacturaCompra/"
+                element={<FacturaCompra />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/recuperar/:token"
+                element={<CambiarContrasena />}
+              />
+              <Route
+                path="/cacharreria_cosas_bonitas/FormularioCambioContrasena/:token"
+                element={<FormularioCambioContrasena />}
+              />{" "}
+            </Routes>
 
-        <Footer />
-      </Router>
-      </CartProvider>
+            <Footer />
+          </Router>
+        </CartProvider>
+      </CategoryProvider>
     </AuthProvider>
   );
 }

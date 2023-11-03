@@ -1,43 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import CategoryForm from "./CategoryForm";
+import CategoryContext from "../Administracion/CategoryContext";
 import {
-  getCategories,
   deleteCategory,
   createCategory,
   uploadCategoryImage,
 } from "../../../config/api/apiUtils";
 
 const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
+  const { categories, addCategory, removeCategory, updateCategory } = useContext(CategoryContext);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categoryImage, setCategoryImage] = useState(null);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const fetchedCategories = await getCategories();
-      setCategories(fetchedCategories);
-    };
-    fetchCategories();
-  }, []);
-
   const handleDelete = async (id) => {
     if (window.confirm("¿Está seguro de que desea eliminar esta categoría?")) {
       await deleteCategory(id);
-      setCategories(categories.filter((cat) => cat._id !== id));
+      removeCategory(id);
     }
   };
 
   const handleFormSubmit = (updatedCategory) => {
     if (updatedCategory && updatedCategory._id) {
-      const updatedCategories = categories.map((cat) =>
-        cat._id === updatedCategory._id ? updatedCategory : cat
-      );
-      setCategories(updatedCategories);
+      updateCategory(updatedCategory);
     }
     setSelectedCategory(null);
   };
+  
 
   const handleAddCategory = async () => {
     if (newCategoryName.trim() === "") {
@@ -61,7 +51,7 @@ const CategoryList = () => {
       });
 
       // Actualiza el estado local con la nueva categoría
-      setCategories([...categories, newCategory]);
+      addCategory(newCategory);
 
       // Limpia los inputs
       setNewCategoryName("");
