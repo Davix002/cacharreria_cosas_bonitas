@@ -2,11 +2,6 @@ import { Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCart } from "./UseCart";
-import {
-  deleteProductFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-} from "../../../config/api/apiUtils";
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {
@@ -17,29 +12,21 @@ const formatPrice = (price) => {
 };
 
 export default function Carrito() {
-  const { state } = useCart();
+  const { state, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
   const productsInCart = state.items;
-
-  const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
 
-  const handleIncreaseQuantity = async (productId) => {
-    const updatedProducts = await increaseQuantity(products, productId);
-    setProducts(updatedProducts);
-  };
-
-  const handleDecreaseQuantity = async (productId) => {
-    const updatedProducts = await decreaseQuantity(products, productId);
-    setProducts(updatedProducts);
+  const handleRemoveFromCart = (productId) => {
+    removeFromCart(productId);
   };
 
   useEffect(() => {
-    const newTotal = products.reduce(
+    const newTotal = productsInCart.reduce(
       (acc, product) => acc + product.price * product.quantity,
       0
     );
     setTotal(newTotal);
-  }, [products]);
+  }, [productsInCart]);
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
@@ -65,7 +52,7 @@ export default function Carrito() {
                     </h3>
                     <div className="flex items-center">
                       <button
-                        onClick={() => handleDecreaseQuantity(product.id)}
+                        onClick={() => decreaseQuantity(product.id)}
                         className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded-l"
                       >
                         -
@@ -74,7 +61,7 @@ export default function Carrito() {
                         {product.quantity}
                       </div>
                       <button
-                        onClick={() => handleIncreaseQuantity(product.id)}
+                        onClick={() => increaseQuantity(product.id)}
                         className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded-r"
                       >
                         +
@@ -94,13 +81,7 @@ export default function Carrito() {
                     type="button"
                     className="flex items-center space-x-2 px-2 py-1 pl-0"
                     onClick={() =>
-                      deleteProductFromCart(
-                        products,
-                        setProducts,
-                        total,
-                        setTotal,
-                        product.id
-                      )
+                      handleRemoveFromCart(product.id)
                     }
                   >
                     <Trash size={16} />
