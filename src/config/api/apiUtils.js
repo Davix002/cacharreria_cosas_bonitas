@@ -266,35 +266,30 @@ export const addProductToCart = async (usuario, product) => {
   return await response.json();
 };
 
-export const deleteProductFromCart = (
-  products,
-  setProducts,
+export const deleteProductFromCart = async (
+  items,
+  dispatch,
   total,
-  setTotal,
   productId
 ) => {
-  // Encuentra el producto por su id
-  const productToDelete = products.find((product) => product.id === productId);
-
-  if (!productToDelete) {
-    console.error("Producto no encontrado:", productId);
-    return;
+  try {
+    const response = await fetch(
+      `http://localhost:5800/api/cart/item/${productId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      // Suponiendo que la API devuelve el producto eliminado y necesitas calcular el nuevo total
+      const newTotal = total - data.price * data.quantity;
+      // Ahora en lugar de actualizar el estado directamente, despachas las acciones
+      dispatch({ type: "REMOVE_FROM_CART", payload: productId });
+      dispatch({ type: "SET_TOTAL", payload: newTotal });
+    }
+  } catch (error) {
+    console.error("Hubo un error al eliminar el producto:", error);
   }
-
-  // Hacer una solicitud DELETE al backend para eliminar el producto
-  fetch(`http://localhost:5800/api/cart/item/${productId}`, {
-    method: "DELETE",
-  })
-    .then((response) => response.json())
-    .then(() => {
-      // Actualizar el estado de los productos después de eliminar uno
-      setProducts(products.filter((product) => product.id !== productId));
-      // Actualizar el total
-      setTotal(total - productToDelete.price * productToDelete.quantity);
-    })
-    .catch((error) => {
-      console.error("Hubo un error al eliminar el producto:", error);
-    });
 };
 
 export const increaseQuantity = async (products, productId) => {
