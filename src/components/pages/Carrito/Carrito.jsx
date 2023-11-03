@@ -1,11 +1,11 @@
 import { Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useCart } from "./UseCart";
 import {
   deleteProductFromCart,
   increaseQuantity,
   decreaseQuantity,
-  getCartItems
 } from "../../../config/api/apiUtils";
 
 const formatPrice = (price) => {
@@ -16,7 +16,10 @@ const formatPrice = (price) => {
   }).format(price);
 };
 
-export default function CartOne() {
+export default function Carrito() {
+  const { state } = useCart();
+  const productsInCart = state.items;
+
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -25,21 +28,10 @@ export default function CartOne() {
     setProducts(updatedProducts);
   };
 
-  // Disminuir cantidad de producto en el carrito
   const handleDecreaseQuantity = async (productId) => {
     const updatedProducts = await decreaseQuantity(products, productId);
     setProducts(updatedProducts);
   };
-
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      const { products, total } = await getCartItems();
-      setProducts(products);
-      setTotal(total);
-    };
-  
-    fetchCartItems();
-  }, []);
 
   useEffect(() => {
     const newTotal = products.reduce(
@@ -54,7 +46,7 @@ export default function CartOne() {
       <h2 className="text-4xl sm:text-5xl  font-semibold mb-8">Tu carrito</h2>
       <p className="text-xl font-semibold mb-2">Resumen del carrito.</p>
       <ul className="flex flex-col divide-y divide-gray-200">
-        {products.map((product) => (
+        {productsInCart.map((product) => (
           <li
             key={product.id}
             className="flex flex-col py-6 sm:flex-row sm:justify-between"

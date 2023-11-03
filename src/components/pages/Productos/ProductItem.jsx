@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import CarritoIcon from "../../icons/CarritoIcon";
-import { useCart } from '../Carrito/CartContext';
+import { useCart } from '../Carrito/UseCart';
 import { useAuth } from '../../../Auth/UseAuth';
 import { addProductToCart } from '../../../config/api/apiUtils'; 
 

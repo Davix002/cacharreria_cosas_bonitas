@@ -297,8 +297,6 @@ export const deleteProductFromCart = (
     });
 };
 
-// ... (Código existente)
-
 export const increaseQuantity = async (products, productId) => {
   const product = products.find((prod) => prod.id === productId);
   if (!product) return products;

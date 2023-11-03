@@ -22,7 +22,7 @@ import FormularioCambioContrasena from "./components/pages/Register/FormularioCa
 import CambiarContrasena from "./Auth/CambiarContrasena";
 import AdminCategorias from "./components/pages/Administracion/CategoryList";
 import Spinner from "./components/pages/Inicio/Spinner";
-import CartProvider from "../src/components/pages/Carrito/CartContext";
+import { CartProvider } from "../src/components/pages/Carrito/CartContext";
 import { CategoryProvider } from "./components/pages/Administracion/CategoryContext";
 
 export default function App() {
