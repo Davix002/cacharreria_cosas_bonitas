@@ -104,12 +104,12 @@ export default function Carrito() {
           </button>
         </Link>
 
-        <Link to="/cacharreria_cosas_bonitas/CarritoPagar">
+        <Link to="">
           <button
             type="button"
             className="w-full rounded-md bg-romTurquoise-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
           >
-            Ir a pagar
+            Pagar
           </button>
         </Link>
       </div>

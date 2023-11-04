@@ -11,7 +11,7 @@ import Category from "./components/pages/Productos/Category";
 import { fetchCategories } from "../src/config/api/apiUtils";
 import Register from "./components/pages/Register/Register";
 import Carrito from "./components/pages/Carrito/Carrito";
-import CarritoPagar from "./components/pages/Carrito/CarritoPagar";
+
 import ConfirmarRegistro from "./Auth/ConfirmarRegistro";
 import Perfil from "./components/pages/Users/Perfil";
 import EsperaConfirmacion from "./components/pages/Register/EsperaConfirmacion";
@@ -94,10 +94,7 @@ export default function App() {
                 path="/cacharreria_cosas_bonitas/Carrito/"
                 element={<Carrito />}
               />
-              <Route
-                path="/cacharreria_cosas_bonitas/CarritoPagar/"
-                element={<CarritoPagar />}
-              />
+              
               <Route
                 path="/cacharreria_cosas_bonitas/confirmar/:token"
                 element={<ConfirmarRegistro />}
