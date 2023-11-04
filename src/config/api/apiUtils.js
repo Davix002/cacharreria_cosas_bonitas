@@ -266,12 +266,7 @@ export const addProductToCart = async (usuario, product) => {
   return await response.json();
 };
 
-export const deleteProductFromCart = async (
-  items,
-  dispatch,
-  total,
-  productId
-) => {
+export const deleteProductFromCart = async (dispatch, productId) => {
   try {
     const response = await fetch(
       `http://localhost:5800/api/cart/item/${productId}`,

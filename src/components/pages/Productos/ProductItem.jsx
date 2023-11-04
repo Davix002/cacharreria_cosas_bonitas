@@ -18,25 +18,31 @@ const ProductItem = (props) => {
   const { dispatch } = useCart();
 
   const addToCart = async (product) => {
-    // Verificar si el usuario está autenticado
     if (!isLogueado) {
-      console.log('El usuario no está autenticado');
       return;
     }
-
-    // Agregar producto al carrito en el estado global
-    dispatch({ type: 'ADD_TO_CART', payload: product });
-    // Hacer solicitud al backend para actualizar el carrito en la base de datos
   
-    const data = await addProductToCart(usuario, product);
-    console.log(data);
+    // Estructura del producto como se espera en el estado y el componente Carrito
+    const productToAdd = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      brand: product.brand,
+      imageSrc: product.thumbnail,
+      quantity: 1
+    };
+  
+    // Agregar producto al carrito en el estado global
+    dispatch({ type: 'ADD_TO_CART', payload: productToAdd });
+  
+    // Hacer solicitud al backend para actualizar el carrito en la base de datos
+    await addProductToCart(usuario, productToAdd);
   };
   
   const formattedPrice = formatPrice(parseFloat(props.product.price));
 
   return (<div key={props.product.id} className="relative overflow-hidden card group h-[altura] flex flex-col  p-8">
     <div className="absolute z-10 top-3 right-3">
-      {/* ... */}
     </div>
     <div className="relative flex-grow">
       <div className="aspect-w-1 aspect-h-1">
