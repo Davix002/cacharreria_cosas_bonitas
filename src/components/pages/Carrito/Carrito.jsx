@@ -41,19 +41,22 @@ export default function Carrito() {
                     <h3 className="text-lg font-semibold leading-snug sm:pr-8">
                       {product.name}
                     </h3>
-                    <div className="flex items-center">
+                    <div className="min-w-24 flex">
                       <button
                         onClick={() => decreaseProductQuantity(product.id)}
-                        className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded-l"
+                        ctype="button" className="h-7 w-7"
                       >
                         -
                       </button>
-                      <div className="bg-gray-200 text-black py-1 px-3 rounded-none">
-                        {product.quantity}
-                      </div>
+                      <input
+                        type="text"
+                        className="mx-1 h-7 w-9 rounded-md border text-center"
+                        value={product.quantity}
+                      />
+                      
                       <button
                         onClick={() => increaseProductQuantity(product.id)}
-                        className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded-r"
+                        type="button" className="flex h-7 w-7 items-center justify-center"
                       >
                         +
                       </button>
@@ -67,16 +70,17 @@ export default function Carrito() {
                     </p>
                   </div>
                 </div>
-                <div className="flex divide-x text-sm">
+                             
+                <div className=" flex text-sm">
                   <button
                     type="button"
-                    className="flex items-center space-x-2 px-2 py-1 pl-0"
+                    className="flex items-center space-x-1 px-2 py-1 pl-0"
                     onClick={() =>
                       handleRemoveFromCart(product.id)
                     }
                   >
-                    <Trash size={16} />
-                    <span>Eliminar</span>
+                    <Trash size={12} className="text-red-500" />
+                    <span className="text-xs font-medium text-red-500">Eliminar</span>
                   </button>
                 </div>
               </div>
