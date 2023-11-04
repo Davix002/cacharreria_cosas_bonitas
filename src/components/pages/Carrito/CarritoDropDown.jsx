@@ -27,12 +27,12 @@ export default function CarritoDropDown({ setCarritoDropDown }) {
 
   return (
     <div
-      className="bg-white px-5 py-3 flex my-6 absolute right-4 mt-2 w-auto max-w-md sm:max-w-md rounded shadow-lg z-50 overflow-y-auto"
+      className=" bg-white px-5 py-3 flex my-6 absolute max-h-[70vh] right-4 mt-2 w-auto max-w-md sm:max-w-md rounded shadow-lg z-50 overflow-y-auto"
       aria-modal="true"
       role="dialog"
       tabIndex={-1}
     >
-      <div className="mt-4 space-y-6">
+      <div className=" mt-4 space-y-6">
         <ul>
           <div
             onClick={handleViewCartClick}
@@ -69,20 +69,20 @@ export default function CarritoDropDown({ setCarritoDropDown }) {
             onClick={handleViewCartClick}
           >
             <div className="w-full mb-2 rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
-              Ver carrito(3)
+              Ver carrito
             </div>
           </Link>
           <Link
-            to="/cacharreria_cosas_bonitas/CarritoPagar/"
+            to=""
             onClick={handleViewCartClick}
           >
             <div className="w-full rounded-md bg-romTurquoise-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
-              Ir a pagar
+              Pagar
             </div>
           </Link>
 
           <Link
-            className="inline-block text-sm text-gray-600 transition hover:text-gray-700 hover:underline hover:underline-offset-4"
+            className="pb-4 inline-block text-sm text-gray-600 transition hover:text-gray-700 hover:underline hover:underline-offset-4"
             to="/cacharreria_cosas_bonitas/"
             onClick={handleViewCartClick}
           >
