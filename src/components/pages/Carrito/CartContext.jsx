@@ -87,7 +87,6 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = async (id) => {
     deleteProductFromCart(state.items, dispatch, state.total, id);
-    dispatch({ type: "REMOVE_FROM_CART", payload: id });
   };
 
   const increaseProductQuantity = async (id) => {

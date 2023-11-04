@@ -279,13 +279,9 @@ export const deleteProductFromCart = async (
         method: "DELETE",
       }
     );
-    const data = await response.json();
     if (response.ok) {
-      // Suponiendo que la API devuelve el producto eliminado y necesitas calcular el nuevo total
-      const newTotal = total - data.price * data.quantity;
       // Ahora en lugar de actualizar el estado directamente, despachas las acciones
       dispatch({ type: "REMOVE_FROM_CART", payload: productId });
-      dispatch({ type: "SET_TOTAL", payload: newTotal });
     }
   } catch (error) {
     console.error("Hubo un error al eliminar el producto:", error);
