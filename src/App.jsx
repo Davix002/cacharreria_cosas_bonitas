@@ -23,7 +23,7 @@ import CambiarContrasena from "./Auth/CambiarContrasena";
 import AdminCategorias from "./components/pages/Administracion/CategoryList";
 import Spinner from "./components/pages/Inicio/Spinner";
 import { CartProvider } from "../src/components/pages/Carrito/CartContext";
-import { CategoryProvider } from "./components/pages/Administracion/CategoryContext";
+import { CategoryProvider } from "./components/pages/Administracion/CategoryProvider";
 
 export default function App() {
   const [categories, setCategories] = useState([]);

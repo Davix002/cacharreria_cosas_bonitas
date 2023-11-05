@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import CategoryForm from "./CategoryForm";
-import CategoryContext from "../Administracion/CategoryContext";
+import CategoryContext from "./CategoryContext";
 import {
   deleteCategory,
   createCategory,

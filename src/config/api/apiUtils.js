@@ -235,8 +235,6 @@ export const getCartItems = async (token) => {
 
     const data = await response.json();
 
-    console.log("data", data);
-
     const products = data.items.map((item) => ({
       id: item._id._id,
       name: item._id.name,

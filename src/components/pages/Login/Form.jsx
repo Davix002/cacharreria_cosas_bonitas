@@ -34,10 +34,10 @@ export default function Form() {
       const data = await response.json();
 
       if (data.token) {
-        logIn(data.token, data.role);
+        logIn(data.token, data.role, { email: data.email, nombre: data.nombre, _id: data._id, role: data.role });
         navigate("/cacharreria_cosas_bonitas/perfil");
     } else {
-        setErrorMessage(data.msg);
+      setErrorMessage(data.msg || "Error al iniciar sesión");
     }    
     } catch (err) {
       setErrorMessage("Error al iniciar sesión. Intente de nuevo.");

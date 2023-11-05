@@ -1,8 +1,7 @@
-import { createContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getCategories } from '../../../config/api/apiUtils';
 import PropTypes from 'prop-types';
-
-const CategoryContext = createContext();
+import CategoryContext from './CategoryContext';
 
 export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
@@ -48,5 +47,3 @@ export const CategoryProvider = ({ children }) => {
 CategoryProvider.propTypes = {
     children: PropTypes.node.isRequired
   };
-
-export default CategoryContext;

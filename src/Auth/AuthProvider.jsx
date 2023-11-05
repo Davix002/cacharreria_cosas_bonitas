@@ -36,14 +36,14 @@ export const AuthProvider = ({ children }) => {
                             'Authorization': `Bearer ${token}`
                         }
                     });
-    
+                    
                     if (response.status === 401) {
                         logOut(); // Llama a logOut si el token no es válido.
                         return;
                     }
     
                     const data = await response.json();
-                    logIn(token, data.role, data); // Actualiza el estado del usuario
+                    logIn(token, data.role, data);
                 } catch (error) {
                     console.error('Error al obtener el perfil:', error);
                 }
