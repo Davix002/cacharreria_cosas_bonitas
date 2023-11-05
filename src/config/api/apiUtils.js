@@ -91,15 +91,6 @@ export async function getCategories() {
   return await response.json();
 }
 
-export async function getCategory(id) {
-  const response = await fetch(`http://localhost:5800/api/categories/${id}`);
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.msg || "Error al obtener la categoría");
-  }
-  return await response.json();
-}
-
 export async function updateCategoryWithImage(id, formData) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
     method: "PUT",
