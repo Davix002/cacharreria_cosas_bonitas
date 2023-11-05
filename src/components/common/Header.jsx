@@ -44,10 +44,11 @@ const Header = () => {
             } absolute sm:relative w-full sm:w-auto bg-white sm:bg-transparent z-20 sm:z-0 top-full sm:top-auto left-0 sm:left-auto font-semibold`}
         >
           <ul className="flex flex-col sm:flex-row items-center">
-            <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer active">
+            <li className="border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer active">
               <Link
                 onClick={() => setIsOpen(!isOpen)}
                 to="/cacharreria_cosas_bonitas/"
+                className="block p-4"
               >
                 Inicio
               </Link>
@@ -56,18 +57,20 @@ const Header = () => {
             <li className=" border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
               <DropdownMenu isOpen={isOpen} setIsOpen={setIsOpen} />
             </li>
-            <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+            <li className="border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
               <Link
                 onClick={() => setIsOpen(!isOpen)}
                 to="/cacharreria_cosas_bonitas/Nosotros/"
+                className="block p-4"
               >
                 Nosotros
               </Link>
             </li>
-            <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+            <li className="border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
               <Link
                 onClick={() => setIsOpen(!isOpen)}
                 to="/cacharreria_cosas_bonitas/Contactanos/"
+                className="block p-4"
               >
                 Contáctanos
               </Link>
@@ -76,18 +79,20 @@ const Header = () => {
             {!isLogueado && (
               // Si el usuario no está logueado, muestra los botones de login y register
               <>
-                <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+                <li className="border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
                   <Link
                     onClick={() => setIsOpen(!isOpen)}
                     to="/cacharreria_cosas_bonitas/Login/"
+                    className="block p-4"
                   >
                     Iniciar Sesión
                   </Link>
                 </li>
-                <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+                <li className="border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
                   <Link
                     onClick={() => setIsOpen(!isOpen)}
                     to="/cacharreria_cosas_bonitas/Register/"
+                    className="block p-4"
                   >
                     Registrarse
                   </Link>
@@ -96,10 +101,11 @@ const Header = () => {
             )}
             {isLogueado && role === 'admin' && (
 
-              <li className="p-4 border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
+              <li className="border-b-2 border-romTurquoise-500 border-opacity-0 hover:border-opacity-100 hover:text-romTurquoise-500 duration-200 cursor-pointer">
                 <Link
                   onClick={() => setIsOpen(!isOpen)}
                   to="/cacharreria_cosas_bonitas/Admin/categorias/"
+                  className="block p-4"
                 >
                   Administrar
                 </Link>
