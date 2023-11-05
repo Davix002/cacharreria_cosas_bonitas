@@ -351,3 +351,33 @@ export const decreaseQuantity = async (products, productId) => {
     return products;
   }
 };
+
+export const updateProductQuantity = async (products, productId, quantity) => {
+  const product = products.find((prod) => prod.id === productId);
+  if (!product) return products;
+
+  try {
+    const response = await fetch(
+      `http://localhost:5800/api/cart/item/${productId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity: quantity }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const updatedItem = await response.json();
+
+    // Devuelves el producto actualizado para que el estado pueda ser actualizado en el front-end
+    return updatedItem;
+  } catch (error) {
+    console.error("Error al actualizar la cantidad:", error);
+    return null; // Devuelve null o un error específico para manejarlo en el front-end
+  }
+};
