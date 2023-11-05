@@ -7,6 +7,7 @@ export default function PerfilDropDown({ setPerfilDropDown }) {
 
   function handleOptionClick() {
     setPerfilDropDown(false);
+    logOut();
   }
 
   return (
@@ -37,10 +38,7 @@ export default function PerfilDropDown({ setPerfilDropDown }) {
           <li>
             <Link
               to="/cacharreria_cosas_bonitas/Login/"
-              onClick={() => {
-                handleOptionClick();
-                logOut();
-              }}
+              onClick={() => handleOptionClick()}
             >
               Cerrar sesión
             </Link>

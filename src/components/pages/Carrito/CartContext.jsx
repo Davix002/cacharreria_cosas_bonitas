@@ -92,6 +92,22 @@ export const CartProvider = ({ children }) => {
   }
   }, [isLogueado, token]);
 
+  useEffect(() => {
+    if (!isLogueado) {
+      // Limpia el carrito cuando el usuario no está logueado
+      dispatch({ type: "SET_CART_ITEMS", payload: { products: [], total: 0 } });
+    } else {
+      // Carga los artículos del carrito cuando el usuario está logueado
+      const fetchCartItems = async () => {
+        const cartData = await getCartItems(token);
+        dispatch({ type: "SET_CART_ITEMS", payload: cartData });
+      };
+  
+      fetchCartItems();
+    }
+  }, [isLogueado, token]);
+  
+
   const removeFromCart = async (id) => {
     deleteProductFromCart(dispatch, id);
   };
