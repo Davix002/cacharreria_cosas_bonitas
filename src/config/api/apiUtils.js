@@ -214,10 +214,28 @@ export async function FormularioReestablecerContrasena(
 
 //Carrito
 
-export const getCartItems = async () => {
+export const getCartItems = async (token) => {
+  if (!token) {
+    console.error("No se proporcionó token de autenticación.");
+    return { products: [], total: 0 };
+  }
+
   try {
-    const response = await fetch("http://localhost:5800/api/cart");
+    const response = await fetch("http://localhost:5800/api/cart", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Asegúrate de manejar las respuestas que no son exitosas
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
+
+    console.log("data", data);
 
     const products = data.items.map((item) => ({
       id: item._id._id,

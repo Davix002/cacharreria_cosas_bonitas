@@ -44,7 +44,7 @@ export default function Carrito() {
                     <div className="min-w-24 flex">
                       <button
                         onClick={() => decreaseProductQuantity(product.id)}
-                        ctype="button" className="h-7 w-7"
+                        type="button" className="h-7 w-7"
                       >
                         -
                       </button>

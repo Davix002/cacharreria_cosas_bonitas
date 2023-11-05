@@ -1,5 +1,7 @@
 import { createContext, useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
+import AuthContext from "../../../Auth/AuthContext";
+import { useContext } from "react";
 import {
   getCartItems,
   increaseQuantity,
@@ -71,19 +73,24 @@ const cartReducer = (state, action) => {
 };
 
 export const CartProvider = ({ children }) => {
+  const { isLogueado } = useContext(AuthContext);
+  const token = localStorage.getItem('token');
+
   const [state, dispatch] = useReducer(cartReducer, {
     items: [],
     total: 0,
   });
 
   useEffect(() => {
+    if (isLogueado) {
     const fetchCartItems = async () => {
-      const cartData = await getCartItems();
+      const cartData = await getCartItems(token);
       dispatch({ type: "SET_CART_ITEMS", payload: cartData });
     };
 
     fetchCartItems();
-  }, []);
+  }
+  }, [isLogueado, token]);
 
   const removeFromCart = async (id) => {
     deleteProductFromCart(dispatch, id);
