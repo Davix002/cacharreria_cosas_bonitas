@@ -113,68 +113,67 @@ const ProductList = () => {
         </Link>
       </div>
       <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
-
-          <div className="w-full mb-6">
-            <label className="block text-lf font-medium mb-1">
-              Nombre del nuevo producto
-            </label>
-            <input
-              className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
-              value={newProductName}
-              onChange={(e) => setNewProductName(e.target.value)}
-              placeholder="Ingrese el nombre del producto"
-            />
-            <label className="block text-lf font-medium mb-1">
-              Marca del nuevo producto
-            </label>
-            <input
-              className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
-              value={newProductBrand}
-              onChange={(e) => setNewProductBrand(e.target.value)}
-              placeholder="Ingrese la marca del producto"
-            />
-            <label className="block text-lf font-medium mb-1">
-              Precio del nuevo producto
-            </label>
-            <input
-              className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
-              type="number"
-              value={newProductPrice}
-              onChange={(e) => setNewProductPrice(e.target.value)}
-              placeholder="Ingrese el precio del producto"
-            />
-            <label className="block text-lf font-medium mb-1">
-              Categorías del nuevo producto
-            </label>
-            <select
-              className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
-              multiple={true}
-              value={newProductCategories}
-              onChange={handleCategoryChange}
-            >
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            <label className="block text-lf font-medium mb-1">
-              Imagen del nuevo producto
-            </label>
-            <input
-              className="mt-2 w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              ref={fileInputRef}
-            />
-            <button
-              className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
-              onClick={handleAddProduct}
-            >
-              Agregar Producto
-            </button>
-          </div>
+        <div className="w-full mb-6">
+          <label className="block text-lf font-medium mb-1">
+            Nombre del nuevo producto
+          </label>
+          <input
+            className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+            value={newProductName}
+            onChange={(e) => setNewProductName(e.target.value)}
+            placeholder="Ingrese el nombre del producto"
+          />
+          <label className="block text-lf font-medium mb-1">
+            Marca del nuevo producto
+          </label>
+          <input
+            className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+            value={newProductBrand}
+            onChange={(e) => setNewProductBrand(e.target.value)}
+            placeholder="Ingrese la marca del producto"
+          />
+          <label className="block text-lf font-medium mb-1">
+            Precio del nuevo producto
+          </label>
+          <input
+            className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+            type="number"
+            value={newProductPrice}
+            onChange={(e) => setNewProductPrice(e.target.value)}
+            placeholder="Ingrese el precio del producto"
+          />
+          <label className="block text-lf font-medium mb-1">
+            Categorías del nuevo producto
+          </label>
+          <select
+            className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+            multiple={true}
+            value={newProductCategories}
+            onChange={handleCategoryChange}
+          >
+            {categories.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <label className="block text-lf font-medium mb-1">
+            Imagen del nuevo producto
+          </label>
+          <input
+            className="mt-2 w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            ref={fileInputRef}
+          />
+          <button
+            className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
+            onClick={handleAddProduct}
+          >
+            Agregar Producto
+          </button>
+        </div>
       </div>
       <div className="w-full max-w-6xl p-6 m-6 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center">
         <table className="bg-white w-full rounded-md shadow-md overflow-hidden">

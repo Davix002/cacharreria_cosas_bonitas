@@ -18,10 +18,6 @@ const ProductItem = (props) => {
   const { dispatch } = useCart();
 
   const addToCart = async (product) => {
-    if (!isLogueado) {
-      return;
-    }
-  
     // Estructura del producto como se espera en el estado y el componente Carrito
     const productToAdd = {
       id: product.id,
@@ -35,9 +31,12 @@ const ProductItem = (props) => {
     // Agregar producto al carrito en el estado global
     dispatch({ type: 'ADD_TO_CART', payload: productToAdd });
   
-    // Hacer solicitud al backend para actualizar el carrito en la base de datos
-    await addProductToCart(usuario, productToAdd);
+    // Si el usuario está logueado, hacer solicitud al backend para actualizar el carrito en la base de datos
+    if (isLogueado) {
+      await addProductToCart(usuario, productToAdd);
+    }
   };
+  
   
   const formattedPrice = formatPrice(parseFloat(props.product.price));
 

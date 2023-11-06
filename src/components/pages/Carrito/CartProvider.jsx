@@ -1,16 +1,15 @@
-import { createContext, useReducer, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 import AuthContext from "../../../Auth/AuthContext";
 import { useContext } from "react";
+import CartContext from "./CartContext";
 import {
   getCartItems,
   increaseQuantity,
   decreaseQuantity,
   deleteProductFromCart,
-  updateProductQuantity
+  updateProductQuantity,
 } from "../../../config/api/apiUtils";
-
-export const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   let updatedItems = [...state.items];
@@ -90,17 +89,6 @@ export const CartProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (isLogueado) {
-      const fetchCartItems = async () => {
-        const cartData = await getCartItems(token);
-        dispatch({ type: "SET_CART_ITEMS", payload: cartData });
-      };
-
-      fetchCartItems();
-    }
-  }, [isLogueado, token]);
-
-  useEffect(() => {
     if (!isLogueado) {
       // Limpia el carrito cuando el usuario no está logueado
       dispatch({ type: "SET_CART_ITEMS", payload: { products: [], total: 0 } });
@@ -114,6 +102,33 @@ export const CartProvider = ({ children }) => {
       fetchCartItems();
     }
   }, [isLogueado, token]);
+
+  useEffect(() => {
+    const localCart = localStorage.getItem("cart");
+    if (localCart) {
+      // Si hay un carrito en el almacenamiento local, se carga en el estado
+      dispatch({ type: "SET_CART_ITEMS", payload: JSON.parse(localCart) });
+    } else if (isLogueado) {
+      // Carga los artículos del carrito cuando el usuario está logueado
+      const fetchCartItems = async () => {
+        const cartData = await getCartItems(token);
+        dispatch({ type: "SET_CART_ITEMS", payload: cartData });
+      };
+
+      fetchCartItems();
+    }
+    // Si el usuario no está logueado y no hay carrito en el local storage, se mantiene el estado por defecto
+  }, [isLogueado, token]);
+
+  // Cuando se actualice el estado del carrito, actualizar el almacenamiento local si el usuario no está logueado
+  useEffect(() => {
+    if (!isLogueado) {
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({ products: state.items, total: state.total })
+      );
+    }
+  }, [state, isLogueado]);
 
   const removeFromCart = async (id) => {
     deleteProductFromCart(dispatch, id);
@@ -134,12 +149,18 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateQuantity = async (id, quantity) => {
-    const updatedProduct = await updateProductQuantity(state.items, id, quantity);
+    const updatedProduct = await updateProductQuantity(
+      state.items,
+      id,
+      quantity
+    );
     if (updatedProduct) {
       dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } });
     } else {
       // Manejar el error si la actualización no fue exitosa
-      console.error("No se pudo actualizar la cantidad del producto en el carrito");
+      console.error(
+        "No se pudo actualizar la cantidad del producto en el carrito"
+      );
     }
   };
 
@@ -151,7 +172,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         increaseProductQuantity,
         decreaseProductQuantity,
-        updateQuantity
+        updateQuantity,
       }}
     >
       {children}
