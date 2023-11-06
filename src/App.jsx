@@ -11,7 +11,6 @@ import Category from "./components/pages/Productos/Category";
 import { fetchCategories } from "../src/config/api/apiUtils";
 import Register from "./components/pages/Register/Register";
 import Carrito from "./components/pages/Carrito/Carrito";
-
 import ConfirmarRegistro from "./Auth/ConfirmarRegistro";
 import Perfil from "./components/pages/Users/Perfil";
 import EsperaConfirmacion from "./components/pages/Register/EsperaConfirmacion";
@@ -24,6 +23,8 @@ import AdminCategorias from "./components/pages/Administracion/CategoryList";
 import Spinner from "./components/pages/Inicio/Spinner";
 import { CartProvider } from "../src/components/pages/Carrito/CartContext";
 import { CategoryProvider } from "./components/pages/Administracion/CategoryProvider";
+import ProductList from "./components/pages/Administracion/ProductList";
+import { ProductProvider } from "./components/pages/Administracion/ProductProvider";
 
 export default function App() {
   const [categories, setCategories] = useState([]);
@@ -54,6 +55,7 @@ export default function App() {
   return (
     <AuthProvider>
       <CategoryProvider>
+      <ProductProvider>
         <CartProvider>
           <Router>
             <Header />
@@ -128,6 +130,7 @@ export default function App() {
             <Footer />
           </Router>
         </CartProvider>
+        </ProductProvider>
       </CategoryProvider>
     </AuthProvider>
   );

@@ -30,6 +30,7 @@ export async function getProducts() {
         'Content-Type': 'application/json'
       }
     });
+    
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -51,6 +52,65 @@ export async function getProducts() {
     console.error("Error al buscar productos:", error);
     return [];
   }
+}
+
+export async function createProductWithImage(formData) {
+  const response = await fetch("http://localhost:5800/api/products/", {
+    method: "POST",
+    body: formData, // Nota: no establezcas headers aquí
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.msg || "Error al crear el producto");
+  }
+
+  return await response.json();
+}
+
+
+export async function updateProductWithImage(id, formData) {
+  const response = await fetch(`http://localhost:5800/api/products/${id}`, {
+    method: "PUT",
+    body: formData, // Nota: no establezcas headers aquí
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.msg || "Error al actualizar el producto");
+  }
+
+  return await response.json();
+}
+
+export async function uploadProductImage(image) {
+  const formData = new FormData();
+  formData.append("image", image);
+
+  const response = await fetch("http://localhost:5800/api/products/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.msg || "Error al subir la imagen");
+  }
+
+  return await response.json();
+}
+
+export async function deleteProduct(id) {
+  const response = await fetch(`http://localhost:5800/api/products/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.msg || "Error al eliminar el producto");
+  }
+
+  return await response.json();
 }
 
 export async function registrar({ nombre, password, email, navigate }) {

@@ -1,16 +1,22 @@
 import { useState, useContext } from "react";
 import ProductForm from "./ProductForm";
 import ProductContext from "../Administracion/ProductContext";
+import CategoryContext from "./CategoryContext";
 import {
-  getProducts
+  uploadProductImage,
+  deleteProduct
 } from "../../../config/api/apiUtils";
 import { Link } from "react-router-dom";
 
 const ProductList = () => {
   const { products, addProduct, removeProduct, updateProduct } = useContext(ProductContext);
+  const { categories } = useContext(CategoryContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productImage, setProductImage] = useState(null);
   const [newProductName, setNewProductName] = useState("");
+  const [newProductBrand, setNewProductBrand] = useState(""); // Nuevo estado para la marca
+  const [newProductPrice, setNewProductPrice] = useState(""); // Nuevo estado para el precio
+  const [newProductCategories, setNewProductCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = async (id) => {
@@ -21,7 +27,7 @@ const ProductList = () => {
   };
 
   const handleFormSubmit = (updatedProduct) => {
-    if (updatedProduct && updatedProduct._id) {
+    if (updatedProduct && updatedProduct.id) {
       updateProduct(updatedProduct);
     }
     setSelectedProduct(null);
@@ -39,6 +45,19 @@ const ProductList = () => {
       return;
     }
 
+    if (newProductBrand.trim() === "") {
+      alert("La marca del producto no puede estar vacía.");
+      return;
+    }
+    if (newProductPrice.trim() === "") {
+      alert("El precio del producto no puede estar vacío.");
+      return;
+    }
+    if (newProductCategories.length === 0) {
+      alert("Debe seleccionar al menos una categoría para el producto.");
+      return;
+    }
+
     try {
       // Primero sube la imagen
       const imageResponse = await uploadProductImage(productImage);
@@ -46,7 +65,11 @@ const ProductList = () => {
       // Luego crea la categoría con el nombre y la URL de la imagen
       const newProduct = await createProduct({
         name: newProductName,
-        picture: imageResponse.imageUrl,
+        thumbnail: imageResponse.imageUrl,
+        brand: newProductBrand, // Incluye la marca
+        price: newProductPrice, // Incluye el precio
+        categories: newProductCategories,
+
       });
 
       // Actualiza el estado local con la nueva categoría
@@ -64,15 +87,20 @@ const ProductList = () => {
     setProductImage(e.target.files[0]);
   };
 
+  const handleCategoryChange = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+    setNewProductCategories(selectedOptions);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200 py-8">
 
       <div className="w-full max-w-2xl p-6 mb-6 bg-white rounded-xl shadow-lg">
-        <Link to="/cacharreria_cosas_bonitas/Admin/productos">
+        <Link to="/cacharreria_cosas_bonitas/Admin/categorias/">
           <button
             className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
           >
-            Administrar Productos
+            Administrar Categorias
           </button>
         </Link>
       </div>
@@ -89,6 +117,40 @@ const ProductList = () => {
               onChange={(e) => setNewProductName(e.target.value)}
               placeholder="Ingrese el nombre del producto"
             />
+            <label className="block text-lf font-medium mb-1">
+              Marca del nuevo producto
+            </label>
+            <input
+              className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+              value={newProductBrand}
+              onChange={(e) => setNewProductBrand(e.target.value)}
+              placeholder="Ingrese la marca del producto"
+            />
+            <label className="block text-lf font-medium mb-1">
+              Precio del nuevo producto
+            </label>
+            <input
+              className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+              type="number"
+              value={newProductPrice}
+              onChange={(e) => setNewProductPrice(e.target.value)}
+              placeholder="Ingrese el precio del producto"
+            />
+            <label className="block text-lf font-medium mb-1">
+              Categorías del nuevo producto
+            </label>
+            <select
+              className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
+              multiple={true} // Permite selecciones múltiples, quita esta línea si solo quieres una selección
+              value={newProductCategories}
+              onChange={handleCategoryChange}
+            >
+              {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
             <label className="block text-lf font-medium mb-1">
               Imagen del nuevo producto
             </label>
@@ -113,8 +175,10 @@ const ProductList = () => {
               </tr>
             </thead>
             <tbody>
-              {categories.map((cat) => (
-                <tr key={cat._id} className="hover:bg-gray-100">
+              {products.map((cat) => (
+
+                <tr key={cat.id} className="hover:bg-gray-100">
+
                   <td className="border-t py-2 px-4">{cat.name}</td>
                   <td className="border-t py-2 px-4 just flex justify-around">
                     <button
@@ -127,7 +191,7 @@ const ProductList = () => {
                       Editar
                     </button>
                     <button
-                      onClick={() => handleDelete(cat._id)}
+                      onClick={() => handleDelete(cat.id)}
                       className="py-1 px-3 rounded-md shadow-md bg-red-600 hover:bg-red-700 text-white focus:outline-none transition duration-150 ease-in-out"
                     >
                       Eliminar
