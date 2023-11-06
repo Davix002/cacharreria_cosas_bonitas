@@ -16,7 +16,7 @@ function Perfil() {
         if (!token) {
             navigate('/cacharreria_cosas_bonitas/Login/');
         }
-    }, [navigate]);
+    }, [navigate, usuario]);
 
     if (!usuario) {
         return <div className="flex items-center justify-center h-screen">Cargando perfil...</div>;

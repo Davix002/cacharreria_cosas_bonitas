@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useMenuColumns from "./useMenuColumns";
 import PropTypes from "prop-types";
-import Spinner from "../pages/Inicio/Spinner";
 import CategoryContext from '../pages/Administracion/CategoryContext';
 
 const SubMenu = "block px-4 py-2 text-gray-700 hover:bg-gray-100 text-xs sm:text-sm";
@@ -14,7 +13,7 @@ const DropdownMenu = ({isOpen, setIsOpen}) => {
   const numColumns = useMenuColumns();
 
   if (loading) {
-    return <Spinner />;
+    return null;
   }
   
   const columnSize = Math.ceil(categories.length / numColumns);

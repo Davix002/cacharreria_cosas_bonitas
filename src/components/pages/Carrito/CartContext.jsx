@@ -1,10 +1,13 @@
 import { createContext, useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
+import AuthContext from "../../../Auth/AuthContext";
+import { useContext } from "react";
 import {
   getCartItems,
   increaseQuantity,
   decreaseQuantity,
   deleteProductFromCart,
+  updateProductQuantity
 } from "../../../config/api/apiUtils";
 
 export const CartContext = createContext();
@@ -54,6 +57,13 @@ const cartReducer = (state, action) => {
           : item
       );
       break;
+    case "UPDATE_QUANTITY": {
+      const { id, quantity } = action.payload;
+      updatedItems = updatedItems.map((item) =>
+        item.id === id ? { ...item, quantity: quantity } : item
+      );
+      break;
+    }
     default:
       return state;
   }
@@ -71,19 +81,39 @@ const cartReducer = (state, action) => {
 };
 
 export const CartProvider = ({ children }) => {
+  const { isLogueado } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
+
   const [state, dispatch] = useReducer(cartReducer, {
     items: [],
     total: 0,
   });
 
   useEffect(() => {
-    const fetchCartItems = async () => {
-      const cartData = await getCartItems();
-      dispatch({ type: "SET_CART_ITEMS", payload: cartData });
-    };
+    if (isLogueado) {
+      const fetchCartItems = async () => {
+        const cartData = await getCartItems(token);
+        dispatch({ type: "SET_CART_ITEMS", payload: cartData });
+      };
 
-    fetchCartItems();
-  }, []);
+      fetchCartItems();
+    }
+  }, [isLogueado, token]);
+
+  useEffect(() => {
+    if (!isLogueado) {
+      // Limpia el carrito cuando el usuario no está logueado
+      dispatch({ type: "SET_CART_ITEMS", payload: { products: [], total: 0 } });
+    } else {
+      // Carga los artículos del carrito cuando el usuario está logueado
+      const fetchCartItems = async () => {
+        const cartData = await getCartItems(token);
+        dispatch({ type: "SET_CART_ITEMS", payload: cartData });
+      };
+
+      fetchCartItems();
+    }
+  }, [isLogueado, token]);
 
   const removeFromCart = async (id) => {
     deleteProductFromCart(dispatch, id);
@@ -103,6 +133,16 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const updateQuantity = async (id, quantity) => {
+    const updatedProduct = await updateProductQuantity(state.items, id, quantity);
+    if (updatedProduct) {
+      dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } });
+    } else {
+      // Manejar el error si la actualización no fue exitosa
+      console.error("No se pudo actualizar la cantidad del producto en el carrito");
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -111,6 +151,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         increaseProductQuantity,
         decreaseProductQuantity,
+        updateQuantity
       }}
     >
       {children}

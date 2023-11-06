@@ -73,7 +73,6 @@ export default function CarritoDropDown({ setCarritoDropDown }) {
             </div>
           </Link>
           <Link
-            to=""
             onClick={handleViewCartClick}
           >
             <div className="w-full rounded-md bg-romTurquoise-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">

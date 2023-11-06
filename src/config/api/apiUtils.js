@@ -125,15 +125,6 @@ export async function getCategories() {
   return await response.json();
 }
 
-export async function getCategory(id) {
-  const response = await fetch(`http://localhost:5800/api/categories/${id}`);
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.msg || "Error al obtener la categoría");
-  }
-  return await response.json();
-}
-
 export async function updateCategoryWithImage(id, formData) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
     method: "PUT",
@@ -257,9 +248,25 @@ export async function FormularioReestablecerContrasena(
 
 //Carrito
 
-export const getCartItems = async () => {
+export const getCartItems = async (token) => {
+  if (!token) {
+    console.error("No se proporcionó token de autenticación.");
+    return { products: [], total: 0 };
+  }
+
   try {
-    const response = await fetch("http://localhost:5800/api/cart");
+    const response = await fetch("http://localhost:5800/api/cart", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Asegúrate de manejar las respuestas que no son exitosas
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
 
     const products = data.items.map((item) => ({
@@ -376,5 +383,35 @@ export const decreaseQuantity = async (products, productId) => {
   } catch (error) {
     console.error("Error al disminuir la cantidad:", error);
     return products;
+  }
+};
+
+export const updateProductQuantity = async (products, productId, quantity) => {
+  const product = products.find((prod) => prod.id === productId);
+  if (!product) return products;
+
+  try {
+    const response = await fetch(
+      `http://localhost:5800/api/cart/item/${productId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity: quantity }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const updatedItem = await response.json();
+
+    // Devuelves el producto actualizado para que el estado pueda ser actualizado en el front-end
+    return updatedItem;
+  } catch (error) {
+    console.error("Error al actualizar la cantidad:", error);
+    return null; // Devuelve null o un error específico para manejarlo en el front-end
   }
 };
