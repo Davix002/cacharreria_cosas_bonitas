@@ -24,6 +24,7 @@ import AdminCategorias from "./components/pages/Administracion/CategoryList";
 import Spinner from "./components/pages/Inicio/Spinner";
 import { CartProvider } from "../src/components/pages/Carrito/CartContext";
 import { CategoryProvider } from "./components/pages/Administracion/CategoryContext";
+import { ProductList } from "./components/pages/Administracion/ProductList";
 
 export default function App() {
   const [categories, setCategories] = useState([]);
@@ -67,11 +68,11 @@ export default function App() {
                   </PrivateRoute>
                 }
               />
-              {/*<Route path="/cacharreria_cosas_bonitas/Admin/productos" element={
-           <PrivateRoute roles={['admin']}>
-              <AdminProductos />
-            </PrivateRoute>
-          } />*/}
+              <Route path="/cacharreria_cosas_bonitas/Admin/productos" element={
+                <PrivateRoute roles={['admin']}>
+                  <ProductList />
+                </PrivateRoute>
+              } />
               <Route path="/cacharreria_cosas_bonitas/" element={<Inicio />} />
               <Route
                 path="/cacharreria_cosas_bonitas/Nosotros/"
@@ -94,7 +95,7 @@ export default function App() {
                 path="/cacharreria_cosas_bonitas/Carrito/"
                 element={<Carrito />}
               />
-              
+
               <Route
                 path="/cacharreria_cosas_bonitas/confirmar/:token"
                 element={<ConfirmarRegistro />}

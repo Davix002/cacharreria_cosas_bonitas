@@ -1,69 +1,67 @@
 import { useState, useContext } from "react";
-import CategoryForm from "./CategoryForm";
-import CategoryContext from "../Administracion/CategoryContext";
+import ProductForm from "./ProductForm";
+import ProductContext from "../Administracion/ProductContext";
 import {
-  deleteCategory,
-  createCategory,
-  uploadCategoryImage,
+  getProducts
 } from "../../../config/api/apiUtils";
 import { Link } from "react-router-dom";
 
-const CategoryList = () => {
-  const { categories, addCategory, removeCategory, updateCategory } = useContext(CategoryContext);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [categoryImage, setCategoryImage] = useState(null);
-  const [newCategoryName, setNewCategoryName] = useState("");
+const ProductList = () => {
+  const { products, addProduct, removeProduct, updateProduct } = useContext(ProductContext);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productImage, setProductImage] = useState(null);
+  const [newProductName, setNewProductName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = async (id) => {
-    if (window.confirm("¿Está seguro de que desea eliminar esta categoría?")) {
-      await deleteCategory(id);
-      removeCategory(id);
+    if (window.confirm("¿Está seguro de que desea eliminar este producto?")) {
+      await deleteProduct(id);
+      removeProduct(id);
     }
   };
 
-  const handleFormSubmit = (updatedCategory) => {
-    if (updatedCategory && updatedCategory._id) {
-      updateCategory(updatedCategory);
+  const handleFormSubmit = (updatedProduct) => {
+    if (updatedProduct && updatedProduct._id) {
+      updateProduct(updatedProduct);
     }
-    setSelectedCategory(null);
+    setSelectedProduct(null);
   };
 
 
-  const handleAddCategory = async () => {
-    if (newCategoryName.trim() === "") {
-      alert("El nombre de la categoría no puede estar vacío.");
+  const handleAddProduct = async () => {
+    if (newProductName.trim() === "") {
+      alert("El nombre del producto no puede estar vacío.");
       return;
     }
 
-    if (!categoryImage) {
-      alert("Por favor, selecciona una imagen para la categoría.");
+    if (!productImage) {
+      alert("Por favor, selecciona una imagen para el producto.");
       return;
     }
 
     try {
       // Primero sube la imagen
-      const imageResponse = await uploadCategoryImage(categoryImage);
+      const imageResponse = await uploadProductImage(productImage);
 
       // Luego crea la categoría con el nombre y la URL de la imagen
-      const newCategory = await createCategory({
-        name: newCategoryName,
+      const newProduct = await createProduct({
+        name: newProductName,
         picture: imageResponse.imageUrl,
       });
 
       // Actualiza el estado local con la nueva categoría
-      addCategory(newCategory);
+      addProduct(newProduct);
 
       // Limpia los inputs
-      setNewCategoryName("");
-      setCategoryImage(null);
+      setNewProductName("");
+      setProductImage(null);
     } catch (error) {
-      console.error("Error al agregar la categoría:", error);
+      console.error("Error al agregar el producto:", error);
     }
   };
 
   const handleImageChange = (e) => {
-    setCategoryImage(e.target.files[0]);
+    setProductImage(e.target.files[0]);
   };
 
   return (
@@ -83,16 +81,16 @@ const CategoryList = () => {
         <div className="flex flex-col items-center space-y-4">
           <div className="w-full mb-4">
             <label className="block text-lf font-medium mb-1">
-              Nombre de la nueva categoría
+              Nombre del nuevo producto
             </label>
             <input
               className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-              placeholder="Ingrese el nombre de la categoría"
+              value={newProductName}
+              onChange={(e) => setNewProductName(e.target.value)}
+              placeholder="Ingrese el nombre del producto"
             />
             <label className="block text-lf font-medium mb-1">
-              Imagen de la nueva categoría
+              Imagen del nuevo producto
             </label>
             <input
               className="mt-2 w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
@@ -102,15 +100,15 @@ const CategoryList = () => {
             />
             <button
               className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
-              onClick={handleAddCategory}
+              onClick={handleAddProduct}
             >
-              Agregar Categoría
+              Agregar Producto
             </button>
           </div>
           <table className="bg-white  w-full rounded-md shadow-md overflow-hidden">
             <thead className="bg-gray-800 text-white">
               <tr>
-                <th className="py-2 px-4">Nombre de la categoría</th>
+                <th className="py-2 px-4">Nombre del producto</th>
                 <th className="py-2 px-4">Acciones</th>
               </tr>
             </thead>
@@ -121,7 +119,7 @@ const CategoryList = () => {
                   <td className="border-t py-2 px-4 just flex justify-around">
                     <button
                       onClick={() => {
-                        setSelectedCategory(cat);
+                        setSelectedProduct(cat);
                         setIsModalOpen(true);
                       }}
                       className="mr-2 py-1 px-3 rounded-md shadow-md bg-blue-700 hover:bg-blue-800 text-white focus:outline-none transition duration-150 ease-in-out"
@@ -149,10 +147,10 @@ const CategoryList = () => {
                 >
                   X
                 </button>
-                <CategoryForm
-                  categoryToUpdate={selectedCategory}
-                  onFormSubmit={(updatedCategory) => {
-                    handleFormSubmit(updatedCategory);
+                <ProductForm
+                  productToUpdate={selectedProduct}
+                  onFormSubmit={(updatedProduct) => {
+                    handleFormSubmit(updatedProduct);
                     setIsModalOpen(false);
                   }}
                 />
@@ -165,4 +163,4 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+export default ProductList;
