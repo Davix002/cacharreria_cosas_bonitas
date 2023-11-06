@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import CategoryForm from "./CategoryForm";
 import CategoryContext from "./CategoryContext";
 import {
@@ -14,6 +14,8 @@ const CategoryList = () => {
   const [categoryImage, setCategoryImage] = useState(null);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const fileInputRef = useRef(null);
+
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Está seguro de que desea eliminar esta categoría?")) {
@@ -57,6 +59,10 @@ const CategoryList = () => {
       // Limpia los inputs
       setNewCategoryName("");
       setCategoryImage(null);
+      // Restablece el campo de entrada de archivo
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
     } catch (error) {
       console.error("Error al agregar la categoría:", error);
     }
@@ -99,6 +105,7 @@ const CategoryList = () => {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
+              ref={fileInputRef}
             />
             <button
               className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"

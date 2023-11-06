@@ -21,16 +21,15 @@ export async function fetchProductsByCategory(categoryId) {
 }
 
 export async function getProducts() {
-  const url = 'http://localhost:5800/api/products/';
+  const url = "http://localhost:5800/api/products/";
 
   try {
     const response = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     });
-    
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -39,19 +38,33 @@ export async function getProducts() {
     const productsData = await response.json();
 
     const products = productsData.map((product) => ({
-      id: product._id,
+      _id: product._id,
       name: product.name,
       thumbnail: product.thumbnail,
       brand: product.brand || "Cosas Bonitas",
-      price: product.price,
+      price: product.price || "Sin precio",
       imageAlt: product.name,
     }));
     return products;
-    
   } catch (error) {
     console.error("Error al buscar productos:", error);
     return [];
   }
+}
+
+export async function createProduct(productData) {
+  const response = await fetch("http://localhost:5800/api/products/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(productData),
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.msg || "Error al crear el producto");
+  }
+
+  return await response.json();
 }
 
 export async function createProductWithImage(formData) {
@@ -67,7 +80,6 @@ export async function createProductWithImage(formData) {
 
   return await response.json();
 }
-
 
 export async function updateProductWithImage(id, formData) {
   const response = await fetch(`http://localhost:5800/api/products/${id}`, {
@@ -114,6 +126,7 @@ export async function deleteProduct(id) {
 }
 
 export async function registrar({ nombre, password, email, navigate }) {
+  const baseUrl = window.location.origin;
   try {
     const response = await fetch(`http://localhost:5800/api/usuarios/`, {
       method: "POST",
@@ -124,6 +137,7 @@ export async function registrar({ nombre, password, email, navigate }) {
         nombre: nombre,
         password: password,
         email: email,
+        baseUrl: baseUrl,
       }),
     });
     const data = await response.json();
@@ -140,7 +154,6 @@ export async function registrar({ nombre, password, email, navigate }) {
 }
 
 // PARA LAS CATEGORIAS''
-
 
 export async function fetchCategories() {
   try {
@@ -244,6 +257,7 @@ export async function uploadCategoryImage(image) {
 }
 
 export async function cambioContrasena({ email, navigate }) {
+  const baseUrl = window.location.origin;
   try {
     const response = await fetch(
       `http://localhost:5800/api/usuarios/olvide-password`,
@@ -254,6 +268,7 @@ export async function cambioContrasena({ email, navigate }) {
         },
         body: JSON.stringify({
           email: email,
+          baseUrl: baseUrl,
         }),
       }
     );

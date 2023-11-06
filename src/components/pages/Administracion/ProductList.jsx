@@ -1,23 +1,26 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import ProductForm from "./ProductForm";
 import ProductContext from "../Administracion/ProductContext";
 import CategoryContext from "./CategoryContext";
 import {
+  createProduct,
   uploadProductImage,
-  deleteProduct
+  deleteProduct,
 } from "../../../config/api/apiUtils";
 import { Link } from "react-router-dom";
 
 const ProductList = () => {
-  const { products, addProduct, removeProduct, updateProduct } = useContext(ProductContext);
+  const { products, addProduct, removeProduct, updateProduct } =
+    useContext(ProductContext);
   const { categories } = useContext(CategoryContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productImage, setProductImage] = useState(null);
   const [newProductName, setNewProductName] = useState("");
-  const [newProductBrand, setNewProductBrand] = useState(""); // Nuevo estado para la marca
-  const [newProductPrice, setNewProductPrice] = useState(""); // Nuevo estado para el precio
+  const [newProductBrand, setNewProductBrand] = useState("");
+  const [newProductPrice, setNewProductPrice] = useState("");
   const [newProductCategories, setNewProductCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const fileInputRef = useRef(null);
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Está seguro de que desea eliminar este producto?")) {
@@ -27,12 +30,11 @@ const ProductList = () => {
   };
 
   const handleFormSubmit = (updatedProduct) => {
-    if (updatedProduct && updatedProduct.id) {
+    if (updatedProduct && updatedProduct._id) {
       updateProduct(updatedProduct);
     }
     setSelectedProduct(null);
   };
-
 
   const handleAddProduct = async () => {
     if (newProductName.trim() === "") {
@@ -66,10 +68,9 @@ const ProductList = () => {
       const newProduct = await createProduct({
         name: newProductName,
         thumbnail: imageResponse.imageUrl,
-        brand: newProductBrand, // Incluye la marca
-        price: newProductPrice, // Incluye el precio
-        categories: newProductCategories,
-
+        brand: newProductBrand,
+        price: newProductPrice,
+        categoryIds: newProductCategories,
       });
 
       // Actualiza el estado local con la nueva categoría
@@ -77,7 +78,14 @@ const ProductList = () => {
 
       // Limpia los inputs
       setNewProductName("");
+      setNewProductBrand("");
+      setNewProductPrice("");
       setProductImage(null);
+      setNewProductCategories([]);
+      // Restablece el campo de entrada de archivo
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     } catch (error) {
       console.error("Error al agregar el producto:", error);
     }
@@ -88,24 +96,23 @@ const ProductList = () => {
   };
 
   const handleCategoryChange = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
     setNewProductCategories(selectedOptions);
   };
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200 py-8">
-
       <div className="w-full max-w-2xl p-6 mb-6 bg-white rounded-xl shadow-lg">
         <Link to="/cacharreria_cosas_bonitas/Admin/categorias/">
-          <button
-            className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
-          >
+          <button className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold">
             Administrar Categorias
           </button>
         </Link>
       </div>
       <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
-
         <div className="flex flex-col items-center space-y-4">
           <div className="w-full mb-4">
             <label className="block text-lf font-medium mb-1">
@@ -141,7 +148,7 @@ const ProductList = () => {
             </label>
             <select
               className="w-full border-2 border-gray-100 rounded-xl p-2 bg-transparent"
-              multiple={true} // Permite selecciones múltiples, quita esta línea si solo quieres una selección
+              multiple={true}
               value={newProductCategories}
               onChange={handleCategoryChange}
             >
@@ -159,6 +166,7 @@ const ProductList = () => {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
+              ref={fileInputRef}
             />
             <button
               className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
@@ -175,15 +183,13 @@ const ProductList = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((cat) => (
-
-                <tr key={cat.id} className="hover:bg-gray-100">
-
-                  <td className="border-t py-2 px-4">{cat.name}</td>
+              {products.map((prod) => (
+                <tr key={prod._id} className="hover:bg-gray-100">
+                  <td className="border-t py-2 px-4">{prod.name}</td>
                   <td className="border-t py-2 px-4 just flex justify-around">
                     <button
                       onClick={() => {
-                        setSelectedProduct(cat);
+                        setSelectedProduct(prod);
                         setIsModalOpen(true);
                       }}
                       className="mr-2 py-1 px-3 rounded-md shadow-md bg-blue-700 hover:bg-blue-800 text-white focus:outline-none transition duration-150 ease-in-out"
@@ -191,7 +197,7 @@ const ProductList = () => {
                       Editar
                     </button>
                     <button
-                      onClick={() => handleDelete(cat.id)}
+                      onClick={() => handleDelete(prod._id)}
                       className="py-1 px-3 rounded-md shadow-md bg-red-600 hover:bg-red-700 text-white focus:outline-none transition duration-150 ease-in-out"
                     >
                       Eliminar
@@ -217,6 +223,7 @@ const ProductList = () => {
                     handleFormSubmit(updatedProduct);
                     setIsModalOpen(false);
                   }}
+                  categories = {categories}
                 />
               </div>
             </div>

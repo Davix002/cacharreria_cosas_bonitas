@@ -27,12 +27,12 @@ export const ProductProvider = ({ children }) => {
   };
 
   const removeProduct = (id) => {
-    setProducts(products.filter((cat) => cat._id !== id));
+    setProducts(products.filter((prod) => prod._id !== id));
   };
 
-  const updateProduct = (updatedProducts) => {
-    setProducts(products.map((cat) =>
-      cat._id === updatedProducts._id ? updatedProducts : cat
+  const updateProduct = (updatedProduct) => {
+    setProducts(products.map((prod) =>
+      prod._id === updatedProduct._id ? updatedProduct : prod
     ));
   };
   
