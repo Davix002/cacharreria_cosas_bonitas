@@ -40,9 +40,10 @@ export async function getProducts() {
     const products = productsData.map((product) => ({
       _id: product._id,
       name: product.name,
+      categoryIds: product.categoryIds,
       thumbnail: product.thumbnail,
       brand: product.brand || "Cosas Bonitas",
-      price: product.price || "Sin precio",
+      price: product.price || 100000,
       imageAlt: product.name,
     }));
     return products;

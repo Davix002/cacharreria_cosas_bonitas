@@ -9,13 +9,13 @@ import {
 import { Link } from "react-router-dom";
 
 const CategoryList = () => {
-  const { categories, addCategory, removeCategory, updateCategory } = useContext(CategoryContext);
+  const { categories, addCategory, removeCategory, updateCategory } =
+    useContext(CategoryContext);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categoryImage, setCategoryImage] = useState(null);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const fileInputRef = useRef(null);
-
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Está seguro de que desea eliminar esta categoría?")) {
@@ -30,7 +30,6 @@ const CategoryList = () => {
     }
     setSelectedCategory(null);
   };
-
 
   const handleAddCategory = async () => {
     if (newCategoryName.trim() === "") {
@@ -60,9 +59,9 @@ const CategoryList = () => {
       setNewCategoryName("");
       setCategoryImage(null);
       // Restablece el campo de entrada de archivo
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     } catch (error) {
       console.error("Error al agregar la categoría:", error);
     }
@@ -74,19 +73,15 @@ const CategoryList = () => {
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200 py-8">
-
       <div className="w-full max-w-2xl p-6 mb-6 bg-white rounded-xl shadow-lg">
         <Link to="/cacharreria_cosas_bonitas/Admin/productos">
-          <button
-            className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold"
-          >
+          <button className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold">
             Administrar Productos
           </button>
         </Link>
       </div>
       <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
 
-        <div className="flex flex-col items-center space-y-4">
           <div className="w-full mb-4">
             <label className="block text-lf font-medium mb-1">
               Nombre de la nueva categoría
@@ -114,10 +109,13 @@ const CategoryList = () => {
               Agregar Categoría
             </button>
           </div>
+          </div>
+      <div className="w-full max-w-3xl p-6 m-6 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center">
           <table className="bg-white  w-full rounded-md shadow-md overflow-hidden">
             <thead className="bg-gray-800 text-white">
               <tr>
                 <th className="py-2 px-4">Nombre de la categoría</th>
+                <th className="py-2 px-4">Imagen</th>
                 <th className="py-2 px-4">Acciones</th>
               </tr>
             </thead>
@@ -125,6 +123,13 @@ const CategoryList = () => {
               {categories.map((cat) => (
                 <tr key={cat._id} className="hover:bg-gray-100">
                   <td className="border-t py-2 px-4">{cat.name}</td>
+                  <td className="border-t py-2 px-4">
+                    <img
+                      src={cat.picture}
+                      alt={cat.name}
+                      style={{ width: "50px", height: "50px" }}
+                    />
+                  </td>
                   <td className="border-t py-2 px-4 just flex justify-around">
                     <button
                       onClick={() => {
@@ -168,7 +173,6 @@ const CategoryList = () => {
           )}
         </div>
       </div>
-    </div>
   );
 };
 
