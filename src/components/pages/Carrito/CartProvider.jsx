@@ -89,10 +89,8 @@ export const CartProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (!isLogueado) {
-      // Limpia el carrito cuando el usuario no está logueado
-      dispatch({ type: "SET_CART_ITEMS", payload: { products: [], total: 0 } });
-    } else {
+    const localCart = localStorage.getItem("cart");
+    if (isLogueado) {
       // Carga los artículos del carrito cuando el usuario está logueado
       const fetchCartItems = async () => {
         const cartData = await getCartItems(token);
@@ -100,24 +98,11 @@ export const CartProvider = ({ children }) => {
       };
 
       fetchCartItems();
-    }
-  }, [isLogueado, token]);
-
-  useEffect(() => {
-    const localCart = localStorage.getItem("cart");
-    if (localCart) {
+    }else if (localCart) {
       // Si hay un carrito en el almacenamiento local, se carga en el estado
       dispatch({ type: "SET_CART_ITEMS", payload: JSON.parse(localCart) });
-    } else if (isLogueado) {
-      // Carga los artículos del carrito cuando el usuario está logueado
-      const fetchCartItems = async () => {
-        const cartData = await getCartItems(token);
-        dispatch({ type: "SET_CART_ITEMS", payload: cartData });
-      };
-
-      fetchCartItems();
     }
-    // Si el usuario no está logueado y no hay carrito en el local storage, se mantiene el estado por defecto
+
   }, [isLogueado, token]);
 
   // Cuando se actualice el estado del carrito, actualizar el almacenamiento local si el usuario no está logueado

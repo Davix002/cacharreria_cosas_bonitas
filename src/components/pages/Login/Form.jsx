@@ -66,6 +66,7 @@ export default function Form() {
               placeholder="Ingrese su correo"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
             />
           </div>
           <div>
@@ -76,6 +77,7 @@ export default function Form() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
             />
           </div>
           {errorMessage ? (

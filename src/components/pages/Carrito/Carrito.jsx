@@ -1,6 +1,11 @@
 import { Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "./UseCart";
+import { useEffect, useContext } from "react";
+import AuthContext from "../../../Auth/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Modal from "./Modal";
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {
@@ -13,6 +18,7 @@ const formatPrice = (price) => {
 export default function Carrito() {
   const {
     state,
+    dispatch,
     updateQuantity,
     increaseProductQuantity,
     decreaseProductQuantity,
@@ -20,21 +26,89 @@ export default function Carrito() {
   } = useCart();
   const productsInCart = state.items;
   const total = state.total;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const { isLogueado, usuario } = useContext(AuthContext);
+  const [userDetails, setUserDetails] = useState({
+    nombre: "",
+    address: "",
+    postalCode: "",
+    phone: "",
+    email: "",
+    creditCardNumber: "",
+  });
 
+  useEffect(() => {
+    if (isLogueado && usuario) {
+      setUserDetails((prevDetails) => ({
+        ...prevDetails,
+        nombre: usuario.nombre || "",
+        email: usuario.email || "",
+      }));
+    }
+  }, [isLogueado, usuario]);
+  
   const handleRemoveFromCart = (productId) => {
     removeFromCart(productId);
   };
 
-// En Carrito.jsx
-const handleQuantityChange = (event, productId) => {
-  const newQuantity = parseInt(event.target.value, 10);
+  // En Carrito.jsx
+  const handleQuantityChange = (event, productId) => {
+    const newQuantity = parseInt(event.target.value);
 
-  if (!isNaN(newQuantity) && newQuantity >= 0) {
-    // Aquí llamas a la nueva función en lugar de despachar la acción directamente
-    updateQuantity(productId, newQuantity);
-  }
-};
+    if (!isNaN(newQuantity) && newQuantity >= 0) {
+      updateQuantity(productId, newQuantity);
+    }
+  };
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
+  const handlePayment = async (userDetails) => {
+    const orderDetails = {
+      products: state.items.map((item) => ({ _id: item.id, quantity: item.quantity })),
+      totalAmount: state.total,
+      ...userDetails,
+    };
+
+    if (isLogueado && usuario._id) {
+      orderDetails.userID = usuario._id;
+    }
+
+    try {
+
+      const response = await fetch("http://localhost:5800/api/orders/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(orderDetails),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const newOrder = await response.json();
+
+      dispatch({ type: "SET_CART_ITEMS", payload: { products: [], total: 0 } });
+
+      if (newOrder) {
+        console.log("Order created successfully!");
+        navigate("/cacharreria_cosas_bonitas/Order");
+      }
+    } catch (error) {
+      console.error("Error al crear la orden: ", error);
+    }
+  };
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
@@ -126,13 +200,135 @@ const handleQuantityChange = (event, productId) => {
 
         <Link to="">
           <button
-            type="button"
             className="w-full rounded-md bg-romTurquoise-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
           >
             Pagar
           </button>
         </Link>
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handlePayment(userDetails);
+          }}
+        >
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="nombre"
+            >
+              Nombre
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="nombre"
+              name="nombre"
+              type="text"
+              placeholder="Nombre completo"
+              value={userDetails.nombre}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="address"
+            >
+              Dirección
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="address"
+              name="address"
+              type="text"
+              placeholder="Dirección de envío"
+              value={userDetails.address}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="postalCode"
+            >
+              Código Postal
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="postalCode"
+              name="postalCode"
+              type="text"
+              placeholder="Código Postal"
+              value={userDetails.postalCode}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="phone"
+            >
+              Teléfono
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="phone"
+              name="phone"
+              type="text"
+              placeholder="Número de teléfono"
+              value={userDetails.phone}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Correo electrónico"
+              value={userDetails.email}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="creditCardNumber"
+            >
+              Número de Tarjeta de Crédito
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="creditCardNumber"
+              name="creditCardNumber"
+              type="text"
+              placeholder="Número de tarjeta de crédito"
+              value={userDetails.creditCardNumber}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Confirmar Pago
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }
