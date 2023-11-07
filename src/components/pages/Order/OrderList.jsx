@@ -164,19 +164,19 @@ const OrderList = () => {
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
                         {order.products.map((product) => (
-                          <tr key={product._id._id}>
+                          <tr key={product.productId._id}>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {product._id.name}
+                              {product.productId.name}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               {product.quantity}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
-                              {formatPrice(product._id.price)}
+                              {formatPrice(product.productId.price)}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
                               {formatPrice(
-                                product._id.price * product.quantity
+                                product.productId.price * product.quantity
                               )}
                             </td>
                           </tr>

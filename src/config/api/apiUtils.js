@@ -344,12 +344,14 @@ export const getCartItems = async (token) => {
 
     const data = await response.json();
 
+    console.log("data:", data);
+
     const products = data.items.map((item) => ({
-      id: item._id._id,
-      name: item._id.name,
-      price: item._id.price,
-      brand: item._id.brand,
-      imageSrc: item._id.thumbnail,
+      id: item.productId._id,
+      name: item.productId.name,
+      price: item.productId.price,
+      brand: item.productId.brand,
+      imageSrc: item.productId.thumbnail,
       quantity: item.quantity,
     }));
 

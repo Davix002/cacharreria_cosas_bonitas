@@ -236,6 +236,7 @@ export default function Carrito() {
               placeholder="Nombre completo"
               value={userDetails.nombre}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="mb-4">
@@ -253,6 +254,7 @@ export default function Carrito() {
               placeholder="Dirección de envío"
               value={userDetails.address}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="mb-4">
@@ -270,6 +272,7 @@ export default function Carrito() {
               placeholder="Código Postal"
               value={userDetails.postalCode}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="mb-4">
@@ -287,6 +290,7 @@ export default function Carrito() {
               placeholder="Número de teléfono"
               value={userDetails.phone}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="mb-4">
@@ -304,6 +308,7 @@ export default function Carrito() {
               placeholder="Correo electrónico"
               value={userDetails.email}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="mb-4 col-span-2">
@@ -321,6 +326,7 @@ export default function Carrito() {
               placeholder="Número de tarjeta de crédito"
               value={userDetails.creditCardNumber}
               onChange={handleInputChange}
+              required
             />
           </div>
 
