@@ -18,7 +18,6 @@ const ProductItem = (props) => {
   const { dispatch } = useCart();
 
   const addToCart = async (product) => {
-    // Estructura del producto como se espera en el estado y el componente Carrito
     const productToAdd = {
       id: product.id,
       name: product.name,

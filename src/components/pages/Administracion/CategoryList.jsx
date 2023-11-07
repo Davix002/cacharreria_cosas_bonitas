@@ -43,22 +43,22 @@ const CategoryList = () => {
     }
 
     try {
-      // Primero sube la imagen
+      // Primero se sube la imagen
       const imageResponse = await uploadCategoryImage(categoryImage);
 
-      // Luego crea la categoría con el nombre y la URL de la imagen
+      // Luego se crea la categoría con el nombre y la URL de la imagen
       const newCategory = await createCategory({
         name: newCategoryName,
         picture: imageResponse.imageUrl,
       });
 
-      // Actualiza el estado local con la nueva categoría
+      //Se actualiza el estado local con la nueva categoría
       addCategory(newCategory);
 
-      // Limpia los inputs
+      // Se limpian los inputs
       setNewCategoryName("");
       setCategoryImage(null);
-      // Restablece el campo de entrada de archivo
+      // Se restablece el campo de entrada de archivo
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }

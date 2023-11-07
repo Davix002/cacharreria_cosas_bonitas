@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import AuthContext from "../../../Auth/AuthContext"; // Asegúrate de importar correctamente AuthContext
+import AuthContext from "../../../Auth/AuthContext";
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {

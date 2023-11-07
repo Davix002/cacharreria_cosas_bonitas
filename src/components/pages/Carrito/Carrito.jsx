@@ -57,7 +57,6 @@ export default function Carrito() {
     removeFromCart(productId);
   };
 
-  // En Carrito.jsx
   const handleQuantityChange = (event, productId) => {
     const newQuantity = parseInt(event.target.value);
 

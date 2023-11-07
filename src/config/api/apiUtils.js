@@ -71,7 +71,7 @@ export async function createProduct(productData) {
 export async function createProductWithImage(formData) {
   const response = await fetch("http://localhost:5800/api/products/", {
     method: "POST",
-    body: formData, // Nota: no establezcas headers aquí
+    body: formData,
   });
 
   if (!response.ok) {
@@ -85,7 +85,7 @@ export async function createProductWithImage(formData) {
 export async function updateProductWithImage(id, formData) {
   const response = await fetch(`http://localhost:5800/api/products/${id}`, {
     method: "PUT",
-    body: formData, // Nota: no establezcas headers aquí
+    body: formData,
   });
 
   if (!response.ok) {
@@ -144,7 +144,7 @@ export async function registrar({ nombre, password, email, navigate }) {
     const data = await response.json();
 
     if (data._id) {
-      // Asumimos que si se devuelve un ID, el registro fue exitoso
+      // Si se devuelve un ID, el registro fue exitoso
       navigate("/cacharreria_cosas_bonitas/espera-confirmacion");
     } else {
       console.error("Error en el registro:", data);
@@ -154,7 +154,7 @@ export async function registrar({ nombre, password, email, navigate }) {
   }
 }
 
-// PARA LAS CATEGORIAS''
+// PARA LAS CATEGORIAS
 
 export async function fetchCategories() {
   try {
@@ -202,7 +202,7 @@ export async function getCategories() {
 export async function updateCategoryWithImage(id, formData) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
     method: "PUT",
-    body: formData, // Nota: no establezcas headers aquí
+    body: formData,
   });
 
   if (!response.ok) {
@@ -216,7 +216,7 @@ export async function updateCategoryWithImage(id, formData) {
 export async function createCategoryWithImage(formData) {
   const response = await fetch("http://localhost:5800/api/categories/", {
     method: "POST",
-    body: formData, // Nota: no establezcas headers aquí
+    body: formData,
   });
 
   if (!response.ok) {
@@ -279,7 +279,7 @@ export async function cambioContrasena({ email, navigate }) {
       navigate("/cacharreria_cosas_bonitas/espera-confirmacion");
     } else {
       if (data && data.msg) {
-        alert(data.msg); // Muestra un mensaje de error al usuario si el backend lo proporciona
+        alert(data.msg);
       } else {
         console.error("Error en el proceso:", data);
       }
@@ -295,7 +295,7 @@ export async function FormularioReestablecerContrasena(
   navigate
 ) {
   try {
-    // Asegurándose de que el token se añade correctamente a la URL
+    // Se agrega el token a la URL
     const response = await fetch(
       `http://localhost:5800/api/usuarios/olvide-password/${token}`,
       {
@@ -304,7 +304,7 @@ export async function FormularioReestablecerContrasena(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          password: password, // Enviando la contraseña en el cuerpo de la petición
+          password: password,
         }),
       }
     );
@@ -338,7 +338,6 @@ export const getCartItems = async (token) => {
       },
     });
 
-    // Asegúrate de manejar las respuestas que no son exitosas
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -392,7 +391,6 @@ export const deleteProductFromCart = async (dispatch, productId) => {
       }
     );
     if (response.ok) {
-      // Ahora en lugar de actualizar el estado directamente, despachas las acciones
       dispatch({ type: "REMOVE_FROM_CART", payload: productId });
     }
   } catch (error) {
@@ -484,10 +482,9 @@ export const updateProductQuantity = async (products, productId, quantity) => {
 
     const updatedItem = await response.json();
 
-    // Devuelves el producto actualizado para que el estado pueda ser actualizado en el front-end
     return updatedItem;
   } catch (error) {
     console.error("Error al actualizar la cantidad:", error);
-    return null; // Devuelve null o un error específico para manejarlo en el front-end
+    return null;
   }
 };

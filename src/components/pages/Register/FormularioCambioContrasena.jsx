@@ -20,7 +20,7 @@ const FormularioCambioContrasena = () => {
 
     if (password !== passwordConfirmacion) {
       setErrorMessage("Las contraseñas no coinciden.");
-      return; // No continuar con el envío del formulario
+      return;
     }
 
     const result = await FormularioReestablecerContrasena(password, token, navigate);

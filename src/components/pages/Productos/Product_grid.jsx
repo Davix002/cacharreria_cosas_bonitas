@@ -40,7 +40,6 @@ const Product_grid = ({ products, currentCategoryId, categories }) => {
             <ProductItem key={product.id} product={product} />
           ))}
         </div>
-        {/* Small Screen ver todo */}
         <div className="mt-12 text-center lg:hidden">
           <Link
             to={getNextCategoryLink()}

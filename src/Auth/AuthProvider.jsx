@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [usuario, setUsuario] = useState(null);
 
-    // Similar para logOut
     const logOut = useCallback(() => {
       localStorage.removeItem("token");
       localStorage.removeItem("role");
@@ -16,7 +15,6 @@ export const AuthProvider = ({ children }) => {
       setUsuario(null);
     }, []);
 
-  // Esta es una versión memorizada de obtenerPerfil que se re-creará solo si token cambia
   const obtenerPerfil = useCallback(async (token) => {
     try {
       const response = await fetch(`http://localhost:5800/api/usuarios/perfil`, {
@@ -31,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      setUsuario(data); // Actualiza directamente el estado del usuario
+      setUsuario(data); // Actualizar el estado del usuario
     } catch (error) {
       console.error("Error al obtener el perfil:", error);
     }
@@ -43,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("role", userRole);
     setIsLogueado(true);
     setRole(userRole);
-    obtenerPerfil(token); // Usamos aquí la función memorizada
+    obtenerPerfil(token);
   }, [obtenerPerfil]);
 
   useEffect(() => {

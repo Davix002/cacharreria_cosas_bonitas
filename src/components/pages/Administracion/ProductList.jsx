@@ -69,10 +69,10 @@ const ProductList = () => {
     }
 
     try {
-      // Primero sube la imagen
+      // Primero se sube la imagen
       const imageResponse = await uploadProductImage(productImage);
 
-      // Luego crea la categoría con el nombre y la URL de la imagen
+      // Luego se crea la categoría con el nombre y la URL de la imagen
       const newProduct = await createProduct({
         name: newProductName,
         thumbnail: imageResponse.imageUrl,
@@ -81,16 +81,16 @@ const ProductList = () => {
         categoryIds: newProductCategories,
       });
 
-      // Actualiza el estado local con la nueva categoría
+      // Se actualiza el estado local con la nueva categoría
       addProduct(newProduct);
 
-      // Limpia los inputs
+      //  Se limpian los inputs
       setNewProductName("");
       setNewProductBrand("");
       setNewProductPrice("");
       setProductImage(null);
       setNewProductCategories([]);
-      // Restablece el campo de entrada de archivo
+      // Se restablece el campo de entrada de archivo
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
