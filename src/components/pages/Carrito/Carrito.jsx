@@ -102,7 +102,6 @@ export default function Carrito() {
       dispatch({ type: "SET_CART_ITEMS", payload: { products: [], total: 0 } });
 
       if (newOrder) {
-        console.log("Order created successfully!");
         navigate("/cacharreria_cosas_bonitas/Order");
       }
     } catch (error) {
@@ -217,7 +216,8 @@ export default function Carrito() {
             handlePayment(userDetails);
           }}
         >
-          <div className="mb-4">
+          <div className="grid grid-cols-2 gap-4">
+          <div className="mb-4 col-span-2">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="nombre"
@@ -302,7 +302,7 @@ export default function Carrito() {
               onChange={handleInputChange}
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 col-span-2">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="creditCardNumber"
@@ -319,7 +319,10 @@ export default function Carrito() {
               onChange={handleInputChange}
             />
           </div>
-          <div className="flex items-center justify-between">
+
+          </div>
+
+          <div className="flex items-center justify-between mt-4">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"

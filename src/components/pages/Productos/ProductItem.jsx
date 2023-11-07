@@ -89,7 +89,7 @@ ProductItem.propTypes = {
     imageAlt: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    price: PropTypes.number,
   }).isRequired,
 };
 
