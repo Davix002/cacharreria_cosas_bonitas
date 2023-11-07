@@ -103,7 +103,7 @@ export default function Carrito() {
       dispatch({ type: "SET_CART_ITEMS", payload: { products: [], total: 0 } });
 
       if (newOrder) {
-        navigate("/cacharreria_cosas_bonitas/Order");
+        navigate("/cacharreria_cosas_bonitas/Purchases");
       }
     } catch (error) {
       console.error("Error al crear la orden: ", error);
