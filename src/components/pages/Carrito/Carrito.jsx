@@ -74,6 +74,7 @@ export default function Carrito() {
     const orderDetails = {
       products: state.items.map((item) => ({ _id: item.id, quantity: item.quantity })),
       totalAmount: state.total,
+      status: "Payment Received / Approved",
       ...userDetails,
     };
 

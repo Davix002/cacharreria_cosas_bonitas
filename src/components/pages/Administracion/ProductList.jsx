@@ -9,6 +9,14 @@ import {
 } from "../../../config/api/apiUtils";
 import { Link } from "react-router-dom";
 
+const formatPrice = (price) => {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    minimumFractionDigits: 0,
+  }).format(price);
+};
+
 const ProductList = () => {
   const { products, addProduct, removeProduct, updateProduct } =
     useContext(ProductContext);
@@ -192,7 +200,7 @@ const ProductList = () => {
               <tr key={prod._id} className="hover:bg-gray-100">
                 <td className="border-t py-2 px-4">{prod.name}</td>
                 <td className="border-t py-2 px-4">{prod.brand}</td>
-                <td className="border-t py-2 px-4">${prod.price}</td>
+                <td className="border-t py-2 px-4 text-right">{formatPrice(prod.price)}</td>
                 <td className="border-t py-2 px-4">
                   {prod.categoryIds.map((category) => category.name).join(", ")}
                 </td>

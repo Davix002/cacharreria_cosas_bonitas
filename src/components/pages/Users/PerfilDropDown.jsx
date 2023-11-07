@@ -7,7 +7,6 @@ export default function PerfilDropDown({ setPerfilDropDown }) {
 
   function handleOptionClick() {
     setPerfilDropDown(false);
-    logOut();
   }
 
   return (
@@ -29,7 +28,7 @@ export default function PerfilDropDown({ setPerfilDropDown }) {
           </li>
           <li>
             <Link
-              to="/cacharreria_cosas_bonitas/MisCompras/"
+              to="/cacharreria_cosas_bonitas/Purchases/"
               onClick={handleOptionClick}
             >
               Mis compras
@@ -38,7 +37,10 @@ export default function PerfilDropDown({ setPerfilDropDown }) {
           <li>
             <Link
               to="/cacharreria_cosas_bonitas/Login/"
-              onClick={() => handleOptionClick()}
+              onClick={() => {
+                logOut();
+                handleOptionClick();
+              }}
             >
               Cerrar sesión
             </Link>
