@@ -28,14 +28,6 @@ export default function PerfilDropDown({ setPerfilDropDown }) {
           </li>
           <li>
             <Link
-              to="/cacharreria_cosas_bonitas/Purchases/"
-              onClick={handleOptionClick}
-            >
-              Mis compras
-            </Link>
-          </li>
-          <li>
-            <Link
               to="/cacharreria_cosas_bonitas/Login/"
               onClick={() => {
                 logOut();

@@ -7,7 +7,7 @@ export default function CarritoDropDown({ setCarritoDropDown }) {
   const cart = useCart();
 
   if (!cart) {
-    return null; 
+    return null;
   }
 
   const { state } = cart;
@@ -73,13 +73,13 @@ export default function CarritoDropDown({ setCarritoDropDown }) {
             </div>
           </Link>
           <Link
+            to="/cacharreria_cosas_bonitas/Purchases/"
             onClick={handleViewCartClick}
           >
             <div className="w-full rounded-md bg-romTurquoise-600 text-white px-3 py-2 text-sm font-semibold  shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
-              Pagar
+              Mis compras
             </div>
           </Link>
-
           <Link
             className="pb-4 inline-block text-sm text-gray-600 transition hover:text-gray-700 hover:underline hover:underline-offset-4"
             to="/cacharreria_cosas_bonitas/"

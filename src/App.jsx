@@ -15,7 +15,6 @@ import ConfirmarRegistro from "./Auth/ConfirmarRegistro";
 import Perfil from "./components/pages/Users/Perfil";
 import EsperaConfirmacion from "./components/pages/Register/EsperaConfirmacion";
 import { AuthProvider } from "./Auth/AuthProvider";
-import Order from "./components/pages/Order/Order";
 import OrderList from "./components/pages/Order/OrderList";
 import CambioContrasena from "./components/pages/Register/SolicitarCambioContrasena";
 import FormularioCambioContrasena from "./components/pages/Register/FormularioCambioContrasena";
@@ -117,10 +116,6 @@ export default function App() {
                <Route
                 path="/cacharreria_cosas_bonitas/Purchases/"
                 element={<OrderList />}
-              />
-              <Route
-                path="/cacharreria_cosas_bonitas/Order/"
-                element={<Order />}
               />
               <Route
                 path="/cacharreria_cosas_bonitas/recuperar/:token"
