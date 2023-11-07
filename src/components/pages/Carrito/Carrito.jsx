@@ -45,6 +45,10 @@ export default function Carrito() {
         ...prevDetails,
         nombre: usuario.nombre || "",
         email: usuario.email || "",
+        address: usuario.address || "",
+        postalCode: usuario.postalCode || "",
+        phone: usuario.phone || "",
+        creditCardNumber: usuario.creditCardNumber || "",
       }));
     }
   }, [isLogueado, usuario]);

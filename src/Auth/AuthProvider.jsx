@@ -3,58 +3,57 @@ import AuthContext from "./AuthContext";
 import PropTypes from "prop-types";
 
 export const AuthProvider = ({ children }) => {
-  const initialIsLogueado = Boolean(localStorage.getItem("token"));
-  const initialRole = localStorage.getItem("role");
-
-  const [isLogueado, setIsLogueado] = useState(initialIsLogueado);
-  const [role, setRole] = useState(initialRole);
+  const [isLogueado, setIsLogueado] = useState(Boolean(localStorage.getItem("token")));
+  const [role, setRole] = useState(localStorage.getItem("role"));
   const [usuario, setUsuario] = useState(null);
 
-  const logIn = useCallback((token, userRole, user) => {
+    // Similar para logOut
+    const logOut = useCallback(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      setIsLogueado(false);
+      setRole(null);
+      setUsuario(null);
+    }, []);
+
+  // Esta es una versión memorizada de obtenerPerfil que se re-creará solo si token cambia
+  const obtenerPerfil = useCallback(async (token) => {
+    try {
+      const response = await fetch(`http://localhost:5800/api/usuarios/perfil`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 401) {
+        logOut();
+        return;
+      }
+
+      const data = await response.json();
+      setUsuario(data); // Actualiza directamente el estado del usuario
+    } catch (error) {
+      console.error("Error al obtener el perfil:", error);
+    }
+  }, [logOut]);
+
+  // Actualiza el estado al iniciar sesión
+  const logIn = useCallback((token, userRole) => {
     localStorage.setItem("token", token);
     localStorage.setItem("role", userRole);
     setIsLogueado(true);
     setRole(userRole);
-    setUsuario(user);
-  }, []);
-
-  const logOut = useCallback(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    setIsLogueado(false);
-    setRole(null);
-    setUsuario(null);
-  }, []);
+    obtenerPerfil(token); // Usamos aquí la función memorizada
+  }, [obtenerPerfil]);
 
   useEffect(() => {
-    const obtenerPerfil = async () => {
+    if (isLogueado && !usuario) {
       const token = localStorage.getItem("token");
       if (token) {
-        try {
-          const response = await fetch(
-            `http://localhost:5800/api/usuarios/perfil`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (response.status === 401) {
-            logOut();
-            return;
-          }
-
-          const data = await response.json();
-          logIn(token, data.role, data);
-        } catch (error) {
-          console.error("Error al obtener el perfil:", error);
-        }
+        obtenerPerfil(token);
       }
-    };
-
-    obtenerPerfil();
-  }, [logIn, logOut]);
+    }
+  }, [isLogueado, usuario, obtenerPerfil]);
 
   useEffect(() => {
     const handleStorageChange = () => {
