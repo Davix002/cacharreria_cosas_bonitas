@@ -344,10 +344,9 @@ export const getCartItems = async (token) => {
 
     const data = await response.json();
 
-    console.log("data:", data);
-
     const products = data.items.map((item) => ({
       id: item.productId._id,
+      cartItemId: item._id,
       name: item.productId.name,
       price: item.productId.price,
       brand: item.productId.brand,
@@ -381,19 +380,23 @@ export const addProductToCart = async (usuario, product) => {
     }),
   });
 
+  if (!response.ok) {
+    throw new Error("No se pudo agregar el producto al carrito.");
+  }
+
   return await response.json();
 };
 
-export const deleteProductFromCart = async (dispatch, productId) => {
+export const deleteProductFromCart = async (dispatch, cartItemId) => {
   try {
     const response = await fetch(
-      `http://localhost:5800/api/cart/item/${productId}`,
+      `http://localhost:5800/api/cart/item/${cartItemId}`,
       {
         method: "DELETE",
       }
     );
     if (response.ok) {
-      dispatch({ type: "REMOVE_FROM_CART", payload: productId });
+      dispatch({ type: "REMOVE_FROM_CART", payload: cartItemId });
     }
   } catch (error) {
     console.error("Hubo un error al eliminar el producto:", error);

@@ -17,7 +17,7 @@ const cartReducer = (state, action) => {
     case "ADD_TO_CART": {
       const itemToAdd = action.payload;
       const existingItemIndex = updatedItems.findIndex(
-        (item) => item.id === itemToAdd.id
+        (item) => item.cartItemId === itemToAdd.cartItemId
       );
       if (existingItemIndex >= 0) {
         // Si el producto ya existe, incrementar la cantidad
@@ -29,7 +29,8 @@ const cartReducer = (state, action) => {
         };
       } else {
         // Si el producto no existe, agregarlo al arreglo
-        updatedItems.push({ ...itemToAdd, quantity: itemToAdd.quantity || 1 });
+        updatedItems.push({ ...itemToAdd, quantity: itemToAdd.quantity || 1,
+          cartItemId: itemToAdd.cartItemId, });
       }
       break;
     }
@@ -40,7 +41,7 @@ const cartReducer = (state, action) => {
         total: action.payload.total,
       };
     case "REMOVE_FROM_CART":
-      updatedItems = state.items.filter((item) => item.id !== action.payload);
+      updatedItems = state.items.filter((item) => item.cartItemId !== action.payload);
       break;
     case "INCREASE_QUANTITY":
       updatedItems = state.items.map((item) =>
@@ -115,8 +116,8 @@ export const CartProvider = ({ children }) => {
     }
   }, [state, isLogueado]);
 
-  const removeFromCart = async (id) => {
-    deleteProductFromCart(dispatch, id);
+  const removeFromCart = async (cartItemId) => {
+    deleteProductFromCart(dispatch, cartItemId);
   };
 
   const increaseProductQuantity = async (id) => {

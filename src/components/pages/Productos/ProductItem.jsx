@@ -27,13 +27,18 @@ const ProductItem = (props) => {
       quantity: 1
     };
   
-    // Agregar producto al carrito en el estado global
-    dispatch({ type: 'ADD_TO_CART', payload: productToAdd });
-  
-    // Si el usuario está logueado, hacer solicitud al backend para actualizar el carrito en la base de datos
-    if (isLogueado) {
-      await addProductToCart(usuario, productToAdd);
-    }
+      // Si el usuario está logueado, hacer solicitud al backend para actualizar el carrito en la base de datos
+  if (isLogueado) {
+    const cartItem = await addProductToCart(usuario, productToAdd);
+    // Aquí debes asegurarte de actualizar el estado global del carrito con el _id del item.
+    // Vamos a modificar el payload para incluir el _id que viene del backend.
+    const productWithCartId = {
+      ...productToAdd,
+      cartItemId: cartItem._id, // Asumiendo que cartItem contiene el _id del CartItem.
+    };
+
+    dispatch({ type: 'ADD_TO_CART', payload: productWithCartId });
+  }
   };
   
   

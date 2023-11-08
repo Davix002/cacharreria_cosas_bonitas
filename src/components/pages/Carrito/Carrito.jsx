@@ -172,7 +172,7 @@ export default function Carrito() {
                   <button
                     type="button"
                     className="flex items-center space-x-1 px-2 py-1 pl-0"
-                    onClick={() => handleRemoveFromCart(product.id)}
+                    onClick={() => handleRemoveFromCart(product.cartItemId)}
                   >
                     <Trash size={12} className="text-red-500" />
                     <span className="text-xs font-medium text-red-500">
