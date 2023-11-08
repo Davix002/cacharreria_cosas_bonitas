@@ -29,8 +29,11 @@ const cartReducer = (state, action) => {
         };
       } else {
         // Si el producto no existe, agregarlo al arreglo
-        updatedItems.push({ ...itemToAdd, quantity: itemToAdd.quantity || 1,
-          cartItemId: itemToAdd.cartItemId, });
+        updatedItems.push({
+          ...itemToAdd,
+          quantity: itemToAdd.quantity || 1,
+          cartItemId: itemToAdd.cartItemId,
+        });
       }
       break;
     }
@@ -41,7 +44,9 @@ const cartReducer = (state, action) => {
         total: action.payload.total,
       };
     case "REMOVE_FROM_CART":
-      updatedItems = state.items.filter((item) => item.cartItemId !== action.payload);
+      updatedItems = state.items.filter(
+        (item) => item.cartItemId !== action.payload
+      );
       break;
     case "INCREASE_QUANTITY":
       updatedItems = state.items.map((item) =>
@@ -99,11 +104,10 @@ export const CartProvider = ({ children }) => {
       };
 
       fetchCartItems();
-    }else if (localCart) {
+    } else if (localCart) {
       // Si hay un carrito en el almacenamiento local, se carga en el estado
       dispatch({ type: "SET_CART_ITEMS", payload: JSON.parse(localCart) });
     }
-
   }, [isLogueado, token]);
 
   // Cuando se actualice el estado del carrito, actualizar el almacenamiento local si el usuario no está logueado
@@ -121,32 +125,45 @@ export const CartProvider = ({ children }) => {
   };
 
   const increaseProductQuantity = async (cartItemId) => {
-    const updatedProducts = await increaseQuantity(state.items, cartItemId);
-    if (updatedProducts) {
+    if (isLogueado) {
+      const updatedProducts = await increaseQuantity(state.items, cartItemId);
+      if (updatedProducts) {
+        dispatch({ type: "INCREASE_QUANTITY", payload: cartItemId });
+      }
+    } else {
+      // Lógica para incrementar la cantidad en el estado local y localStorage
       dispatch({ type: "INCREASE_QUANTITY", payload: cartItemId });
     }
   };
 
   const decreaseProductQuantity = async (cartItemId) => {
-    const updatedProducts = await decreaseQuantity(state.items, cartItemId);
-    if (updatedProducts) {
+    if (isLogueado) {
+      const updatedProducts = await decreaseQuantity(state.items, cartItemId);
+      if (updatedProducts) {
+        dispatch({ type: "DECREASE_QUANTITY", payload: cartItemId });
+      }
+    } else {
+      // Lógica para decrementar la cantidad en el estado local y localStorage
       dispatch({ type: "DECREASE_QUANTITY", payload: cartItemId });
     }
   };
 
   const updateQuantity = async (cartItemId, quantity) => {
-    const updatedProduct = await updateProductQuantity(
-      state.items,
-      cartItemId,
-      quantity
-    );
-    if (updatedProduct) {
-      dispatch({ type: "UPDATE_QUANTITY", payload: { cartItemId, quantity } });
-    } else {
-      // Manejar el error si la actualización no fue exitosa
-      console.error(
-        "No se pudo actualizar la cantidad del producto en el carrito"
+    if (isLogueado) {
+      const updatedProduct = await updateProductQuantity(
+        state.items,
+        cartItemId,
+        quantity
       );
+      if (updatedProduct) {
+        dispatch({
+          type: "UPDATE_QUANTITY",
+          payload: { cartItemId, quantity },
+        });
+      }
+    } else {
+      // Lógica para actualizar la cantidad en el estado local y localStorage
+      dispatch({ type: "UPDATE_QUANTITY", payload: { cartItemId, quantity } });
     }
   };
 
