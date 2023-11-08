@@ -403,15 +403,15 @@ export const deleteProductFromCart = async (dispatch, cartItemId) => {
   }
 };
 
-export const increaseQuantity = async (products, productId) => {
-  const product = products.find((prod) => prod.id === productId);
+export const increaseQuantity = async (products, cartItemId) => {
+  const product = products.find((prod) => prod.cartItemId === cartItemId);
   if (!product) return products;
 
   const newQuantity = product.quantity + 1;
 
   try {
     const response = await fetch(
-      `http://localhost:5800/api/cart/item/${productId}`,
+      `http://localhost:5800/api/cart/item/${cartItemId}`,
       {
         method: "PUT",
         headers: {
@@ -424,7 +424,9 @@ export const increaseQuantity = async (products, productId) => {
     const updatedItem = await response.json();
 
     const updatedProducts = products.map((prod) =>
-      prod.id === productId ? { ...prod, quantity: updatedItem.quantity } : prod
+      prod.cartItemId === cartItemId
+        ? { ...prod, quantity: updatedItem.quantity }
+        : prod
     );
 
     return updatedProducts;
@@ -434,15 +436,15 @@ export const increaseQuantity = async (products, productId) => {
   }
 };
 
-export const decreaseQuantity = async (products, productId) => {
-  const product = products.find((prod) => prod.id === productId);
+export const decreaseQuantity = async (products, cartItemId) => {
+  const product = products.find((prod) => prod.cartItemId === cartItemId);
   if (!product || product.quantity <= 1) return products;
 
   const newQuantity = product.quantity - 1;
 
   try {
     const response = await fetch(
-      `http://localhost:5800/api/cart/item/${productId}`,
+      `http://localhost:5800/api/cart/item/${cartItemId}`,
       {
         method: "PUT",
         headers: {
@@ -455,7 +457,9 @@ export const decreaseQuantity = async (products, productId) => {
     const updatedItem = await response.json();
 
     const updatedProducts = products.map((prod) =>
-      prod.id === productId ? { ...prod, quantity: updatedItem.quantity } : prod
+      prod.cartItemId === cartItemId
+        ? { ...prod, quantity: updatedItem.quantity }
+        : prod
     );
 
     return updatedProducts;
@@ -465,13 +469,13 @@ export const decreaseQuantity = async (products, productId) => {
   }
 };
 
-export const updateProductQuantity = async (products, productId, quantity) => {
-  const product = products.find((prod) => prod.id === productId);
+export const updateProductQuantity = async (products, cartItemId, quantity) => {
+  const product = products.find((prod) => prod.cartItemId === cartItemId);
   if (!product) return products;
 
   try {
     const response = await fetch(
-      `http://localhost:5800/api/cart/item/${productId}`,
+      `http://localhost:5800/api/cart/item/${cartItemId}`,
       {
         method: "PUT",
         headers: {

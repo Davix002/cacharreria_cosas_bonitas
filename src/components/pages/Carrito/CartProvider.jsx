@@ -45,22 +45,22 @@ const cartReducer = (state, action) => {
       break;
     case "INCREASE_QUANTITY":
       updatedItems = state.items.map((item) =>
-        item.id === action.payload
+        item.cartItemId === action.payload
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
       break;
     case "DECREASE_QUANTITY":
       updatedItems = state.items.map((item) =>
-        item.id === action.payload
+        item.cartItemId === action.payload
           ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
           : item
       );
       break;
     case "UPDATE_QUANTITY": {
-      const { id, quantity } = action.payload;
+      const { cartItemId, quantity } = action.payload;
       updatedItems = updatedItems.map((item) =>
-        item.id === id ? { ...item, quantity: quantity } : item
+        item.cartItemId === cartItemId ? { ...item, quantity: quantity } : item
       );
       break;
     }
@@ -120,28 +120,28 @@ export const CartProvider = ({ children }) => {
     deleteProductFromCart(dispatch, cartItemId);
   };
 
-  const increaseProductQuantity = async (id) => {
-    const updatedProducts = await increaseQuantity(state.items, id);
+  const increaseProductQuantity = async (cartItemId) => {
+    const updatedProducts = await increaseQuantity(state.items, cartItemId);
     if (updatedProducts) {
-      dispatch({ type: "INCREASE_QUANTITY", payload: id });
+      dispatch({ type: "INCREASE_QUANTITY", payload: cartItemId });
     }
   };
 
-  const decreaseProductQuantity = async (id) => {
-    const updatedProducts = await decreaseQuantity(state.items, id);
+  const decreaseProductQuantity = async (cartItemId) => {
+    const updatedProducts = await decreaseQuantity(state.items, cartItemId);
     if (updatedProducts) {
-      dispatch({ type: "DECREASE_QUANTITY", payload: id });
+      dispatch({ type: "DECREASE_QUANTITY", payload: cartItemId });
     }
   };
 
-  const updateQuantity = async (id, quantity) => {
+  const updateQuantity = async (cartItemId, quantity) => {
     const updatedProduct = await updateProductQuantity(
       state.items,
-      id,
+      cartItemId,
       quantity
     );
     if (updatedProduct) {
-      dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } });
+      dispatch({ type: "UPDATE_QUANTITY", payload: { cartItemId, quantity } });
     } else {
       // Manejar el error si la actualización no fue exitosa
       console.error(

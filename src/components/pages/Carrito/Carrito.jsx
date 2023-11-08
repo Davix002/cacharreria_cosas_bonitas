@@ -137,7 +137,7 @@ export default function Carrito() {
                     </h3>
                     <div className="min-w-24 flex">
                       <button
-                        onClick={() => decreaseProductQuantity(product.id)}
+                        onClick={() => decreaseProductQuantity(product.cartItemId)}
                         type="button"
                         className="h-7 w-7"
                       >
@@ -147,11 +147,11 @@ export default function Carrito() {
                         type="text"
                         className="mx-1 h-7 w-9 rounded-md border text-center"
                         value={product.quantity}
-                        onChange={(e) => handleQuantityChange(e, product.id)}
+                        onChange={(e) => handleQuantityChange(e, product.cartItemId)}
                       />
 
                       <button
-                        onClick={() => increaseProductQuantity(product.id)}
+                        onClick={() => increaseProductQuantity(product.cartItemId)}
                         type="button"
                         className="flex h-7 w-7 items-center justify-center"
                       >
