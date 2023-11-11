@@ -17,15 +17,15 @@ const formatPrice = (price) => {
 
 export default function Carrito() {
   const {
-    state,
-    dispatch,
+    cartItems,
+    total,
     updateQuantity,
     increaseProductQuantity,
     decreaseProductQuantity,
     removeFromCart,
+    clearCart
   } = useCart();
-  const productsInCart = state.items;
-  const total = state.total;
+  const productsInCart = cartItems;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -75,8 +75,8 @@ export default function Carrito() {
 
   const handlePayment = async (userDetails) => {
     const orderDetails = {
-      products: state.items.map((item) => ({ _id: item.id, quantity: item.quantity })),
-      totalAmount: state.total,
+      products: productsInCart.map((item) => ({ _id: item.id, quantity: item.quantity })),
+      totalAmount: total,
       status: "Payment Received / Approved",
       ...userDetails,
     };
@@ -103,9 +103,8 @@ export default function Carrito() {
 
       const newOrder = await response.json();
 
-      dispatch({ type: "SET_CART_ITEMS", payload: { products: [], total: 0 } });
-
       if (newOrder) {
+        clearCart();
         navigate("/cacharreria_cosas_bonitas/Purchases");
       }
     } catch (error) {

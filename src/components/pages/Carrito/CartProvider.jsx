@@ -1,124 +1,61 @@
-import { useReducer, useEffect } from "react";
-import PropTypes from "prop-types";
-import CartContext from "./CartContext";
-import { useAuth } from "../../../Auth/UseAuth";
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import CartContext from './CartContext';
+import { useAuth } from '../../../Auth/UseAuth';
 import {
   getCartItems,
   increaseQuantity,
   decreaseQuantity,
   deleteProductFromCart,
   updateProductQuantity,
-  addProductToCart
-} from "../../../config/api/apiUtils";
-
-const cartReducer = (state, action) => {
-  let updatedItems = [...state.items];
-  switch (action.type) {
-    case "ADD_TO_CART": {
-      const itemToAdd = action.payload;
-      const existingItemIndex = updatedItems.findIndex(
-        (item) => item.cartItemId === itemToAdd.cartItemId
-      );
-      if (existingItemIndex >= 0) {
-        // Si el producto ya existe, incrementar la cantidad
-        updatedItems[existingItemIndex] = {
-          ...updatedItems[existingItemIndex],
-          quantity:
-            updatedItems[existingItemIndex].quantity +
-            (itemToAdd.quantity || 1),
-        };
-      } else {
-        // Si el producto no existe, agregarlo al arreglo
-        updatedItems.push({
-          ...itemToAdd,
-          quantity: itemToAdd.quantity || 1,
-          cartItemId: itemToAdd.cartItemId,
-        });
-      }
-      break;
-    }
-    case "SET_CART_ITEMS":
-      return {
-        ...state,
-        items: action.payload.products,
-        total: action.payload.total,
-      };
-    case "REMOVE_FROM_CART":
-      updatedItems = state.items.filter(
-        (item) => item.cartItemId !== action.payload
-      );
-      break;
-    case "INCREASE_QUANTITY":
-      updatedItems = state.items.map((item) =>
-        item.cartItemId === action.payload
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      );
-      break;
-    case "DECREASE_QUANTITY":
-      updatedItems = state.items.map((item) =>
-        item.cartItemId === action.payload
-          ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
-          : item
-      );
-      break;
-    case "UPDATE_QUANTITY": {
-      const { cartItemId, quantity } = action.payload;
-      updatedItems = updatedItems.map((item) =>
-        item.cartItemId === cartItemId ? { ...item, quantity: quantity } : item
-      );
-      break;
-    }
-    default:
-      return state;
-  }
-  // Calcular el nuevo total después de cada acción que modifica el carrito
-  const newTotal = updatedItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-
-  return {
-    ...state,
-    items: updatedItems,
-    total: newTotal,
-  };
-};
+  addProductToCart,
+} from '../../../config/api/apiUtils';
 
 export const CartProvider = ({ children }) => {
   const { isLogueado, usuario } = useAuth();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
-  const [state, dispatch] = useReducer(cartReducer, {
-    items: [],
-    total: 0,
-  });
+  const [cartItems, setCartItems] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const localCart = localStorage.getItem("cart");
+    // Actualización de los artículos del carrito y el total
+    const calculateTotal = () => {
+      const newTotal = cartItems.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      setTotal(newTotal);
+    };
+
+    calculateTotal();
+  }, [cartItems]);
+
+  useEffect(() => {
+    const localCart = localStorage.getItem('cart');
     if (isLogueado) {
-      // Carga los artículos del carrito cuando el usuario está logueado
       const fetchCartItems = async () => {
         const cartData = await getCartItems(token);
-        dispatch({ type: "SET_CART_ITEMS", payload: cartData });
+        setCartItems(cartData.products); // Asumiendo que cartData tiene la estructura correcta
+        setTotal(cartData.total);
       };
 
       fetchCartItems();
     } else if (localCart) {
-      // Si hay un carrito en el almacenamiento local, se carga en el estado
-      dispatch({ type: "SET_CART_ITEMS", payload: JSON.parse(localCart) });
+      const parsedCart = JSON.parse(localCart);
+      setCartItems(parsedCart.products);
+      setTotal(parsedCart.total);
     }
   }, [isLogueado, token]);
 
-  // Cuando se actualice el estado del carrito, actualizar el almacenamiento local si el usuario no está logueado
   useEffect(() => {
     if (!isLogueado) {
       localStorage.setItem(
-        "cart",
-        JSON.stringify({ products: state.items, total: state.total })
+        'cart',
+        JSON.stringify({ products: cartItems, total: total })
       );
     }
-  }, [state, isLogueado]);
+  }, [cartItems, total, isLogueado]);
 
   const addToCart = async (product) => {
     const productToAdd = {
@@ -137,14 +74,48 @@ export const CartProvider = ({ children }) => {
         cartItemId: cartItem._id,
       };
 
-      dispatch({ type: "ADD_TO_CART", payload: productWithCartId });
+      setCartItems(currentItems => {
+        // Verificar si el producto ya está en el carrito
+        const existingItemIndex = currentItems.findIndex(item => item.id === product.id);
+    
+        // Si ya existe, incrementar la cantidad
+        if (existingItemIndex > -1) {
+          const updatedItems = [...currentItems];
+          updatedItems[existingItemIndex] = {
+            ...updatedItems[existingItemIndex],
+            quantity: updatedItems[existingItemIndex].quantity + 1,
+          };
+          return updatedItems;
+        } else {
+          // Si el producto no está en el carrito, agregarlo
+          return [...currentItems, productWithCartId];
+        }
+      });
+
     } else {
       const productWithCartId = {
         ...productToAdd,
         cartItemId: product.id,
       };
-      dispatch({ type: "ADD_TO_CART", payload: productWithCartId });
-      
+
+      setCartItems(currentItems => {
+        // Verificar si el producto ya está en el carrito
+        const existingItemIndex = currentItems.findIndex(item => item.id === product.id);
+    
+        // Si ya existe, incrementar la cantidad
+        if (existingItemIndex > -1) {
+          const updatedItems = [...currentItems];
+          updatedItems[existingItemIndex] = {
+            ...updatedItems[existingItemIndex],
+            quantity: updatedItems[existingItemIndex].quantity + 1,
+          };
+          return updatedItems;
+        } else {
+          // Si el producto no está en el carrito, agregarlo
+          return [...currentItems, productWithCartId];
+        }
+      });
+
     }
   };
 
@@ -152,66 +123,94 @@ export const CartProvider = ({ children }) => {
     if (isLogueado) {
       const response = await deleteProductFromCart(cartItemId);
       if (response) {
-        dispatch({ type: "REMOVE_FROM_CART", payload: cartItemId });
+        setCartItems(currentItems => currentItems.filter(item => item.cartItemId !== cartItemId));
       }
     } else {
-      dispatch({ type: "REMOVE_FROM_CART", payload: cartItemId });
+      setCartItems(currentItems => currentItems.filter(item => item.cartItemId !== cartItemId));
     }
   };
 
   const increaseProductQuantity = async (cartItemId) => {
     if (isLogueado) {
-      const updatedProducts = await increaseQuantity(state.items, cartItemId);
+      const updatedProducts = await increaseQuantity(cartItems, cartItemId);
       if (updatedProducts) {
-        dispatch({ type: "INCREASE_QUANTITY", payload: cartItemId });
+        setCartItems(currentItems =>
+          currentItems.map(item =>
+            item.cartItemId === cartItemId ? { ...item, quantity: item.quantity + 1 } : item
+          )
+        );
       }
     } else {
       // Lógica para incrementar la cantidad en el estado local y localStorage
-      dispatch({ type: "INCREASE_QUANTITY", payload: cartItemId });
+      setCartItems(currentItems =>
+        currentItems.map(item =>
+          item.cartItemId === cartItemId ? { ...item, quantity: item.quantity + 1 } : item
+        )
+      );
     }
   };
 
   const decreaseProductQuantity = async (cartItemId) => {
     if (isLogueado) {
-      const updatedProducts = await decreaseQuantity(state.items, cartItemId);
+      const updatedProducts = await decreaseQuantity(cartItems, cartItemId);
       if (updatedProducts) {
-        dispatch({ type: "DECREASE_QUANTITY", payload: cartItemId });
+        setCartItems(currentItems =>
+          currentItems.map(item =>
+            item.cartItemId === cartItemId ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
+          )
+        );
       }
     } else {
       // Lógica para decrementar la cantidad en el estado local y localStorage
-      dispatch({ type: "DECREASE_QUANTITY", payload: cartItemId });
+      setCartItems(currentItems =>
+        currentItems.map(item =>
+          item.cartItemId === cartItemId ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
+        )
+      );
     }
   };
 
   const updateQuantity = async (cartItemId, quantity) => {
     if (isLogueado) {
       const updatedProduct = await updateProductQuantity(
-        state.items,
+        cartItems,
         cartItemId,
         quantity
       );
       if (updatedProduct) {
-        dispatch({
-          type: "UPDATE_QUANTITY",
-          payload: { cartItemId, quantity },
-        });
+        setCartItems(currentItems =>
+          currentItems.map(item =>
+            item.cartItemId === cartItemId ? { ...item, quantity: quantity } : item
+          )
+        );
       }
     } else {
       // Lógica para actualizar la cantidad en el estado local y localStorage
-      dispatch({ type: "UPDATE_QUANTITY", payload: { cartItemId, quantity } });
+      setCartItems(currentItems =>
+        currentItems.map(item =>
+          item.cartItemId === cartItemId ? { ...item, quantity: quantity } : item
+        )
+      );
     }
   };
+
+  const clearCart = () => {
+    setCartItems([]);
+    setTotal(0);
+  };
+  
 
   return (
     <CartContext.Provider
       value={{
-        state,
-        dispatch,
+        cartItems,
+        total,
         removeFromCart,
         increaseProductQuantity,
         decreaseProductQuantity,
         updateQuantity,
-        addToCart
+        addToCart,
+        clearCart
       }}
     >
       {children}

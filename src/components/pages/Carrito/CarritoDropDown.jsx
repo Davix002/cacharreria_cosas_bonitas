@@ -10,8 +10,8 @@ export default function CarritoDropDown({ setCarritoDropDown }) {
     return null;
   }
 
-  const { state } = cart;
-  const productsInCart = state.items;
+  const { cartItems } = cart;
+  const productsInCart = cartItems;
 
   function handleViewCartClick() {
     setCarritoDropDown(false);
