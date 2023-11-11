@@ -387,7 +387,7 @@ export const addProductToCart = async (usuario, product) => {
   return await response.json();
 };
 
-export const deleteProductFromCart = async (dispatch, cartItemId) => {
+export const deleteProductFromCart = async (cartItemId) => {
   try {
     const response = await fetch(
       `http://localhost:5800/api/cart/item/${cartItemId}`,
@@ -395,11 +395,10 @@ export const deleteProductFromCart = async (dispatch, cartItemId) => {
         method: "DELETE",
       }
     );
-    if (response.ok) {
-      dispatch({ type: "REMOVE_FROM_CART", payload: cartItemId });
-    }
+    return response.ok;
   } catch (error) {
     console.error("Hubo un error al eliminar el producto:", error);
+    return false;
   }
 };
 

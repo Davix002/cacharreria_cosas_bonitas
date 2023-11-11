@@ -121,12 +121,14 @@ export const CartProvider = ({ children }) => {
   }, [state, isLogueado]);
 
   const removeFromCart = async (cartItemId) => {
-    if (isLogueado){
-      deleteProductFromCart(dispatch, cartItemId);
-    } else{
+    if (isLogueado) {
+      const response = await deleteProductFromCart(cartItemId);
+      if (response) {
+        dispatch({ type: "REMOVE_FROM_CART", payload: cartItemId });
+      }
+    } else {
       dispatch({ type: "REMOVE_FROM_CART", payload: cartItemId });
     }
-    
   };
 
   const increaseProductQuantity = async (cartItemId) => {
