@@ -1,14 +1,14 @@
 import { useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
-import AuthContext from "../../../Auth/AuthContext";
-import { useContext } from "react";
 import CartContext from "./CartContext";
+import { useAuth } from "../../../Auth/UseAuth";
 import {
   getCartItems,
   increaseQuantity,
   decreaseQuantity,
   deleteProductFromCart,
   updateProductQuantity,
+  addProductToCart
 } from "../../../config/api/apiUtils";
 
 const cartReducer = (state, action) => {
@@ -86,7 +86,7 @@ const cartReducer = (state, action) => {
 };
 
 export const CartProvider = ({ children }) => {
-  const { isLogueado } = useContext(AuthContext);
+  const { isLogueado, usuario } = useAuth();
   const token = localStorage.getItem("token");
 
   const [state, dispatch] = useReducer(cartReducer, {
@@ -119,6 +119,34 @@ export const CartProvider = ({ children }) => {
       );
     }
   }, [state, isLogueado]);
+
+  const addToCart = async (product) => {
+    const productToAdd = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      brand: product.brand,
+      imageSrc: product.thumbnail,
+      quantity: 1,
+    };
+
+    if (isLogueado) {
+      const cartItem = await addProductToCart(usuario, productToAdd);
+      const productWithCartId = {
+        ...productToAdd,
+        cartItemId: cartItem._id,
+      };
+
+      dispatch({ type: "ADD_TO_CART", payload: productWithCartId });
+    } else {
+      const productWithCartId = {
+        ...productToAdd,
+        cartItemId: product.id,
+      };
+      dispatch({ type: "ADD_TO_CART", payload: productWithCartId });
+      
+    }
+  };
 
   const removeFromCart = async (cartItemId) => {
     if (isLogueado) {
@@ -183,6 +211,7 @@ export const CartProvider = ({ children }) => {
         increaseProductQuantity,
         decreaseProductQuantity,
         updateQuantity,
+        addToCart
       }}
     >
       {children}

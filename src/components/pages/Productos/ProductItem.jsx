@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 import CarritoIcon from "../../icons/CarritoIcon";
 import { useCart } from "../Carrito/UseCart";
-import { useAuth } from "../../../Auth/UseAuth";
-import { addProductToCart } from "../../../config/api/apiUtils";
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {
@@ -13,62 +11,12 @@ const formatPrice = (price) => {
 };
 
 const ProductItem = (props) => {
-  const { isLogueado, usuario } = useAuth();
-  const { dispatch } = useCart();
+  const { addToCart } = useCart();
 
-  const addToCart = async (product) => {
-    const productToAdd = {
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      brand: product.brand,
-      imageSrc: product.thumbnail,
-      quantity: 1,
-    };
-
-    if (isLogueado) {
-      const cartItem = await addProductToCart(usuario, productToAdd);
-      const productWithCartId = {
-        ...productToAdd,
-        cartItemId: cartItem._id,
-      };
-
-      dispatch({ type: "ADD_TO_CART", payload: productWithCartId });
-    } else {
-      const productWithCartId = {
-        ...productToAdd,
-        cartItemId: product.id,
-      };
-      dispatch({ type: "ADD_TO_CART", payload: productWithCartId });
-      
-      // Lógica para usuarios no logueados: Agregar al carrito en localStorage
-      let cart = localStorage.getItem("cart");
-
-      cart = cart ? JSON.parse(cart) : { products: [], total: 0 };
-
-      const existingItemIndex = cart.products.findIndex((item) => {
-        return item.id === productToAdd.id;
-      });
-
-      if (existingItemIndex >= 0) {
-        // Si el producto ya existe, incrementar la cantidad
-        cart.products[existingItemIndex].quantity += 1;
-      } else {
-        // Si el producto no existe, agregarlo al arreglo
-        cart.products.push(productToAdd);
-      }
-
-      // Recalcular el total
-      cart.total = cart.products.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-      );
-
-      // Guardar de nuevo en el localStorage
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
+  const handleAddToCart = () => {
+    addToCart(props.product);
   };
-
+  
   const formattedPrice = formatPrice(parseFloat(props.product.price));
 
   return (
@@ -103,7 +51,7 @@ const ProductItem = (props) => {
         <button
           type="button"
           className="inline-flex flex-col items-center justify-center bg-romTurquoise-600 text-white rounded-xl p-2 hover:bg-black/80 mt-4"
-          onClick={() => addToCart(props.product)}
+          onClick={handleAddToCart} 
         >
           Agregar al carrito
           <CarritoIcon className="mt-2" />
