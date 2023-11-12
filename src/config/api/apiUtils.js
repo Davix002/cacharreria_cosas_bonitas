@@ -213,20 +213,6 @@ export async function updateCategoryWithImage(id, formData) {
   return await response.json();
 }
 
-export async function createCategoryWithImage(formData) {
-  const response = await fetch("http://localhost:5800/api/categories/", {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.msg || "Error al crear la categoría");
-  }
-
-  return await response.json();
-}
-
 export async function deleteCategory(id) {
   const response = await fetch(`http://localhost:5800/api/categories/${id}`, {
     method: "DELETE",
