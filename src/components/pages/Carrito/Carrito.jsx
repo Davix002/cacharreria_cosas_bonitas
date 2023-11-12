@@ -23,13 +23,14 @@ export default function Carrito() {
     increaseProductQuantity,
     decreaseProductQuantity,
     removeFromCart,
-    clearCart
+    clearCart,
   } = useCart();
   const productsInCart = cartItems;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { isLogueado, usuario } = useContext(AuthContext);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [userDetails, setUserDetails] = useState({
     nombre: "",
     address: "",
@@ -52,7 +53,7 @@ export default function Carrito() {
       }));
     }
   }, [isLogueado, usuario]);
-  
+
   const handleRemoveFromCart = (productId) => {
     removeFromCart(productId);
   };
@@ -75,7 +76,10 @@ export default function Carrito() {
 
   const handlePayment = async (userDetails) => {
     const orderDetails = {
-      products: productsInCart.map((item) => ({ _id: item.id, quantity: item.quantity })),
+      products: productsInCart.map((item) => ({
+        _id: item.id,
+        quantity: item.quantity,
+      })),
       totalAmount: total,
       status: "Payment Received / Approved",
       ...userDetails,
@@ -86,7 +90,6 @@ export default function Carrito() {
     }
 
     try {
-
       const response = await fetch("http://localhost:5800/api/orders/", {
         method: "POST",
         headers: {
@@ -104,8 +107,12 @@ export default function Carrito() {
       const newOrder = await response.json();
 
       if (newOrder) {
+        setPaymentSuccess(true);
         clearCart();
-        navigate("/cacharreria_cosas_bonitas/Purchases");
+        setTimeout(() => {
+          setPaymentSuccess(false);
+          navigate("/cacharreria_cosas_bonitas/Purchases");
+        }, 5000);
       }
     } catch (error) {
       console.error("Error al crear la orden: ", error);
@@ -136,7 +143,9 @@ export default function Carrito() {
                     </h3>
                     <div className="min-w-24 flex">
                       <button
-                        onClick={() => decreaseProductQuantity(product.cartItemId)}
+                        onClick={() =>
+                          decreaseProductQuantity(product.cartItemId)
+                        }
                         type="button"
                         className="h-7 w-7"
                       >
@@ -146,11 +155,15 @@ export default function Carrito() {
                         type="text"
                         className="mx-1 h-7 w-9 rounded-md border text-center"
                         value={product.quantity}
-                        onChange={(e) => handleQuantityChange(e, product.cartItemId)}
+                        onChange={(e) =>
+                          handleQuantityChange(e, product.cartItemId)
+                        }
                       />
 
                       <button
-                        onClick={() => increaseProductQuantity(product.cartItemId)}
+                        onClick={() =>
+                          increaseProductQuantity(product.cartItemId)
+                        }
                         type="button"
                         className="flex h-7 w-7 items-center justify-center"
                       >
@@ -211,136 +224,147 @@ export default function Carrito() {
           </button>
         </Link>
       </div>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handlePayment(userDetails);
-          }}
+      {paymentSuccess ? (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4 py-6 overflow-y-auto"
+          style={{ marginTop: 0 }}
         >
-          <div className="grid grid-cols-2 gap-4">
-          <div className="mb-4 col-span-2">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="nombre"
-            >
-              Nombre
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="nombre"
-              name="nombre"
-              type="text"
-              placeholder="Nombre completo"
-              value={userDetails.nombre}
-              onChange={handleInputChange}
-              required
-            />
+          <div className="payment-success-message" role="alert">
+            <span className="font-medium">¡Pago exitoso!</span> Tu pedido ha
+            sido procesado correctamente.
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="address"
-            >
-              Dirección
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="address"
-              name="address"
-              type="text"
-              placeholder="Dirección de envío"
-              value={userDetails.address}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="postalCode"
-            >
-              Código Postal
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="postalCode"
-              name="postalCode"
-              type="text"
-              placeholder="Código Postal"
-              value={userDetails.postalCode}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="phone"
-            >
-              Teléfono
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="phone"
-              name="phone"
-              type="text"
-              placeholder="Número de teléfono"
-              value={userDetails.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Correo electrónico"
-              value={userDetails.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-4 col-span-2">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="creditCardNumber"
-            >
-              Número de Tarjeta de Crédito
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="creditCardNumber"
-              name="creditCardNumber"
-              type="text"
-              placeholder="Número de tarjeta de crédito"
-              value={userDetails.creditCardNumber}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+        </div>
+      ) : (
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <form
+            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handlePayment(userDetails);
+            }}
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <div className="mb-4 col-span-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="nombre"
+                >
+                  Nombre
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="nombre"
+                  name="nombre"
+                  type="text"
+                  placeholder="Nombre completo"
+                  value={userDetails.nombre}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="address"
+                >
+                  Dirección
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="address"
+                  name="address"
+                  type="text"
+                  placeholder="Dirección de envío"
+                  value={userDetails.address}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="postalCode"
+                >
+                  Código Postal
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="postalCode"
+                  name="postalCode"
+                  type="text"
+                  placeholder="Código Postal"
+                  value={userDetails.postalCode}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="phone"
+                >
+                  Teléfono
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  placeholder="Número de teléfono"
+                  value={userDetails.phone}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Correo electrónico"
+                  value={userDetails.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="mb-4 col-span-2">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="creditCardNumber"
+                >
+                  Número de Tarjeta de Crédito
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="creditCardNumber"
+                  name="creditCardNumber"
+                  type="text"
+                  placeholder="Número de tarjeta de crédito"
+                  value={userDetails.creditCardNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
 
-          </div>
-
-          <div className="flex items-center justify-between mt-4">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Confirmar Pago
-            </button>
-          </div>
-        </form>
-      </Modal>
+            <div className="flex items-center justify-between mt-4">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Confirmar Pago
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 }

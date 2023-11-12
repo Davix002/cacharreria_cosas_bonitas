@@ -10,10 +10,10 @@
 
 @keyframes spin {
   0% {
-    transform: rotate(0deg);
+    rotate: 0deg;
   }
   100% {
-    transform: rotate(360deg);
+    rotate: 360deg;
   }
 }
 
@@ -23,4 +23,36 @@
 
 .icon-hover-effect:hover {
   transform: scale(1.1) translateX(-5%);
+}
+
+@keyframes bubble {
+  0% {
+    scale: 0.5;
+    opacity: 0;
+  }
+  70% {
+    scale: 1.2;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+.payment-success-message {
+  animation: bubble 0.5s ease forwards;
+  font-size: 1.5em;
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 1000;
+  padding: 1.5em;
+  border-radius: 0.75em;
+  box-shadow: 0 0.1em 0.75em rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
