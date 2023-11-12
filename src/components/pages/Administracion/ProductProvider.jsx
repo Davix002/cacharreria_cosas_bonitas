@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { getProducts } from '../../../config/api/apiUtils';
-import PropTypes from 'prop-types';
-import ProductContext from './ProductContext';
+import { useState, useEffect } from "react";
+import { getProducts } from "../../../config/api/apiUtils";
+import PropTypes from "prop-types";
+import ProductContext from "./ProductContext";
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
@@ -31,19 +31,21 @@ export const ProductProvider = ({ children }) => {
   };
 
   const updateProduct = (updatedProduct) => {
-    setProducts(products.map((prod) =>
+    const newProducts = products.map((prod) =>
       prod._id === updatedProduct._id ? updatedProduct : prod
-    ));
-  };
-  
+    );
+    setProducts(newProducts);
+  };  
 
   return (
-    <ProductContext.Provider value={{ products, addProduct, removeProduct, updateProduct, loading }}>
+    <ProductContext.Provider
+      value={{ products, addProduct, removeProduct, updateProduct, loading }}
+    >
       {children}
     </ProductContext.Provider>
   );
 };
 
 ProductProvider.propTypes = {
-    children: PropTypes.node.isRequired
-  };
+  children: PropTypes.node.isRequired,
+};

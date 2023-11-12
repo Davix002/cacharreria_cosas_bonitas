@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { updateProductWithImage,createProductWithImage } from "../../../config/api/apiUtils";
+import { updateProductWithImage, createProductWithImage } from "../../../config/api/apiUtils";
 
 const ProductForm = ({ productToUpdate, onFormSubmit, categories  }) => {
   const [product, setProduct] = useState(productToUpdate || {});

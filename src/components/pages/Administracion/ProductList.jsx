@@ -1,12 +1,12 @@
 import { useState, useContext, useRef } from "react";
-import ProductForm from "./ProductForm";
 import ProductContext from "../Administracion/ProductContext";
 import CategoryContext from "./CategoryContext";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import {
   createProduct,
   uploadProductImage,
   deleteProduct,
+  updateProductWithImage,
 } from "../../../config/api/apiUtils";
 import { Link } from "react-router-dom";
 
@@ -22,43 +22,135 @@ const ProductList = () => {
   const { products, addProduct, removeProduct, updateProduct } =
     useContext(ProductContext);
   const { categories } = useContext(CategoryContext);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [productImage, setProductImage] = useState(null);
   const [newProductName, setNewProductName] = useState("");
   const [newProductBrand, setNewProductBrand] = useState("");
   const [newProductPrice, setNewProductPrice] = useState("");
   const [newProductCategories, setNewProductCategories] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const fileInputRef = useRef(null);
+
+  const handleEditProduct = (product) => {
+    let htmlContent = `
+    <input id="swal-input1" class="swal2-input" placeholder="Nombre" value="${
+      product.name || ""
+    }">
+    <input id="swal-input2" class="swal2-input" placeholder="Marca" value="${
+      product.brand || ""
+    }">
+    <input id="swal-input3" class="swal2-input" placeholder="Precio" type="number" value="${
+      product.price || ""
+    }">
+    <select id="swal-input4" class="swal2-input" multiple>`;
+
+    categories.forEach((category) => {
+      htmlContent += `<option value="${category._id}" ${
+        product.categoryIds.includes(category._id) ? "selected" : ""
+      }>${category.name}</option>`;
+    });
+
+    htmlContent += `</select>
+    <input type="file" id="swal-input5" class="swal2-file" accept="image/*">`;
+
+    Swal.fire({
+      title: "Editar Producto",
+      html: htmlContent,
+      preConfirm: () => {
+        const name = document.getElementById("swal-input1").value;
+        const brand = document.getElementById("swal-input2").value;
+        const price = document.getElementById("swal-input3").value;
+        const categorySelect = document.getElementById("swal-input4");
+        const selectedCategories = Array.from(categorySelect.options)
+          .filter((option) => option.selected)
+          .map((option) => option.value);
+        const thumbnail = document.getElementById("swal-input5").files[0];
+
+        if (!name) {
+          Swal.showValidationMessage(
+            "El nombre del producto no puede estar vacío."
+          );
+          return false;
+        }
+
+        if (!brand) {
+          Swal.showValidationMessage(
+            "La marca del producto no puede estar vacía."
+          );
+          return false;
+        }
+
+        if (!price) {
+          Swal.showValidationMessage(
+            "El precio del producto no puede estar vacío."
+          );
+          return false;
+        }
+
+        return {
+          name,
+          brand,
+          price,
+          categoryIds: selectedCategories,
+          thumbnail,
+        };
+      },
+      didOpen: () => {
+        document.getElementById("swal-input1").focus();
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const formData = new FormData();
+        formData.append("name", result.value.name);
+        formData.append("brand", result.value.brand);
+        formData.append("price", result.value.price);
+        result.value.categoryIds.forEach((categoryId) => {
+          formData.append("categoryIds", categoryId);
+        });
+        if (result.value.thumbnail) {
+          formData.append("thumbnail", result.value.thumbnail);
+        }
+
+        try {
+          const updatedProduct = await updateProductWithImage(
+            product._id,
+            formData
+          );
+          const fullCategoryObjects = categories.filter((cat) =>
+          updatedProduct.categoryIds.includes(cat._id)
+        );
+          updateProduct({ ...updatedProduct, categoryIds: fullCategoryObjects });// Actualiza el producto en el contexto
+          Swal.fire({
+            title: "¡Producto actualizado!",
+            icon: "success",
+          });
+        } catch (error) {
+          console.error("Error al actualizar el producto:", error);
+          Swal.fire({
+            title: "Error al actualizar el producto",
+            text: error.toString(),
+            icon: "error",
+          });
+        }
+      }
+    });
+  };
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
-      title: '¿Estás seguro?',
+      title: "¿Estás seguro?",
       text: "¿Está seguro de que desea eliminar este producto?",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
     });
-  
+
     if (result.isConfirmed) {
       await deleteProduct(id);
       removeProduct(id);
-      Swal.fire(
-        'Eliminado',
-        'El producto ha sido eliminada.',
-        'success'
-      );
+      Swal.fire("Eliminado", "El producto ha sido eliminada.", "success");
     }
-  };
-
-  const handleFormSubmit = (updatedProduct) => {
-    if (updatedProduct && updatedProduct._id) {
-      updateProduct(updatedProduct);
-    }
-    setSelectedProduct(null);
   };
 
   const handleAddProduct = async () => {
@@ -217,7 +309,9 @@ const ProductList = () => {
               <tr key={prod._id} className="hover:bg-gray-100">
                 <td className="py-2 px-4">{prod.name}</td>
                 <td className="py-2 px-4">{prod.brand}</td>
-                <td className="py-2 px-4 text-right">{formatPrice(prod.price)}</td>
+                <td className="py-2 px-4 text-right">
+                  {formatPrice(prod.price)}
+                </td>
                 <td className="py-2 px-4">
                   {prod.categoryIds.map((category) => category.name).join(", ")}
                 </td>
@@ -228,13 +322,10 @@ const ProductList = () => {
                     className="m-auto w-12 h-12"
                   />
                 </td>
-                <td className="py-4 px-4 flex justify-around">
+                <td className="py-4 px-4 flex space-x-2">
                   <button
-                    onClick={() => {
-                      setSelectedProduct(prod);
-                      setIsModalOpen(true);
-                    }}
-                    className="mr-2 py-1 px-3 rounded-md shadow-md bg-blue-700 hover:bg-blue-800 text-white focus:outline-none transition duration-150 ease-in-out"
+                    onClick={() => handleEditProduct(prod)}
+                    className="py-1 px-3 rounded-md shadow-md bg-blue-700 hover:bg-blue-800 text-white focus:outline-none transition duration-150 ease-in-out"
                   >
                     Editar
                   </button>
@@ -249,27 +340,6 @@ const ProductList = () => {
             ))}
           </tbody>
         </table>
-
-        {isModalOpen && (
-          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="bg-white p-4 rounded-md shadow-lg relative w-2/4">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="absolute top-2 right-2"
-              >
-                X
-              </button>
-              <ProductForm
-                productToUpdate={selectedProduct}
-                onFormSubmit={(updatedProduct) => {
-                  handleFormSubmit(updatedProduct);
-                  setIsModalOpen(false);
-                }}
-                categories={categories}
-              />
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -66,7 +66,6 @@ const CategoryList = () => {
       }
     });
   };
-  
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
