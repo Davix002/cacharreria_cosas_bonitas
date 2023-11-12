@@ -140,21 +140,21 @@ const CategoryList = () => {
             <tbody>
               {categories.map((cat) => (
                 <tr key={cat._id} className="hover:bg-gray-100">
-                  <td className="border-t py-2 px-4">{cat.name}</td>
-                  <td className="border-t py-2 px-4">
+                  <td className="py-2 px-4">{cat.name}</td>
+                  <td className=" py-2 px-4">
                     <img
                       src={cat.picture}
                       alt={cat.name}
-                      style={{ width: "50px", height: "50px" }}
+                      className="m-auto w-12 h-12"
                     />
                   </td>
-                  <td className="border-t py-2 px-4 flex justify-around">
+                  <td className="py-4 px-4 flex justify-around">
                     <button
                       onClick={() => {
                         setSelectedCategory(cat);
                         setIsModalOpen(true);
                       }}
-                      className="mr-2 py-1 px-3 rounded-md shadow-md bg-blue-700 hover:bg-blue-800 text-white focus:outline-none transition duration-150 ease-in-out"
+                      className=" py-1 px-3 rounded-md shadow-md bg-blue-700 hover:bg-blue-800 text-white focus:outline-none transition duration-150 ease-in-out"
                     >
                       Editar
                     </button>
