@@ -6,6 +6,8 @@ import AuthContext from "../../../Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Modal from "./Modal";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {
@@ -30,7 +32,8 @@ export default function Carrito() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { isLogueado, usuario } = useContext(AuthContext);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  //const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const MySwal = withReactContent(Swal);
   const [userDetails, setUserDetails] = useState({
     nombre: "",
     address: "",
@@ -107,12 +110,23 @@ export default function Carrito() {
       const newOrder = await response.json();
 
       if (newOrder) {
-        setPaymentSuccess(true);
         clearCart();
-        setTimeout(() => {
-          setPaymentSuccess(false);
-          navigate("/cacharreria_cosas_bonitas/Purchases");
-        }, 5000);
+        MySwal.fire({
+          title: '¡Pago exitoso!',
+          text: 'Tu pedido ha sido procesado correctamente.',
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ver pedidos',
+          cancelButtonText: 'Volver a la tienda',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/cacharreria_cosas_bonitas/Purchases");
+          } else {
+            navigate("/cacharreria_cosas_bonitas");
+          }
+        });
       }
     } catch (error) {
       console.error("Error al crear la orden: ", error);
@@ -224,17 +238,6 @@ export default function Carrito() {
           </button>
         </Link>
       </div>
-      {paymentSuccess ? (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4 py-6 overflow-y-auto"
-          style={{ marginTop: 0 }}
-        >
-          <div className="payment-success-message" role="alert">
-            <span className="font-medium">¡Pago exitoso!</span> Tu pedido ha
-            sido procesado correctamente.
-          </div>
-        </div>
-      ) : (
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <form
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -364,7 +367,6 @@ export default function Carrito() {
             </div>
           </form>
         </Modal>
-      )}
     </div>
   );
 }
