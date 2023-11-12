@@ -1,6 +1,7 @@
 import { useState, useContext, useRef } from "react";
 import CategoryForm from "./CategoryForm";
 import CategoryContext from "./CategoryContext";
+import Swal from 'sweetalert2';
 import {
   deleteCategory,
   createCategory,
@@ -18,11 +19,28 @@ const CategoryList = () => {
   const fileInputRef = useRef(null);
 
   const handleDelete = async (id) => {
-    if (window.confirm("¿Está seguro de que desea eliminar esta categoría?")) {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¿Está seguro de que desea eliminar esta categoría?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+  
+    if (result.isConfirmed) {
       await deleteCategory(id);
       removeCategory(id);
+      Swal.fire(
+        'Eliminado',
+        'La categoría ha sido eliminada.',
+        'success'
+      );
     }
   };
+  
 
   const handleFormSubmit = (updatedCategory) => {
     if (updatedCategory && updatedCategory._id) {
@@ -130,7 +148,7 @@ const CategoryList = () => {
                       style={{ width: "50px", height: "50px" }}
                     />
                   </td>
-                  <td className="border-t py-2 px-4 just flex justify-around">
+                  <td className="border-t py-2 px-4 flex justify-around">
                     <button
                       onClick={() => {
                         setSelectedCategory(cat);

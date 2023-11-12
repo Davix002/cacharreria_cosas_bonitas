@@ -2,6 +2,7 @@ import { useState, useContext, useRef } from "react";
 import ProductForm from "./ProductForm";
 import ProductContext from "../Administracion/ProductContext";
 import CategoryContext from "./CategoryContext";
+import Swal from 'sweetalert2';
 import {
   createProduct,
   uploadProductImage,
@@ -31,9 +32,25 @@ const ProductList = () => {
   const fileInputRef = useRef(null);
 
   const handleDelete = async (id) => {
-    if (window.confirm("¿Está seguro de que desea eliminar este producto?")) {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¿Está seguro de que desea eliminar este producto?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+  
+    if (result.isConfirmed) {
       await deleteProduct(id);
       removeProduct(id);
+      Swal.fire(
+        'Eliminado',
+        'El producto ha sido eliminada.',
+        'success'
+      );
     }
   };
 
