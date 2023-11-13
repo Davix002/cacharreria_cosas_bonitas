@@ -96,7 +96,7 @@ const OrderList = () => {
             key={order._id}
             className="bg-white shadow overflow-hidden sm:rounded-lg p-6 mb-4"
           >
-            <summary >
+            <summary>
               <h3 className="inline-block text-lg leading-6 font-medium text-gray-900">
                 Order ID: {order._id}
               </h3>
@@ -164,20 +164,26 @@ const OrderList = () => {
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
                         {order.products.map((product) => (
-                          <tr key={product.productId._id}>
+                          <tr key={product.productId ? product.productId._id : product._id}>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {product.productId.name}
+                              {product.productId
+                                ? product.productId.name
+                                : "Producto no disponible"}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                               {product.quantity}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
-                              {formatPrice(product.productId.price)}
+                              {product.productId
+                                ? formatPrice(product.productId.price)
+                                : "N/A"}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
-                              {formatPrice(
-                                product.productId.price * product.quantity
-                              )}
+                              {product.productId
+                                ? formatPrice(
+                                    product.productId.price * product.quantity
+                                  )
+                                : "N/A"}
                             </td>
                           </tr>
                         ))}
