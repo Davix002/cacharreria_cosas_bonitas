@@ -94,11 +94,10 @@ const OrderList = () => {
         {orders.map((order) => (
           <details
             key={order._id}
-            className="bg-white shadow overflow-hidden sm:rounded-lg p-6 mb-4"
           >
-            <summary>
-              <h3 className="inline-block text-lg leading-6 font-medium text-gray-900">
-                Order ID: {order._id}
+            <summary className="cursor-pointer text-lg leading-6 font-medium text-gray-100 bg-romTurquoise-500 p-4 rounded-md hover:bg-romTurquoise-600 hover:scale-[1.01]">
+              <h3 className="inline-block text-lg leading-6 font-medium text-gray-100 cursor-pointer">
+                ID del pedido: {order._id}
               </h3>
             </summary>
 
