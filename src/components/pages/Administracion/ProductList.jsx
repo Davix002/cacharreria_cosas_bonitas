@@ -31,16 +31,16 @@ const ProductList = () => {
 
   const handleEditProduct = (product) => {
     let htmlContent = `
-    <input id="swal-input1" class="swal2-input" placeholder="Nombre" value="${
+    <input id="swal-input1" class="mx-0 w-96 swal2-input" placeholder="Nombre" value="${
       product.name || ""
     }">
-    <input id="swal-input2" class="swal2-input" placeholder="Marca" value="${
+    <input id="swal-input2" class="mx-0 w-96 swal2-input" placeholder="Marca" value="${
       product.brand || ""
     }">
-    <input id="swal-input3" class="swal2-input" placeholder="Precio" type="number" value="${
+    <input id="swal-input3" class="mx-0 w-96 swal2-input" placeholder="Precio" type="number" value="${
       product.price || ""
     }">
-    <select id="swal-input4" class="swal2-input" multiple>`;
+    <select id="swal-input4" class="mx-0 w-96 swal2-select" multiple>`;
 
     categories.forEach((category) => {
       htmlContent += `<option value="${category._id}" ${
@@ -49,7 +49,7 @@ const ProductList = () => {
     });
 
     htmlContent += `</select>
-    <input type="file" id="swal-input5" class="swal2-file" accept="image/*">`;
+    <input type="file" id="swal-input5" class="mx-0 w-96 swal2-file" accept="image/*">`;
 
     Swal.fire({
       title: "Editar Producto",
@@ -114,10 +114,7 @@ const ProductList = () => {
             product._id,
             formData
           );
-          const fullCategoryObjects = categories.filter((cat) =>
-          updatedProduct.categoryIds.includes(cat._id)
-        );
-          updateProduct({ ...updatedProduct, categoryIds: fullCategoryObjects });// Actualiza el producto en el contexto
+          updateProduct(updatedProduct);
           Swal.fire({
             title: "¡Producto actualizado!",
             icon: "success",

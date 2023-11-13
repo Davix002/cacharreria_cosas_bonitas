@@ -20,8 +20,8 @@ const CategoryList = () => {
     Swal.fire({
       title: 'Editar Categoría',
       html: `
-        <input id="swal-input1" class="swal2-input" placeholder="Nombre" value="${category.name || ''}">
-        <input type="file" id="swal-input2" class="swal2-file" accept="image/*">
+        <input id="swal-input1" class="mx-0 w-96 swal2-input" placeholder="Nombre" value="${category.name || ''}">
+        <input type="file" id="swal-input2" class="mx-0 w-96 swal2-file" accept="image/*">
       `,
       preConfirm: () => {
         const name = document.getElementById('swal-input1').value;
