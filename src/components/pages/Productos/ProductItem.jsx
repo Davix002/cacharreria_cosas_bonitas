@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import CarritoIcon from "../../icons/CarritoIcon";
 import { useCart } from "../Carrito/UseCart";
+import { useState, useEffect } from "react";
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {
@@ -12,11 +13,28 @@ const formatPrice = (price) => {
 
 const ProductItem = (props) => {
   const { addToCart } = useCart();
+  const [isAdded, setIsAdded] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleAddToCart = () => {
-    addToCart(props.product);
+  useEffect(() => {
+    let timeout;
+    if (isAdded) {
+      timeout = setTimeout(() => setIsAdded(false), 2000);
+    }
+    return () => clearTimeout(timeout);
+  }, [isAdded]);  
+
+  const handleAddToCart = async () => {
+    try {
+      setError(null);
+      await addToCart(props.product);
+      setIsAdded(true);
+      setTimeout(() => setIsAdded(false), 3000);
+    } catch (e) {
+      setError("No se pudo agregar al carrito");
+    }
   };
-  
+
   const formattedPrice = formatPrice(parseFloat(props.product.price));
 
   return (
@@ -48,10 +66,20 @@ const ProductItem = (props) => {
         <p className="text-lg font-bold text-gray-900 price text-center">
           {formattedPrice}
         </p>
+        {isAdded && (
+          <div className="absolute z-20 top-3 left-3 bg-romTurquoise-600 text-white font-semibold rounded-2xl py-2 px-4 shadow-md">
+            Agregado al carrito
+          </div>
+        )}
+        {error && (
+          <div className="absolute z-20 top-3 left-3 bg-red-600 text-white font-semibold rounded-2xl py-2 px-4 shadow-md">
+            {error}
+          </div>
+        )}
         <button
           type="button"
           className="inline-flex flex-col items-center justify-center bg-romTurquoise-600 text-white rounded-xl p-2 hover:bg-black/80 mt-4"
-          onClick={handleAddToCart} 
+          onClick={handleAddToCart}
         >
           Agregar al carrito
           <CarritoIcon className="mt-2" />
