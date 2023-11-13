@@ -31,16 +31,16 @@ const ProductList = () => {
 
   const handleEditProduct = (product) => {
     let htmlContent = `
-    <input id="swal-input1" class="mx-0 w-96 swal2-input" placeholder="Nombre" value="${
+    <input id="swal-input1" class="mx-0 mb-2 mt-1 w-96 swal2-input" placeholder="Nombre" value="${
       product.name || ""
     }">
-    <input id="swal-input2" class="mx-0 w-96 swal2-input" placeholder="Marca" value="${
+    <input id="swal-input2" class="mx-0 my-2 w-96 swal2-input" placeholder="Marca" value="${
       product.brand || ""
     }">
-    <input id="swal-input3" class="mx-0 w-96 swal2-input" placeholder="Precio" type="number" value="${
+    <input id="swal-input3" class="mx-0 my-2 w-96 swal2-input" placeholder="Precio" type="number" value="${
       product.price || ""
     }">
-    <select id="swal-input4" class="mx-0 w-96 swal2-select" multiple>`;
+    <select id="swal-input4" class="mx-0 my-2 w-96 swal2-select" multiple>`;
 
     categories.forEach((category) => {
       htmlContent += `<option value="${category._id}" ${
@@ -49,7 +49,7 @@ const ProductList = () => {
     });
 
     htmlContent += `</select>
-    <input type="file" id="swal-input5" class="mx-0 w-96 swal2-file" accept="image/*">`;
+    <input type="file" id="swal-input5" class="mx-0 mt-2 mb-1 w-96 swal2-file" accept="image/*">`;
 
     Swal.fire({
       title: "Editar Producto",
