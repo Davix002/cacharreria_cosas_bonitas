@@ -187,6 +187,14 @@ const ProductList = () => {
         categoryIds: newProductCategories,
       });
 
+      // Aquí se muestra el mensaje de éxito
+      Swal.fire({
+        title: '¡Éxito!',
+        text: 'El producto se ha creado exitosamente.',
+        icon: 'success',
+        confirmButtonText: 'Genial'
+      });
+
       // Se actualiza el estado local con la nueva categoría
       addProduct(newProduct);
 
@@ -202,6 +210,12 @@ const ProductList = () => {
       }
     } catch (error) {
       console.error("Error al agregar el producto:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al crear el producto.',
+        icon: 'error',
+        confirmButtonText: 'Entendido'
+      });
     }
   };
 
