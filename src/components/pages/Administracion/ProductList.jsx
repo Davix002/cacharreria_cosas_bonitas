@@ -237,9 +237,9 @@ const ProductList = () => {
   const tabButtonBaseClass =
     "mt-4 w-full p-2 rounded-xl text-lg font-bold transition-all";
   const activeTabClass =
-    "bg-romTurquoise-600 cursor-default text-white shadow-lg cursor-default";
+    "bg-romTurquoise-600 text-white shadow-lg shadow-gray-700";
   const inactiveTabClass =
-    "bg-gray-200 text-gray-400 cursor-pointer hover:shadow-md";
+    "bg-gray-200 text-gray-400 hover:shadow-md";
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200 py-8">
