@@ -5,9 +5,10 @@ import {
   deleteCategory,
   createCategory,
   uploadCategoryImage,
-  updateCategoryWithImage
+  updateCategoryWithImage,
 } from "../../../config/api/apiUtils";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const CategoryList = () => {
   const { categories, addCategory, removeCategory, updateCategory } =
@@ -15,52 +16,58 @@ const CategoryList = () => {
   const [categoryImage, setCategoryImage] = useState(null);
   const [newCategoryName, setNewCategoryName] = useState("");
   const fileInputRef = useRef(null);
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
 
   const handleEditCategory = (category) => {
     Swal.fire({
-      title: 'Editar Categoría',
+      title: "Editar Categoría",
       html: `
-        <input id="swal-input1" class="mx-0 w-96 swal2-input" placeholder="Nombre" value="${category.name || ''}">
+        <input id="swal-input1" class="mx-0 w-96 swal2-input" placeholder="Nombre" value="${
+          category.name || ""
+        }">
         <input type="file" id="swal-input2" class="mx-0 w-96 swal2-file" accept="image/*">
       `,
       preConfirm: () => {
-        const name = document.getElementById('swal-input1').value;
-        const picture = document.getElementById('swal-input2').files[0];
-  
+        const name = document.getElementById("swal-input1").value;
+        const picture = document.getElementById("swal-input2").files[0];
+
         if (!name) {
-          Swal.showValidationMessage('El nombre de la categoría no puede estar vacío.');
+          Swal.showValidationMessage(
+            "El nombre de la categoría no puede estar vacío."
+          );
           return false;
         }
-  
+
         return { name, picture };
       },
       didOpen: () => {
-        document.getElementById('swal-input1').focus();
-      }
+        document.getElementById("swal-input1").focus();
+      },
     }).then(async (result) => {
       if (result.isConfirmed) {
         const formData = new FormData();
-        formData.append('name', result.value.name);
+        formData.append("name", result.value.name);
         if (result.value.picture) {
-          formData.append('picture', result.value.picture);
+          formData.append("picture", result.value.picture);
         }
 
-          await updateCategoryWithImage(category._id, formData)
+        await updateCategoryWithImage(category._id, formData)
           .then((updatedCategory) => {
             // Aquí se actualiza el contexto con la categoría actualizada
             updateCategory(updatedCategory);
-  
+
             Swal.fire({
-              title: '¡Categoría actualizada!',
-              icon: 'success'
+              title: "¡Categoría actualizada!",
+              icon: "success",
             });
           })
           .catch((error) => {
-            console.error('Error al actualizar la categoría:', error);
+            console.error("Error al actualizar la categoría:", error);
             Swal.fire({
-              title: 'Error al actualizar la categoría',
+              title: "Error al actualizar la categoría",
               text: error.toString(),
-              icon: 'error'
+              icon: "error",
             });
           });
       }
@@ -91,33 +98,33 @@ const CategoryList = () => {
       alert("El nombre de la categoría no puede estar vacío.");
       return;
     }
-  
+
     if (!categoryImage) {
       alert("Por favor, selecciona una imagen para la categoría.");
       return;
     }
-  
+
     try {
       // Primero se sube la imagen
       const imageResponse = await uploadCategoryImage(categoryImage);
-  
+
       // Luego se crea la categoría con el nombre y la URL de la imagen
       const newCategory = await createCategory({
         name: newCategoryName,
         picture: imageResponse.imageUrl,
       });
-  
+
       // Aquí se muestra el mensaje de éxito
       Swal.fire({
-        title: '¡Éxito!',
-        text: 'La categoría se ha creado exitosamente.',
-        icon: 'success',
-        confirmButtonText: 'Genial'
+        title: "¡Éxito!",
+        text: "La categoría se ha creado exitosamente.",
+        icon: "success",
+        confirmButtonText: "Genial",
       });
-  
+
       // Se actualiza el estado local con la nueva categoría
       addCategory(newCategory);
-  
+
       // Se limpian los inputs
       setNewCategoryName("");
       setCategoryImage(null);
@@ -127,23 +134,61 @@ const CategoryList = () => {
     } catch (error) {
       console.error("Error al agregar la categoría:", error);
       Swal.fire({
-        title: 'Error',
-        text: 'Hubo un problema al crear la categoría.',
-        icon: 'error',
-        confirmButtonText: 'Entendido'
+        title: "Error",
+        text: "Hubo un problema al crear la categoría.",
+        icon: "error",
+        confirmButtonText: "Entendido",
       });
     }
-  };  
+  };
 
   const handleImageChange = (e) => {
     setCategoryImage(e.target.files[0]);
   };
 
+  const tabButtonBaseClass =
+    "mt-4 w-full p-2 rounded-xl text-lg font-bold transition-all";
+  const activeTabClass =
+    "bg-romTurquoise-600 text-white shadow-lg cursor-default";
+  const inactiveTabClass =
+    "bg-gray-200 text-gray-400 cursor-pointer hover:shadow-md";
+
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200 py-8">
-      <div className="w-full max-w-2xl p-6 mb-6 bg-white rounded-xl shadow-lg">
+      <div className="flex flex-row justify-around w-full max-w-2xl p-6 mb-6 bg-white rounded-xl shadow-lg">
+        <Link className="cursor-default">
+          <button
+            className={`${tabButtonBaseClass} ${
+              isActive("/cacharreria_cosas_bonitas/Admin/categorias/")
+                ? activeTabClass
+                : inactiveTabClass
+            }`}
+            style={{
+              pointerEvents: isActive(
+                "/cacharreria_cosas_bonitas/Admin/categorias/"
+              )
+                ? "none"
+                : "auto",
+            }}
+          >
+            Administrar Categorias
+          </button>
+        </Link>
         <Link to="/cacharreria_cosas_bonitas/Admin/productos">
-          <button className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold">
+          <button
+            className={`${tabButtonBaseClass} ${
+              isActive("/cacharreria_cosas_bonitas/Admin/productos")
+                ? activeTabClass
+                : inactiveTabClass
+            }`}
+            style={{
+              pointerEvents: isActive(
+                "/cacharreria_cosas_bonitas/Admin/productos"
+              )
+                ? "none"
+                : "auto",
+            }}
+          >
             Administrar Productos
           </button>
         </Link>

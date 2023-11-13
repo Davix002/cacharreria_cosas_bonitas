@@ -9,6 +9,7 @@ import {
   updateProductWithImage,
 } from "../../../config/api/apiUtils";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-CO", {
@@ -28,6 +29,8 @@ const ProductList = () => {
   const [newProductPrice, setNewProductPrice] = useState("");
   const [newProductCategories, setNewProductCategories] = useState([]);
   const fileInputRef = useRef(null);
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
 
   const handleEditProduct = (product) => {
     let htmlContent = `
@@ -189,10 +192,10 @@ const ProductList = () => {
 
       // Aquí se muestra el mensaje de éxito
       Swal.fire({
-        title: '¡Éxito!',
-        text: 'El producto se ha creado exitosamente.',
-        icon: 'success',
-        confirmButtonText: 'Genial'
+        title: "¡Éxito!",
+        text: "El producto se ha creado exitosamente.",
+        icon: "success",
+        confirmButtonText: "Genial",
       });
 
       // Se actualiza el estado local con la nueva categoría
@@ -211,10 +214,10 @@ const ProductList = () => {
     } catch (error) {
       console.error("Error al agregar el producto:", error);
       Swal.fire({
-        title: 'Error',
-        text: 'Hubo un problema al crear el producto.',
-        icon: 'error',
-        confirmButtonText: 'Entendido'
+        title: "Error",
+        text: "Hubo un problema al crear el producto.",
+        icon: "error",
+        confirmButtonText: "Entendido",
       });
     }
   };
@@ -231,12 +234,50 @@ const ProductList = () => {
     setNewProductCategories(selectedOptions);
   };
 
+  const tabButtonBaseClass =
+    "mt-4 w-full p-2 rounded-xl text-lg font-bold transition-all";
+  const activeTabClass =
+    "bg-romTurquoise-600 cursor-default text-white shadow-lg cursor-default";
+  const inactiveTabClass =
+    "bg-gray-200 text-gray-400 cursor-pointer hover:shadow-md";
+
   return (
     <div className="flex flex-col items-center justify-center bg-gray-200 py-8">
-      <div className="w-full max-w-2xl p-6 mb-6 bg-white rounded-xl shadow-lg">
+      <div className="flex flex-row justify-around w-full max-w-2xl p-6 mb-6 bg-white rounded-xl shadow-lg">
         <Link to="/cacharreria_cosas_bonitas/Admin/categorias/">
-          <button className="mt-4 w-full active:scale-[.98] active:duration transition-all hover:scale-[1.01] ease-in-out py-2 rounded-xl bg-romTurquoise-600 text-white text-lg font-bold">
+          <button
+            className={`${tabButtonBaseClass} ${
+              isActive("/cacharreria_cosas_bonitas/Admin/categorias/")
+                ? activeTabClass
+                : inactiveTabClass
+            }`}
+            style={{
+              pointerEvents: isActive(
+                "/cacharreria_cosas_bonitas/Admin/categorias/"
+              )
+                ? "none"
+                : "auto",
+            }}
+          >
             Administrar Categorias
+          </button>
+        </Link>
+        <Link className="cursor-default">
+          <button
+            className={`${tabButtonBaseClass} ${
+              isActive("/cacharreria_cosas_bonitas/Admin/productos")
+                ? activeTabClass
+                : inactiveTabClass
+            }`}
+            style={{
+              pointerEvents: isActive(
+                "/cacharreria_cosas_bonitas/Admin/productos"
+              )
+                ? "none"
+                : "auto",
+            }}
+          >
+            Administrar Productos
           </button>
         </Link>
       </div>
