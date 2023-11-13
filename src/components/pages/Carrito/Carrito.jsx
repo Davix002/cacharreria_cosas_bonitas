@@ -32,7 +32,6 @@ export default function Carrito() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { isLogueado, usuario } = useContext(AuthContext);
-  //const [paymentSuccess, setPaymentSuccess] = useState(false);
   const MySwal = withReactContent(Swal);
   const [userDetails, setUserDetails] = useState({
     nombre: "",

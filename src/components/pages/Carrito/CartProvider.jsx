@@ -156,7 +156,7 @@ export const CartProvider = ({ children }) => {
       if (updatedProducts) {
         setCartItems(currentItems =>
           currentItems.map(item =>
-            item.cartItemId === cartItemId ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
+            item.cartItemId === cartItemId ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
           )
         );
       }
@@ -164,7 +164,7 @@ export const CartProvider = ({ children }) => {
       // Lógica para decrementar la cantidad en el estado local y localStorage
       setCartItems(currentItems =>
         currentItems.map(item =>
-          item.cartItemId === cartItemId ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
+          item.cartItemId === cartItemId ? { ...item, quantity: Math.max(item.quantity - 1, 1) } : item
         )
       );
     }
